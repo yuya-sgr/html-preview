@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smash Battle JS</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #222;
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            user-select: none;
+        }
+        #game-container {
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        canvas {
+            background-color: #87CEEB; /* 空の色 */
+            display: block;
+            border-radius: 4px;
+        }
+        #ui-layer {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            pointer-events: none;
+            font-weight: bold;
+            text-shadow: 2px 2px 0 #000;
+        }
+        .player-hud {
+            text-align: center;
+        }
+        .percent {
+            font-size: 48px;
+        }
+        .stock-icons {
+            font-size: 20px;
+            margin-top: 5px;
+        }
+        .p1-color { color: #3498db; }
+        .p2-color { color: #e74c3c; }
+
+        #overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 10;
+        }
+        h1 { margin: 0 0 20px 0; font-size: 40px; color: #f1c40f; text-shadow: 2px 2px 0 #c0392b; }
+        .controls {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            font-weight: bold;
+            box-shadow: 0 4px 0 #c0392b;
+        }
+        button:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+        button:hover {
+            background: #ec7063;
+        }
+        .key {
+            display: inline-block;
+            background: #eee;
+            color: #333;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: monospace;
+            box-shadow: 0 2px 0 #bbb;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <canvas id="gameCanvas" width="800" height="450"></canvas>
+        
+        <div id="ui-layer">
+            <div class="player-hud p1-color">
+                <div>PLAYER 1</div>
+                <div id="p1-percent" class="percent">0%</div>
+                <div id="p1-stocks" class="stock-icons">●●●</div>
+            </div>
+            <div class="player-hud p2-color">
+                <div>CPU</div>
+                <div id="p2-percent" class="percent">0%</div>
+                <div id="p2-stocks" class="stock-icons">●●●</div>
+            </div>
+        </div>
+
+        <div id="overlay">
+            <h1>SMASH BATTLE JS</h1>
+            <div class="controls">
+                <p>移動: <span class="key">←</span> <span class="key">→</span></p>
+                <p>ジャンプ: <span class="key">↑</span> (空中ジャンプ可)</p>
+                <p>攻撃: <span class="key">SPACE</span> or <span class="key">Z</span></p>
+            </div>
+            <button onclick="startGame()">BATTLE START</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 定数と設定 ---
+        const CANVAS_WIDTH = 800;
+        const CANVAS_HEIGHT = 450;
+        const GRAVITY = 0.6;
+        const FRICTION = 0.85;
+        const MOVE_SPEED = 1.5;
+        const JUMP_FORCE = 12;
+        const MAX_SPEED = 8;
+        const STOCKS = 3;
+
+        // --- クラス定義 ---
+
+        class Vector2 {
+            constructor(x, y) { this.x = x; this.y = y; }
+        }
+
+        class Particle {
+            constructor(x, y, color, speed, life) {
+                this.x = x;
+                this.y = y;
+                this.vx = (Math.random() - 0.5) * speed;
+                this.vy = (Math.random() - 0.5) * speed;
+                this.color = color;
+                this.life = life;
+                this.maxLife = life;
+                this.size = Math.random() * 5 + 2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.life--;
+                this.size *= 0.95;
+            }
+            draw(ctx) {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = this.life / this.maxLife;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+                ctx.globalAlpha = 1.0;
+            }
+        }
+
+        class Fighter {
+            constructor(x, y, color, isAI) {
+                this.x = x;
+                this.y = y;
+                this.width = 30;
+                this.height = 40;
+                this.vx = 0;
+                this.vy = 0;
+                this.color = color;
+                this.isAI = isAI;
+                
+                // ステータス
+                this.percent = 0;
+                this.stocks = STOCKS;
+                this.isDead = false;
+
+                // 状態管理
+                this.isGrounded = false;
+                this.jumps = 0;
+                this.maxJumps = 2;
+                this.facingRight = true; // true = right, false = left
+                
+                // 攻撃関連
+                this.attackCooldown = 0;
+                this.hitbox = null; // {x, y, w, h, damage, knockback}
+                this.hitStun = 0; // ヒットストップ用
+                this.isAttacking = false;
+                this.attackFrame = 0;
+            }
+
+            reset(x, y) {
+                this.x = x;
+                this.y = y;
+                this.vx = 0;
+                this.vy = 0;
+                this.percent = 0;
+                this.jumps = 0;
+                this.hitStun = 0;
+                this.isDead = false;
+            }
+
+            update(platforms, opponent) {
+                if (this.isDead) return;
+
+                // --- ヒットスタン（硬直） ---
+                if (this.hitStun > 0) {
+                    this.hitStun--;
+                    // ふっとびの初速を適用するのはヒットスタン明け
+                    return; 
+                }
+
+                // --- 物理演算 ---
+                this.vy += GRAVITY;
+                this.vx *= FRICTION;
+
+                // AI or 入力
+                if (this.isAI) {
+                    this.updateAI(opponent, platforms);
+                } else {
+                    this.handleInput();
+                }
+
+                // 速度制限
+                // X軸は制限するが、ふっとび時は超えることを許容したいので、減衰を強めるアプローチ
+                // ここでは簡易的に移動入力による加速のみ制限
+                
+                // 位置更新
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // --- 当たり判定（地形） ---
+                this.isGrounded = false;
+                for (let p of platforms) {
+                    if (this.x < p.x + p.w && this.x + this.width > p.x &&
+                        this.y + this.height > p.y && this.y + this.height < p.y + p.h + 20 && // 上から入った場合のみ
+                        this.vy >= 0) { // 落下中のみ
+                        
+                        this.y = p.y - this.height;
+                        this.vy = 0;
+                        this.isGrounded = true;
+                        this.jumps = 0; // ジャンプ回数リセット
+                    }
+                }
+
+                // --- 攻撃処理 ---
+                if (this.attackCooldown > 0) this.attackCooldown--;
+                
+                if (this.isAttacking) {
+                    this.attackFrame++;
+                    // 攻撃判定の発生（5フレーム目くらいに出るイメージ）
+                    if (this.attackFrame === 5) {
+                        // ヒットボックス生成
+                        let range = 40;
+                        let hitX = this.facingRight ? this.x + this.width : this.x - range;
+                        this.hitbox = {
+                            x: hitX,
+                            y: this.y + 10,
+                            w: range,
+                            h: 20,
+                            damage: 12, // ダメージ
+                            knockbackBase: 5,
+                            knockbackGrowth: 0.15
+                        };
+                    }
+                    // 攻撃終了
+                    if (this.attackFrame > 15) {
+                        this.isAttacking = false;
+                        this.hitbox = null;
+                    }
+                }
+
+                // --- 攻撃判定の衝突チェック ---
+                if (this.hitbox && opponent) {
+                    if (checkRectOverlap(this.hitbox, opponent)) {
+                        // 相手にヒット！
+                        game.onHit(this, opponent, this.hitbox);
+                        this.hitbox = null; // 多段ヒット防止
+                    }
+                }
+
+                // --- リングアウト判定 ---
+                if (this.y > CANVAS_HEIGHT + 50 || this.x < -50 || this.x > CANVAS_WIDTH + 50 || this.y < -400) {
+                    game.onDeath(this);
+                }
+            }
+
+            handleInput() {
+                // 左右移動
+                if (keys['ArrowRight']) {
+                    this.vx += MOVE_SPEED;
+                    this.facingRight = true;
+                }
+                if (keys['ArrowLeft']) {
+                    this.vx -= MOVE_SPEED;
+                    this.facingRight = false;
+                }
+
+                // ジャンプ
+                if (keys['ArrowUp']) {
+                    if (!keys.prevUp) { // 押しっぱなし防止
+                        this.performJump();
+                    }
+                    keys.prevUp = true;
+                } else {
+                    keys.prevUp = false;
+                }
+
+                // 攻撃
+                if (keys[' '] || keys['z'] || keys['Z']) {
+                    if (this.attackCooldown === 0) {
+                        this.performAttack();
+                    }
+                }
+            }
+
+            updateAI(opponent, platforms) {
+                // 簡易AI
+                let dx = opponent.x - this.x;
+                let dy = opponent.y - this.y;
+                let dist = Math.sqrt(dx*dx + dy*dy);
+
+                // 復帰ロジック（ステージから落ちそうな時）
+                let stageCenter = CANVAS_WIDTH / 2;
+                if (this.y > 300 || Math.abs(this.x - stageCenter) > 350) {
+                    // ステージ中央へ向かう
+                    if (this.x < stageCenter) {
+                        this.vx += MOVE_SPEED;
+                        this.facingRight = true;
+                    } else {
+                        this.vx -= MOVE_SPEED;
+                        this.facingRight = false;
+                    }
+                    // ジャンプが必要ならジャンプ
+                    if (this.y > 100 && Math.random() < 0.1) this.performJump();
+                    return;
+                }
+
+                // 攻撃・追跡ロジック
+                if (Math.abs(dx) < 60 && Math.abs(dy) < 50) {
+                    // 近くにいるなら攻撃
+                    if (this.attackCooldown === 0) this.performAttack();
+                } else {
+                    // 遠いなら近づく
+                    if (dx > 0) {
+                        this.vx += MOVE_SPEED * 0.8; // 少し遅めに
+                        this.facingRight = true;
+                    } else {
+                        this.vx -= MOVE_SPEED * 0.8;
+                        this.facingRight = false;
+                    }
+                }
+
+                // ランダムジャンプ
+                if (Math.random() < 0.01 && this.isGrounded) this.performJump();
+            }
+
+            performJump() {
+                if (this.jumps < this.maxJumps) {
+                    this.vy = -JUMP_FORCE;
+                    this.jumps++;
+                    createParticles(this.x + this.width/2, this.y + this.height, '#fff', 2, 5);
+                }
+            }
+
+            performAttack() {
+                this.isAttacking = true;
+                this.attackFrame = 0;
+                this.attackCooldown = 30; // クールダウン
+            }
+
+            takeDamage(damage, knockbackX, knockbackY) {
+                this.percent += damage;
+                this.hitStun = 5; // 少し止まる
+                this.vx = knockbackX;
+                this.vy = knockbackY;
+                // ヒット時の演出
+                createParticles(this.x + this.width/2, this.y + this.height/2, '#ff0', 8, 15);
+                screenShake = 5;
+            }
+
+            draw(ctx) {
+                if (this.isDead) return;
+
+                // 本体
+                ctx.fillStyle = this.color;
+                
+                // ヒットスタン中は点滅
+                if (this.hitStun > 0 && Math.floor(Date.now() / 50) % 2 === 0) {
+                    ctx.fillStyle = '#fff';
+                }
+
+                // 攻撃モーション（簡易：横に伸びる）
+                if (this.isAttacking && this.attackFrame < 10) {
+                    let lungex = this.facingRight ? 10 : -10;
+                    ctx.fillRect(this.x + lungex, this.y, this.width, this.height);
+                } else {
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                }
+                
+                // 目（向き確認用）
+                ctx.fillStyle = 'white';
+                let eyeX = this.facingRight ? this.x + 20 : this.x + 5;
+                ctx.fillRect(eyeX, this.y + 5, 5, 10);
+
+                // 攻撃エフェクト描画
+                if (this.hitbox) {
+                    ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
+                    ctx.fillRect(this.hitbox.x, this.hitbox.y, this.hitbox.w, this.hitbox.h);
+                }
+            }
+        }
+
+        // --- ゲーム管理 ---
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        let keys = {};
+        let particles = [];
+        let screenShake = 0;
+        let gameRunning = false;
+
+        const platforms = [
+            { x: 200, y: 300, w: 400, h: 20 }, // メインステージ
+            { x: 150, y: 200, w: 100, h: 10 }, // 左の台
+            { x: 550, y: 200, w: 100, h: 10 }  // 右の台
+        ];
+
+        let p1, p2;
+
+        const game = {
+            init: function() {
+                p1 = new Fighter(300, 100, '#3498db', false);
+                p2 = new Fighter(500, 100, '#e74c3c', true); // AI
+                this.updateUI();
+            },
+
+            update: function() {
+                if (!gameRunning) return;
+
+                // 画面揺れリセット
+                if (screenShake > 0) {
+                    let shakeX = (Math.random() - 0.5) * screenShake;
+                    let shakeY = (Math.random() - 0.5) * screenShake;
+                    ctx.setTransform(1, 0, 0, 1, shakeX, shakeY);
+                    screenShake *= 0.9;
+                    if (screenShake < 0.5) screenShake = 0;
+                } else {
+                    ctx.setTransform(1, 0, 0, 1, 0, 0);
+                }
+
+                ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+                // 背景装飾（グリッド）
+                ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                for(let i=0; i<CANVAS_WIDTH; i+=100) { ctx.moveTo(i,0); ctx.lineTo(i,CANVAS_HEIGHT); }
+                for(let i=0; i<CANVAS_HEIGHT; i+=100) { ctx.moveTo(0,i); ctx.lineTo(CANVAS_WIDTH,i); }
+                ctx.stroke();
+
+                // 床描画
+                ctx.fillStyle = '#7f8c8d';
+                for (let p of platforms) {
+                    ctx.fillRect(p.x, p.y, p.w, p.h);
+                    // 床のハイライト
+                    ctx.fillStyle = '#95a5a6';
+                    ctx.fillRect(p.x, p.y, p.w, 5);
+                    ctx.fillStyle = '#7f8c8d';
+                }
+
+                // プレイヤー更新・描画
+                p1.update(platforms, p2);
+                p2.update(platforms, p1);
+                p1.draw(ctx);
+                p2.draw(ctx);
+
+                // パーティクル更新
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    particles[i].update();
+                    particles[i].draw(ctx);
+                    if (particles[i].life <= 0) particles.splice(i, 1);
+                }
+
+                requestAnimationFrame(() => this.update());
+            },
+
+            onHit: function(attacker, victim, hitbox) {
+                // スマブラ式ふっとび計算
+                // Knockback = Base + (Damage% * Scaling)
+                let knockbackForce = hitbox.knockbackBase + (victim.percent * hitbox.knockbackGrowth);
+                
+                // 吹っ飛ぶ方向
+                let dirX = attacker.facingRight ? 1 : -1;
+                let dirY = -1; // 基本的に少し上に浮く
+
+                // 高ダメージ時はさらに強く
+                if (victim.percent > 80) {
+                    knockbackForce *= 1.2;
+                    screenShake = 10; // 強い揺れ
+                    createParticles(victim.x, victim.y, '#f00', 10, 30); // 派手なエフェクト
+                }
+
+                victim.takeDamage(hitbox.damage, dirX * knockbackForce, dirY * (knockbackForce * 0.8));
+                this.updateUI();
+            },
+
+            onDeath: function(player) {
+                player.isDead = true;
+                player.stocks--;
+                createParticles(player.x, player.y, player.color, 15, 50); // 撃墜エフェクト
+                screenShake = 20;
+                
+                this.updateUI();
+
+                if (player.stocks > 0) {
+                    setTimeout(() => {
+                        player.reset(CANVAS_WIDTH / 2, 100);
+                    }, 1000);
+                } else {
+                    setTimeout(() => {
+                        this.gameOver(player === p2 ? "PLAYER 1 WINS!" : "CPU WINS!");
+                    }, 1000);
+                }
+            },
+
+            updateUI: function() {
+                document.getElementById('p1-percent').innerText = Math.floor(p1.percent) + '%';
+                document.getElementById('p2-percent').innerText = Math.floor(p2.percent) + '%';
+                document.getElementById('p1-percent').style.color = getDamageColor(p1.percent);
+                document.getElementById('p2-percent').style.color = getDamageColor(p2.percent);
+
+                document.getElementById('p1-stocks').innerText = '●'.repeat(p1.stocks);
+                document.getElementById('p2-stocks').innerText = '●'.repeat(p2.stocks);
+            },
+
+            gameOver: function(msg) {
+                gameRunning = false;
+                document.querySelector('#overlay h1').innerText = msg;
+                document.querySelector('#overlay button').innerText = "RETRY";
+                document.getElementById('overlay').style.display = 'flex';
+            }
+        };
+
+        // --- ユーティリティ ---
+
+        function checkRectOverlap(rect1, rect2) {
+            // rect2はFighterオブジェクト（x, y, width, heightを持つ）
+            return (rect1.x < rect2.x + rect2.width &&
+                    rect1.x + rect1.w > rect2.x &&
+                    rect1.y < rect2.y + rect2.height &&
+                    rect1.y + rect1.h > rect2.y);
+        }
+
+        function createParticles(x, y, color, speed, count) {
+            for(let i=0; i<count; i++) {
+                particles.push(new Particle(x, y, color, speed, 20 + Math.random()*10));
+            }
+        }
+
+        function getDamageColor(percent) {
+            if (percent < 50) return '#fff';
+            if (percent < 100) return '#f1c40f'; // 黄色
+            return '#e74c3c'; // 赤
+        }
+
+        // --- 入力管理 ---
+        window.addEventListener('keydown', e => {
+            keys[e.key] = true;
+            if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].indexOf(e.code) > -1) {
+                e.preventDefault(); // スクロール防止
+            }
+        });
+        window.addEventListener('keyup', e => keys[e.key] = false);
+
+        // --- ゲーム開始 ---
+        function startGame() {
+            document.getElementById('overlay').style.display = 'none';
+            game.init();
+            gameRunning = true;
+            game.update();
+        }
+
+        // 初期ロード時はオーバーレイ表示のため何もしない
+    </script>
+</body>
+</html>
