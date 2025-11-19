@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トウコベPRIME - 中学受験の成功を、もっと確かに。</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Noto Sans JP -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        
+        /* Custom Colors based on the image */
+        .bg-brand-green { background-color: #22c55e; } /* Bright Green */
+        .text-brand-green { color: #16a34a; }
+        .bg-dark-green { background-color: #15803d; } /* Darker Green for sections */
+        .bg-light-green { background-color: #f0fdf4; } /* Very light green background */
+        .border-brand-green { border-color: #22c55e; }
+        
+        .bg-accent-gold { background-color: #eab308; }
+        .text-accent-gold { color: #ca8a04; }
+        .border-accent-gold { border-color: #eab308; }
+
+        /* Gradient Text */
+        .text-gradient-gold {
+            background: linear-gradient(to right, #ca8a04, #eab308);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.1s active;
+        }
+        .btn-primary:active {
+            transform: translateY(2px);
+        }
+        
+        .btn-outline {
+            background: white;
+            border: 2px solid #22c55e;
+            color: #16a34a;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Triangle Shapes */
+        .triangle-down {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid #ffffff; /* Adjust color as needed */
+        }
+        .triangle-down-green {
+             border-top: 15px solid #22c55e;
+        }
+
+        /* Specific Section Styling */
+        .speech-bubble {
+            position: relative;
+            background: #ffffff;
+            border-radius: 1rem;
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 20px;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 15px solid #ffffff;
+        }
+        .speech-bubble-right::after {
+            left: auto;
+            right: -10px;
+            border-left: 15px solid #ffffff;
+            border-right: none;
+        }
+    </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+    <!-- Header / Logo -->
+    <header class="bg-brand-green p-4 text-white">
+        <div class="max-w-2xl mx-auto flex items-center gap-2">
+            <i class="fas fa-book-open text-2xl"></i>
+            <div class="leading-tight font-bold text-xl">
+                <span>トウコベ</span><br>
+                <span class="text-lg tracking-widest">PRIME</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section (Frame 13) -->
+    <section class="relative">
+        <!-- Image Placeholder for Hero -->
+        <div class="w-full h-80 md:h-96 bg-cover bg-center relative" style="background-image: url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80');">
+            <div class="absolute inset-0 bg-black bg-opacity-10"></div>
+            <div class="max-w-2xl mx-auto pt-8 px-4 relative z-10">
+                <div class="bg-brand-green bg-opacity-90 text-white inline-block px-4 py-2 mb-2 text-xl md:text-2xl font-bold shadow-md">
+                    中学受験の成功を、
+                </div>
+                <br>
+                <div class="bg-brand-green bg-opacity-90 text-white inline-block px-4 py-2 text-xl md:text-2xl font-bold shadow-md">
+                    もっと確かに。
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Buttons Area -->
+        <div class="bg-light-green py-8 px-4">
+            <div class="max-w-md mx-auto space-y-4">
+                <button class="btn-primary w-full text-white font-bold py-4 rounded shadow-lg text-lg flex items-center justify-center gap-2">
+                    無料相談/お試しはこちら <i class="fas fa-angle-double-right"></i>
+                </button>
+                <button class="btn-outline w-full font-bold py-4 rounded shadow-md text-lg flex items-center justify-center gap-2">
+                    サービス詳細/料金はこちら <i class="fas fa-angle-double-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Worries Section -->
+    <section class="max-w-2xl mx-auto py-12 px-4">
+        <h2 class="text-center text-2xl font-bold mb-8 text-gray-800 border-b-2 border-green-500 inline-block px-4 pb-2 mx-auto block w-fit">
+            こんな<span class="text-brand-green">お悩み</span>ありませんか？
+        </h2>
+        
+        <div class="space-y-4">
+            <div class="border-2 border-brand-green p-4 rounded bg-white font-bold text-gray-700">
+                志望校合格レベルには達しているが、算数だけ苦手のままになっている。
+            </div>
+            <div class="border-2 border-brand-green p-4 rounded bg-white font-bold text-gray-700">
+                集団塾で最上位クラスを維持できるか不安になってきた。
+            </div>
+            <div class="border-2 border-brand-green p-4 rounded bg-white font-bold text-gray-700">
+                塾のカリキュラムはこなせているが、苦手克服に時間をかけられていない。
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Transition -->
+    <section class="bg-gradient-to-b from-green-500 to-green-400 text-white py-12 px-4 relative overflow-hidden">
+        <div class="max-w-2xl mx-auto flex flex-col md:flex-row items-center gap-6">
+            <!-- Man Image Placeholder -->
+            <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white flex-shrink-0 bg-gray-200">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Instructor" class="w-full h-full object-cover">
+            </div>
+            <div class="text-center md:text-left flex-1">
+                <p class="text-lg font-bold mb-2 drop-shadow-md">家庭教師や個別指導では<br>解決できないそのお悩み…</p>
+                <div class="flex justify-center md:justify-start my-2">
+                     <i class="fas fa-caret-down text-4xl text-white animate-bounce"></i>
+                </div>
+                <div class="bg-white text-green-600 p-6 rounded-lg shadow-xl text-center transform rotate-1">
+                    <div class="flex items-center justify-center gap-2 mb-2">
+                        <i class="fas fa-book-open text-2xl"></i>
+                        <span class="font-bold text-xl text-gray-800">トウコベ <span class="text-green-600">PRIME</span> に</span>
+                    </div>
+                    <div class="text-2xl md:text-3xl font-black tracking-wider">お任せください！</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Introduction (Frame 484) -->
+    <section class="py-16 px-4 bg-light-green">
+        <div class="max-w-2xl mx-auto text-center">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <i class="fas fa-book-open text-3xl text-green-600"></i>
+                <h2 class="text-2xl font-bold text-gray-800">
+                    <span>トウコベ</span> <span class="text-green-600">PRIME</span> は
+                </h2>
+            </div>
+            <h3 class="text-2xl md:text-3xl font-black text-gray-800 mb-2">
+                <span class="text-green-600">最難関中学受験向け</span>の
+            </h3>
+            <h3 class="text-2xl md:text-3xl font-black text-gray-800 mb-8">
+                オンライン個別指導塾です
+            </h3>
+
+            <div class="bg-green-600 text-white py-3 px-6 rounded-full inline-block font-bold mb-12 shadow-md">
+                集団塾では足りない合格までのあと一歩を
+            </div>
+
+            <!-- 3 Circles Diagram -->
+            <div class="relative h-80 md:h-96 w-full max-w-md mx-auto mb-12">
+                <!-- Top Circle -->
+                <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-40 rounded-full bg-white border-4 border-green-500 flex items-center justify-center p-4 shadow-lg z-20">
+                    <p class="text-green-600 font-bold leading-tight">一流講師との<br>最適マッチング</p>
+                </div>
+                <!-- Left Circle -->
+                <div class="absolute bottom-0 left-0 w-40 h-40 rounded-full bg-white border-4 border-green-500 flex items-center justify-center p-4 shadow-lg z-10">
+                    <p class="text-green-600 font-bold leading-tight text-sm">通塾負担のない<br>オンライン指導</p>
+                </div>
+                <!-- Right Circle -->
+                <div class="absolute bottom-0 right-0 w-40 h-40 rounded-full bg-white border-4 border-green-500 flex items-center justify-center p-4 shadow-lg z-10">
+                    <p class="text-green-600 font-bold leading-tight text-sm">最後までやりきる<br>実行体制</p>
+                </div>
+            </div>
+
+            <p class="text-2xl text-green-600 font-bold mb-16">
+                の仕組みを通じて<br>後押しします。
+            </p>
+
+            <!-- Mechanism Title -->
+            <div class="relative text-center mb-12">
+                <span class="relative z-10 bg-light-green px-4 text-2xl font-black text-gray-800">
+                    <span class="text-green-600">成果</span>につなげる仕組み
+                </span>
+                <div class="absolute top-1/2 left-0 w-full h-px bg-gray-300 -z-0"></div>
+            </div>
+
+            <!-- Step 1 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8 text-left">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Consultation" class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4 bg-green-600 text-white w-16 h-20 flex flex-col items-center justify-center shadow-md">
+                        <span class="text-xs font-bold">STEP</span>
+                        <span class="text-4xl font-bold leading-none">1</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-xl font-bold text-center mb-4 border-b-2 border-green-500 pb-2">保護者様のご要望を<br>学習方針に反映</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        お子様の学習状況や性格を一番理解しているのは保護者様です。<br>
+                        トウコベPRIMEはその点を尊重し、毎月のヒアリングでご家庭の要望を授業計画に反映させます。<br>
+                        ご家庭の意志を確実に学習方針に反映し、最適なサポートを実現します。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8 text-left">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Studying" class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4 bg-green-600 text-white w-16 h-20 flex flex-col items-center justify-center shadow-md">
+                        <span class="text-xs font-bold">STEP</span>
+                        <span class="text-4xl font-bold leading-none">2</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-xl font-bold text-center mb-4 border-b-2 border-green-500 pb-2">学習方針を<br>確実に実行する</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        学習方針は机上の計画にとどめず、最後まで必ずやり切ります。<br>
+                        授業後には詳細なレポートをご共有。<br>
+                        これにより「今どこまで進んでいるのか」「苦手がどの程度克服されたのか」が一目瞭然になります。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8 text-left">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Feedback" class="w-full h-48 object-cover">
+                    <div class="absolute top-4 left-4 bg-green-600 text-white w-16 h-20 flex flex-col items-center justify-center shadow-md">
+                        <span class="text-xs font-bold">STEP</span>
+                        <span class="text-4xl font-bold leading-none">3</span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h4 class="text-xl font-bold text-center mb-4 border-b-2 border-green-500 pb-2">運営による<br>学習方針の改善</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        授業はすべて録画し、講師と連携を取りながら指導品質を徹底的に管理します。<br>
+                        万が一、講師との相性が悪かった場合は、何度でも無料で講師変更可能です。
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Reasons Section (Frame 485) -->
+    <section class="bg-brand-green py-16 px-4 text-white">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-center text-3xl font-bold mb-16 flex items-center justify-center gap-4">
+                <span class="w-12 h-px bg-white/50"></span>
+                選ばれる理由
+                <span class="w-12 h-px bg-white/50"></span>
+            </h2>
+
+            <!-- Reason 1 -->
+            <div class="bg-white text-gray-800 rounded-lg p-8 pt-12 relative mb-20 shadow-xl">
+                <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 rounded-full bg-white border-4 border-green-500 flex items-center justify-center">
+                    <span class="text-4xl font-bold text-green-600">1</span>
+                </div>
+                <h3 class="text-center text-2xl font-bold text-green-600 mb-4">一流の講師を<br>最適にマッチング</h3>
+                <p class="text-sm mb-6 leading-relaxed">
+                    トウコベPRIMEの講師は全員、開成・麻布・桜蔭など、最難関中学の出身者のみ。実際に受験を経験しているからこそ、ご家庭に寄り添った指導ができます。さらに、SAPIX通塾経験者に絞って講師をお探しすることも可能です。
+                </p>
+                
+                <!-- School List Box -->
+                <div class="border-2 border-yellow-400 bg-yellow-50 p-4 rounded relative mt-4">
+                    <h4 class="text-center text-yellow-600 font-bold text-lg border-b border-yellow-200 pb-2 mb-2">講師出身校一覧</h4>
+                    <p class="text-sm text-gray-700 text-center leading-loose font-medium">
+                        開成/筑駒/麻布/桜蔭/早稲田/<br>
+                        慶應/SFC/栄光/聖光/渋幕/<br>
+                        渋々/海城/女子学院/豊島岡/雙葉/武蔵/駒東/浅野
+                    </p>
+                    <p class="text-xs text-right text-gray-400 mt-2">※一部略称</p>
+                </div>
+                <p class="mt-6 text-sm leading-relaxed">
+                    また、講師は東京一科/早慶など最難関大に在籍する講師のみ。<br>
+                    中学以降も学習で成果を上げた、信頼できる講師が指導します。
+                </p>
+            </div>
+
+            <!-- Reason 2 -->
+            <div class="bg-white text-gray-800 rounded-lg p-8 pt-12 relative mb-20 shadow-xl">
+                <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 rounded-full bg-white border-4 border-green-500 flex items-center justify-center">
+                    <span class="text-4xl font-bold text-green-600">2</span>
+                </div>
+                <h3 class="text-center text-2xl font-bold text-green-600 mb-4">ご家庭の要望に沿って<br>高い品質でやりきる</h3>
+                <p class="text-sm mb-4 leading-relaxed">
+                    毎月の面談で、ご要望やお子様の状況を丁寧に伺い、徹底的に実行します。<br>
+                    授業後には詳細なレポートをお届けし、進捗やお子様の様子をご共有します。
+                </p>
+                <p class="text-sm leading-relaxed">
+                    授業はすべて録画され、運営がモニタリング。もし講師との相性が合わなければ、何度でも講師変更が可能です。
+                </p>
+            </div>
+
+            <!-- Reason 3 -->
+            <div class="bg-white text-gray-800 rounded-lg p-8 pt-12 relative shadow-xl">
+                <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-20 h-20 rounded-full bg-white border-4 border-green-500 flex items-center justify-center">
+                    <span class="text-4xl font-bold text-green-600">3</span>
+                </div>
+                <h3 class="text-center text-2xl font-bold text-green-600 mb-4">シンプルで<br>わかりやすいシステム</h3>
+                <p class="text-sm leading-relaxed">
+                    授業料は受けた授業の分だけ。講習料や解約費用など、余分な費用は発生いたしません。<br>
+                    わかりやすくシンプルなシステムで、ご家庭の負担を増やすことなく志望校合格をサポートいたします。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Section (Frame 486) -->
+    <section class="py-16 px-4 bg-light-green">
+        <div class="max-w-2xl mx-auto">
+            <div class="flex justify-center gap-4 mb-12">
+                <span class="border-2 border-yellow-400 text-yellow-500 font-bold px-4 py-2 text-2xl bg-white">お</span>
+                <span class="border-2 border-yellow-400 text-yellow-500 font-bold px-4 py-2 text-2xl bg-white">客</span>
+                <span class="border-2 border-yellow-400 text-yellow-500 font-bold px-4 py-2 text-2xl bg-white">様</span>
+                <span class="border-2 border-yellow-400 text-yellow-500 font-bold px-4 py-2 text-2xl bg-white">の</span>
+                <span class="border-2 border-yellow-400 text-yellow-500 font-bold px-4 py-2 text-2xl bg-white">声</span>
+            </div>
+
+            <!-- Review 1 -->
+            <div class="flex flex-col md:flex-row gap-6 mb-12 items-start">
+                <div class="flex-shrink-0 mx-auto md:mx-0">
+                    <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-200">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="speech-bubble p-6 shadow-md flex-1">
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        日程を調整いただき、また事前に文章を読んでいただかなくてはならないご面倒な内容をお受けいただいて、ありがたく思っています。<br>
+                        先生のご指導のおかげで、以前よりできることが増え、テストにも反映されています。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Review 2 (Reversed) -->
+            <div class="flex flex-col md:flex-row-reverse gap-6 mb-12 items-start">
+                <div class="flex-shrink-0 mx-auto md:mx-0">
+                    <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-200">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="User" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="speech-bubble speech-bubble-right p-6 shadow-md flex-1">
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        問題を解く際に時間を見ながら、どのくらいで解くべきなのかを教えていただき、今後に生かせるよう取り組んでいます。<br>
+                        時間変更などの連絡も細かくしていただき安心です。<br>
+                        先生のおかげでテストでも点数が取れるようになってきており、大変感謝しております。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Review 3 -->
+            <div class="flex flex-col md:flex-row gap-6 items-start">
+                <div class="flex-shrink-0 mx-auto md:mx-0">
+                    <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-gray-200">
+                        <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="User" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="speech-bubble p-6 shadow-md flex-1">
+                    <p class="text-sm text-gray-700 leading-relaxed">
+                        いつも落ち着いた雰囲気でわかりやすく教えてくださり、息子も信頼しているようです。<br>
+                        自分が行きたい中学の卒業生ということもあり、やる気が出ております。<br>
+                        いつもありがとうございます。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee Section -->
+    <section class="bg-white py-16 px-4 text-center">
+        <div class="max-w-2xl mx-auto">
+            <h2 class="text-3xl font-bold text-yellow-500 mb-2">安心して</h2>
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">お試しいただくために</h2>
+
+            <div class="border-2 border-yellow-200 p-1 bg-yellow-50 relative">
+                 <!-- Corner Triangles -->
+                 <div class="absolute top-0 left-0 w-0 h-0 border-t-[20px] border-r-[20px] border-t-yellow-500 border-r-transparent"></div>
+                 <div class="absolute top-0 right-0 w-0 h-0 border-t-[20px] border-l-[20px] border-t-yellow-500 border-l-transparent"></div>
+                 <div class="absolute bottom-0 left-0 w-0 h-0 border-b-[20px] border-r-[20px] border-b-yellow-500 border-r-transparent"></div>
+                 <div class="absolute bottom-0 right-0 w-0 h-0 border-b-[20px] border-l-[20px] border-b-yellow-500 border-l-transparent"></div>
+
+                <div class="bg-white p-8 border border-yellow-100">
+                    <div class="inline-block bg-yellow-500 text-white text-sm font-bold px-4 py-1 mb-4">興味のある方へ</div>
+                    <h3 class="text-xl font-bold text-gray-600 mb-2">理由は問いません</h3>
+                    <h3 class="text-4xl font-serif font-bold text-gray-800 mb-6">30日間全額返金保証</h3>
+                    
+                    <p class="text-sm text-gray-600 leading-relaxed mb-4">
+                        ご入会をお考えの方に、<br>
+                        全額返金保証をお付けしております。<br>
+                        万が一ご満足いただけない場合は<br>
+                        入会金も含めて全額をお返しいたします。
+                    </p>
+                    <p class="text-xs text-right text-gray-400">詳細はお問い合わせください</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flow Section -->
+    <section class="py-16 px-4 bg-light-green">
+        <div class="max-w-2xl mx-auto">
+             <!-- CTA Middle -->
+             <div class="mb-16 space-y-4 text-center">
+                <div class="text-green-600 font-bold text-sm relative inline-block mb-2">
+                    <span class="border-l border-green-600 h-8 absolute -left-4 -top-4 rotate-12"></span>
+                    受講プランを知りたい<br>お試し授業を受けたい
+                    <span class="border-r border-green-600 h-8 absolute -right-4 -top-4 -rotate-12"></span>
+                </div>
+                <button class="btn-primary w-full text-white font-bold py-4 rounded shadow-lg text-lg block">
+                    無料相談/お試しはこちら >>
+                </button>
+
+                <div class="text-green-600 font-bold text-sm relative inline-block mt-4 mb-2">
+                     <span class="border-l border-green-600 h-8 absolute -left-4 -top-4 rotate-12"></span>
+                    サービスの詳細や<br>料金体系を知りたい
+                    <span class="border-r border-green-600 h-8 absolute -right-4 -top-4 -rotate-12"></span>
+                </div>
+                <button class="btn-outline w-full font-bold py-4 rounded shadow-md text-lg block">
+                    サービス詳細/料金はこちら >>
+                </button>
+
+                 <div class="text-green-600 font-bold text-sm relative inline-block mt-4 mb-2">
+                     <span class="border-l border-green-600 h-8 absolute -left-4 -top-4 rotate-12"></span>
+                    資料をダウンロードするか<br>まだ迷っている
+                     <span class="border-r border-green-600 h-8 absolute -right-4 -top-4 -rotate-12"></span>
+                </div>
+                <button class="bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-4 rounded-full shadow-lg text-lg w-full block flex items-center justify-center gap-2">
+                    <i class="fab fa-line text-2xl"></i> LINEを追加する >>
+                </button>
+            </div>
+
+            <h2 class="text-center text-3xl font-bold text-green-600 mb-12">受講までの流れ</h2>
+
+            <!-- Flow Step 1 -->
+            <div class="mb-8">
+                <div class="flex items-end gap-2 mb-4">
+                    <span class="text-green-600 font-bold text-3xl">step1</span>
+                    <span class="h-6 w-px bg-green-600 mb-2"></span>
+                    <h3 class="text-xl font-bold text-green-600">お問い合わせ</h3>
+                </div>
+                <div class="flex gap-4 items-center bg-white p-4 rounded-lg shadow">
+                     <div class="w-24 h-24 flex-shrink-0 rounded-full overflow-hidden border border-gray-100">
+                         <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Step 1" class="w-full h-full object-cover">
+                     </div>
+                     <p class="text-sm text-gray-700">ページ下部より、説明資料のダウンロードもしくは無料相談へのご予約をお願いします。</p>
+                </div>
+                 <div class="text-center my-4 text-green-500"><i class="fas fa-caret-down text-4xl"></i></div>
+            </div>
+
+            <!-- Flow Step 2 -->
+            <div class="mb-8">
+                <div class="flex items-end gap-2 mb-4">
+                    <span class="text-green-600 font-bold text-3xl">step2</span>
+                    <span class="h-6 w-px bg-green-600 mb-2"></span>
+                    <h3 class="text-xl font-bold text-green-600">無料相談に参加</h3>
+                </div>
+                <div class="flex gap-4 items-center bg-white p-4 rounded-lg shadow">
+                     <div class="w-24 h-24 flex-shrink-0 rounded-full overflow-hidden border border-gray-100">
+                         <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Step 2" class="w-full h-full object-cover">
+                     </div>
+                     <p class="text-sm text-gray-700">運営の担当者が保護者様と面談します。お子様の現状やご家庭の方針をお伺いし、最適な指導方針を検討します。</p>
+                </div>
+                <div class="text-center my-4 text-green-500"><i class="fas fa-caret-down text-4xl"></i></div>
+            </div>
+
+            <!-- Flow Step 3 -->
+            <div class="mb-8">
+                <div class="flex items-end gap-2 mb-4">
+                    <span class="text-green-600 font-bold text-3xl">step3</span>
+                    <span class="h-6 w-px bg-green-600 mb-2"></span>
+                    <h3 class="text-xl font-bold text-green-600">マッチング＆顔合わせ</h3>
+                </div>
+                <div class="flex gap-4 items-center bg-white p-4 rounded-lg shadow">
+                     <div class="w-24 h-24 flex-shrink-0 rounded-full overflow-hidden border border-gray-100">
+                         <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Step 3" class="w-full h-full object-cover">
+                     </div>
+                     <p class="text-sm text-gray-700">一流の講師陣から最適な人材を選定。授業開始前に、講師と顔を合わせ、指導方針や相性を確認します。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA (Identical to Middle CTA) -->
+    <footer class="bg-green-600 p-4 py-12">
+         <div class="max-w-md mx-auto bg-white rounded-2xl p-6 shadow-2xl">
+             <div class="space-y-6 text-center">
+                
+                <!-- CTA 1 -->
+                <div>
+                    <div class="text-green-600 font-bold text-xs mb-2 flex items-center justify-center gap-4">
+                         <span class="w-px h-8 bg-green-400 rotate-12"></span>
+                        <div>受講プランを知りたい<br>お試し授業を受けたい</div>
+                        <span class="w-px h-8 bg-green-400 -rotate-12"></span>
+                    </div>
+                    <button class="btn-primary w-full text-white font-bold py-4 rounded shadow-lg text-lg block hover:opacity-90">
+                        無料相談/お試しはこちら >>
+                    </button>
+                </div>
+
+                <!-- CTA 2 -->
+                <div>
+                    <div class="text-green-600 font-bold text-xs mb-2 flex items-center justify-center gap-4">
+                         <span class="w-px h-8 bg-green-400 rotate-12"></span>
+                        <div>サービスの詳細や<br>料金体系を知りたい</div>
+                        <span class="w-px h-8 bg-green-400 -rotate-12"></span>
+                    </div>
+                    <button class="btn-outline w-full font-bold py-4 rounded shadow-md text-lg block hover:bg-green-50">
+                        サービス詳細/料金はこちら >>
+                    </button>
+                </div>
+
+                <!-- CTA 3 -->
+                <div>
+                    <div class="text-green-600 font-bold text-xs mb-2 flex items-center justify-center gap-4">
+                         <span class="w-px h-8 bg-green-400 rotate-12"></span>
+                        <div>資料をダウンロードするか<br>まだ迷っている</div>
+                        <span class="w-px h-8 bg-green-400 -rotate-12"></span>
+                    </div>
+                    <button class="bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-4 rounded-full shadow-lg text-lg w-full block flex items-center justify-center gap-2">
+                        <i class="fab fa-line text-2xl"></i> LINEを追加する >>
+                    </button>
+                </div>
+
+            </div>
+         </div>
+    </footer>
+
+</body>
+</html>
