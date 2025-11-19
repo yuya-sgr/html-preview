@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トウコベPRIME - 中学受験の成功を、もっと確かに。</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Zen+Old+Mincho:wght@700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            green: '#16a34a',
+                            dark: '#064e3b',
+                            light: '#dcfce7',
+                            accent: '#eab308',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        serif: ['"Zen Old Mincho"', 'serif'],
+                        display: ['"Montserrat"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #e5e7eb 1px, transparent 1px), linear-gradient(to bottom, #e5e7eb 1px, transparent 1px)",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles not available in Tailwind default */
+        body {
+            background-color: #fdfdfd;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .glass-dark {
+            background: rgba(22, 163, 74, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .text-stroke {
+            -webkit-text-stroke: 1px rgba(0,0,0,0.1);
+            color: transparent;
+        }
+        
+        .text-stroke-white {
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+            color: transparent;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes slide-in-left {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .animate-slide-in {
+            animation: slide-in-left 1s ease-out forwards;
+        }
+
+        .clip-diagonal {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        .clip-diagonal-reverse {
+            clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+        }
+
+        /* Decorative background elements */
+        .blob {
+            position: absolute;
+            filter: blur(50px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <!-- Sticky Header -->
+    <header class="fixed top-0 w-full z-50 glass shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-brand-green text-white p-2 rounded-lg">
+                    <i class="fas fa-book-open text-xl"></i>
+                </div>
+                <div class="leading-none font-bold text-brand-dark">
+                    <span class="text-lg">トウコベ</span>
+                    <span class="block text-brand-green text-xs tracking-[0.2em]">PRIME</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center gap-8 font-bold text-sm text-gray-600">
+                <a href="#about" class="hover:text-brand-green transition">特徴</a>
+                <a href="#reason" class="hover:text-brand-green transition">選ばれる理由</a>
+                <a href="#voice" class="hover:text-brand-green transition">お客様の声</a>
+                <a href="#flow" class="hover:text-brand-green transition">流れ</a>
+            </nav>
+            <a href="#cta" class="hidden md:block bg-brand-green hover:bg-brand-dark text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transition transform hover:-translate-y-0.5 text-sm">
+                無料体験はこちら <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section: Immersive & Impactful -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full bg-grid-pattern bg-[length:40px_40px] opacity-[0.05]"></div>
+        <div class="blob bg-green-300 w-96 h-96 rounded-full top-0 right-0 translate-x-1/3 -translate-y-1/4 mix-blend-multiply animate-float"></div>
+        <div class="blob bg-yellow-200 w-80 h-80 rounded-full bottom-0 left-0 -translate-x-1/4 translate-y-1/4 mix-blend-multiply animate-float" style="animation-delay: 2s;"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <!-- Copy Content -->
+                <div class="lg:w-3/5 space-y-8 animate-slide-in">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 border border-green-100 text-brand-green font-bold text-sm shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></span>
+                        最難関中学受験専門オンライン個別指導
+                    </div>
+                    
+                    <h1 class="font-serif font-black text-5xl md:text-7xl leading-[1.1] text-gray-900">
+                        中学受験の成功を、<br>
+                        <span class="relative inline-block mt-2">
+                            <span class="relative z-10 text-brand-green">もっと確かに。</span>
+                            <span class="absolute bottom-2 left-0 w-full h-4 bg-yellow-200 -z-0 opacity-60 -rotate-1"></span>
+                        </span>
+                    </h1>
+                    
+                    <p class="text-xl text-gray-600 leading-relaxed font-medium max-w-xl">
+                        集団塾では届かない「あと一歩」を確実に。<br>
+                        開成・桜蔭出身のトップ講師陣による、<br>
+                        あなただけの戦略的指導が始まります。
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <a href="#cta" class="group bg-gradient-to-r from-brand-green to-emerald-600 text-white px-8 py-5 rounded-full font-bold text-lg shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                            <span>無料相談・体験へ進む</span>
+                            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#features" class="bg-white text-brand-dark border-2 border-gray-100 px-8 py-5 rounded-full font-bold text-lg shadow-md hover:shadow-lg hover:border-brand-green transition-all flex items-center justify-center gap-3">
+                            <span>サービス詳細</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Visual -->
+                <div class="lg:w-2/5 relative">
+                    <div class="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition duration-500 border-4 border-white">
+                        <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Studying Child" class="w-full h-auto object-cover">
+                        <!-- Floating Badge -->
+                        <div class="absolute bottom-6 left-6 glass p-4 rounded-xl shadow-lg flex items-center gap-3 animate-bounce" style="animation-duration: 3s;">
+                            <div class="bg-brand-accent text-white w-12 h-12 rounded-full flex items-center justify-center font-black text-xl shadow">No.1</div>
+                            <div>
+                                <p class="text-xs font-bold text-gray-500 uppercase">Satisfaction</p>
+                                <p class="font-bold text-brand-dark">保護者満足度</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Decorative frames -->
+                    <div class="absolute top-4 -right-4 w-full h-full border-4 border-brand-green rounded-[2.5rem] -z-10 transform rotate-6"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section: Dark Theme for Contrast -->
+    <section class="bg-gray-900 py-24 relative clip-diagonal">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
+                    こんな<span class="text-brand-accent">お悩み</span>はありませんか？
+                </h2>
+                <p class="text-gray-400">伸び悩む成績、見えない突破口。</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Card 1 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-brand-green transition duration-300 group">
+                    <div class="w-14 h-14 bg-gray-700 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-green transition-colors">
+                        <i class="fas fa-calculator text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">算数だけが伸びない</h3>
+                    <p class="text-gray-400 leading-relaxed">志望校レベルには達しているが、算数などの特定科目だけが苦手で、全体の足を引っ張っている。</p>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-brand-green transition duration-300 group">
+                    <div class="w-14 h-14 bg-gray-700 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-green transition-colors">
+                        <i class="fas fa-users text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">集団塾での不安</h3>
+                    <p class="text-gray-400 leading-relaxed">最上位クラスの維持が難しくなってきた。集団授業のペースについていけず、置いていかれる不安がある。</p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-gray-800 p-8 rounded-2xl border border-gray-700 hover:border-brand-green transition duration-300 group">
+                    <div class="w-14 h-14 bg-gray-700 rounded-xl flex items-center justify-center mb-6 group-hover:bg-brand-green transition-colors">
+                        <i class="fas fa-clock text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4">時間がない</h3>
+                    <p class="text-gray-400 leading-relaxed">塾の課題をこなすだけで手一杯。本当に必要な「弱点克服」に時間を割けず、空回りしている。</p>
+                </div>
+            </div>
+
+            <!-- Bridge to Solution -->
+            <div class="mt-20 text-center">
+                <div class="inline-block relative">
+                    <div class="text-6xl text-white animate-bounce mb-4"><i class="fas fa-chevron-down"></i></div>
+                    <div class="glass-dark text-white px-10 py-6 rounded-2xl shadow-2xl transform transition hover:scale-105 inline-flex items-center gap-4">
+                        <div class="text-left">
+                            <p class="text-sm font-bold text-green-200 uppercase tracking-wider">Answer</p>
+                            <p class="text-2xl md:text-3xl font-serif font-bold">トウコベ<span class="text-yellow-300">PRIME</span>にお任せください</p>
+                        </div>
+                        <i class="fas fa-check-circle text-4xl text-yellow-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features (Solution) Section: Clean & Modern -->
+    <section id="features" class="py-32 bg-white relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-24">
+                <span class="text-brand-green font-display font-bold text-lg uppercase tracking-widest mb-2 block">Our Solution</span>
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-brand-dark mb-8">
+                    <span class="bg-gradient-to-r from-brand-green to-emerald-600 text-transparent bg-clip-text">最難関中学受験</span>のための<br>
+                    新しいスタンダード
+                </h2>
+                <p class="text-gray-600 text-lg">集団塾では実現できない「合格へのあと一歩」を埋める、<br>トウコベPRIME独自の3つのアプローチ。</p>
+            </div>
+
+            <!-- Feature 1: Zigzag Layout -->
+            <div class="flex flex-col md:flex-row items-center gap-12 mb-24">
+                <div class="md:w-1/2 relative">
+                    <div class="absolute -top-10 -left-10 font-display text-9xl font-black text-gray-100 z-0">01</div>
+                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Strategy" class="w-full h-full object-cover transform hover:scale-110 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="bg-brand-accent text-brand-dark text-xs font-bold px-2 py-1 rounded mb-2 inline-block">PLANNING</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-3xl font-bold text-brand-dark mb-6">保護者の想いを、<br>戦略へ昇華する。</h3>
+                    <p class="text-gray-600 leading-loose mb-6">
+                        お子様の性格や家庭の方針を一番理解しているのは保護者様です。私たちはその想いを尊重し、毎月の綿密なヒアリングを実施。抽象的な「想い」を具体的な「学習計画」へと落とし込みます。
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3 text-gray-700 font-medium">
+                            <i class="fas fa-check text-brand-green"></i> 毎月のヒアリングで軌道修正
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-700 font-medium">
+                            <i class="fas fa-check text-brand-green"></i> 志望校逆算のカリキュラム作成
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Feature 2: Zigzag Reversed -->
+            <div class="flex flex-col md:flex-row-reverse items-center gap-12 mb-24">
+                <div class="md:w-1/2 relative">
+                    <div class="absolute -top-10 -right-10 font-display text-9xl font-black text-gray-100 z-0">02</div>
+                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Execution" class="w-full h-full object-cover transform hover:scale-110 transition duration-700">
+                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="bg-brand-accent text-brand-dark text-xs font-bold px-2 py-1 rounded mb-2 inline-block">EXECUTION</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-3xl font-bold text-brand-dark mb-6">計画を絵に描いた餅にしない。<br>徹底的な実行力。</h3>
+                    <p class="text-gray-600 leading-loose mb-6">
+                        立てた計画をやり切らせるのがプロの仕事です。授業後には詳細なレポートで進捗を可視化。「何ができて、何ができていないか」を明確にし、曖昧な学習を排除します。
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3 text-gray-700 font-medium">
+                            <i class="fas fa-check text-brand-green"></i> 授業ごとの詳細レポート
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-700 font-medium">
+                            <i class="fas fa-check text-brand-green"></i> 苦手克服度の可視化
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Feature 3: Zigzag -->
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 relative">
+                    <div class="absolute -top-10 -left-10 font-display text-9xl font-black text-gray-100 z-0">03</div>
+                    <div class="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Quality Control" class="w-full h-full object-cover transform hover:scale-110 transition duration-700">
+                         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="bg-brand-accent text-brand-dark text-xs font-bold px-2 py-1 rounded mb-2 inline-block">QUALITY</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-3xl font-bold text-brand-dark mb-6">運営チームによる<br>第三者視点の品質管理。</h3>
+                    <p class="text-gray-600 leading-loose mb-6">
+                        講師任せにはしません。すべての授業を録画し、運営チームがモニタリング。指導品質を客観的に管理し、万が一相性が合わない場合は何度でも講師変更が可能です。
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3 text-gray-700 font-medium">
+                            <i class="fas fa-check text-brand-green"></i> 全授業の録画モニタリング
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-700 font-medium">
+                            <i class="fas fa-check text-brand-green"></i> 講師変更無料保証
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reason Section: Immersive Green -->
+    <section id="reason" class="py-32 bg-brand-green relative overflow-hidden">
+        <!-- Background Decoration -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+            <div class="absolute right-0 top-0 font-serif text-[20rem] leading-none text-white transform translate-x-1/3 -translate-y-1/3">選</div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-6">
+                    なぜ、<span class="text-yellow-300 relative inline-block">
+                        トウコベPRIME
+                        <svg class="absolute w-full h-3 bottom-0 left-0 text-yellow-300 opacity-50" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" stroke-width="3" fill="none"/></svg>
+                    </span>なのか。
+                </h2>
+                <p class="text-green-100 text-lg">圧倒的な成果を生み出す、3つの理由。</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Reason Card 1 -->
+                <div class="glass p-8 rounded-3xl transform transition hover:-translate-y-2 duration-300">
+                    <div class="bg-brand-green text-white w-12 h-12 rounded-full flex items-center justify-center font-black text-xl mb-6 shadow-lg border-2 border-white">1</div>
+                    <h3 class="text-xl font-bold text-brand-dark mb-4">超一流の講師陣</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-6">
+                        講師は全員、開成・麻布・桜蔭など最難関中学出身、かつ東大・早慶などの難関大在籍者のみ。成功体験を持つ「先輩」だからこその指導があります。
+                    </p>
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                        <p class="text-xs text-yellow-800 font-bold text-center leading-loose">
+                            開成 / 麻布 / 桜蔭 / 筑駒<br>
+                            早稲田 / 慶應 / 女子学院 ...他
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Reason Card 2 -->
+                <div class="glass p-8 rounded-3xl transform transition hover:-translate-y-2 duration-300 delay-100">
+                    <div class="bg-brand-green text-white w-12 h-12 rounded-full flex items-center justify-center font-black text-xl mb-6 shadow-lg border-2 border-white">2</div>
+                    <h3 class="text-xl font-bold text-brand-dark mb-4">SAPIX対応も可能</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        SAPIXをはじめとする大手進学塾のカリキュラムを熟知した講師を選定可能。クラスアップ対策や、塾の宿題フォローも万全です。
+                    </p>
+                </div>
+
+                <!-- Reason Card 3 -->
+                <div class="glass p-8 rounded-3xl transform transition hover:-translate-y-2 duration-300 delay-200">
+                    <div class="bg-brand-green text-white w-12 h-12 rounded-full flex items-center justify-center font-black text-xl mb-6 shadow-lg border-2 border-white">3</div>
+                    <h3 class="text-xl font-bold text-brand-dark mb-4">明朗な料金体系</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        授業料は受けた分だけ。解約金や教材費などの不明瞭なコストは一切ありません。シンプルだからこそ、安心して続けられます。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Section: Review Cards Style -->
+    <section id="voice" class="py-32 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="font-serif text-4xl font-bold text-brand-dark">お客様の声</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Voice 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg relative mt-6">
+                    <div class="absolute -top-6 left-8">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="w-14 h-14 rounded-full border-4 border-white shadow-md">
+                    </div>
+                    <div class="flex text-yellow-400 mb-4 pt-4 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed italic">
+                        "面倒な事前準備も快く引き受けてくださり感謝しています。先生のおかげで、以前よりできることが増え、テストの点数にも如実に反映されています。"
+                    </p>
+                    <p class="text-brand-green font-bold text-xs mt-4 text-right">- 小学5年生 保護者様</p>
+                </div>
+
+                <!-- Voice 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg relative mt-6">
+                    <div class="absolute -top-6 left-8">
+                        <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="User" class="w-14 h-14 rounded-full border-4 border-white shadow-md">
+                    </div>
+                    <div class="flex text-yellow-400 mb-4 pt-4 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed italic">
+                        "時間の使い方の指導が具体的で、子供の意識が変わりました。テストの点数も上がり、親としてこれ以上の喜びはありません。"
+                    </p>
+                    <p class="text-brand-green font-bold text-xs mt-4 text-right">- 小学6年生 保護者様</p>
+                </div>
+
+                <!-- Voice 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-lg relative mt-6">
+                    <div class="absolute -top-6 left-8">
+                        <img src="https://randomuser.me/api/portraits/women/12.jpg" alt="User" class="w-14 h-14 rounded-full border-4 border-white shadow-md">
+                    </div>
+                    <div class="flex text-yellow-400 mb-4 pt-4 text-sm">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm leading-relaxed italic">
+                        "志望校の卒業生ということもあり、息子にとって憧れの存在になっています。落ち着いた指導で信頼できます。"
+                    </p>
+                    <p class="text-brand-green font-bold text-xs mt-4 text-right">- 小学4年生 保護者様</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee Section: Premium Certificate Style -->
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto bg-white border-4 border-double border-yellow-400 p-10 md:p-16 text-center relative shadow-2xl rounded-xl">
+            <!-- Corner Decorations -->
+            <div class="absolute top-0 left-0 w-16 h-16 border-t-4 border-l-4 border-yellow-500 -mt-2 -ml-2"></div>
+            <div class="absolute top-0 right-0 w-16 h-16 border-t-4 border-r-4 border-yellow-500 -mt-2 -mr-2"></div>
+            <div class="absolute bottom-0 left-0 w-16 h-16 border-b-4 border-l-4 border-yellow-500 -mb-2 -ml-2"></div>
+            <div class="absolute bottom-0 right-0 w-16 h-16 border-b-4 border-r-4 border-yellow-500 -mb-2 -mr-2"></div>
+
+            <div class="bg-yellow-100 text-yellow-800 font-bold px-6 py-2 rounded-full inline-block mb-8 text-sm uppercase tracking-widest">Risk Free</div>
+            
+            <h2 class="font-serif text-3xl md:text-5xl font-black text-gray-900 mb-6">
+                30日間<span class="text-brand-green">全額返金保証</span>
+            </h2>
+            <p class="text-gray-600 leading-relaxed max-w-2xl mx-auto mb-8">
+                まずは安心してお試しいただきたいから。万が一、指導内容にご満足いただけなかった場合は、入会金を含め全額を返金いたします。理由は問いません。
+            </p>
+            
+            <div class="w-24 h-1 bg-gray-200 mx-auto"></div>
+        </div>
+    </section>
+
+    <!-- Flow Section: Timeline -->
+    <section id="flow" class="py-24 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="font-serif text-center text-3xl font-bold mb-16 text-brand-dark">受講までの流れ</h2>
+            
+            <div class="space-y-12 relative before:absolute before:inset-0 before:ml-6 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-brand-green before:to-transparent">
+                
+                <!-- Step 1 -->
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-full border-4 border-white bg-brand-green text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold">1</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] bg-white p-6 rounded-xl shadow-md border-l-4 border-brand-green">
+                        <h3 class="font-bold text-lg text-brand-dark mb-2">お問い合わせ・資料請求</h3>
+                        <p class="text-gray-600 text-sm">まずはフォームまたはLINEからご連絡ください。詳細資料をお送りします。</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-full border-4 border-white bg-brand-green text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold">2</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] bg-white p-6 rounded-xl shadow-md border-l-4 border-brand-green">
+                        <h3 class="font-bold text-lg text-brand-dark mb-2">無料相談・ヒアリング</h3>
+                        <p class="text-gray-600 text-sm">お子様の現状や志望校について詳しくお伺いし、最適なプランをご提案します。</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-12 h-12 rounded-full border-4 border-white bg-brand-green text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-bold">3</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-3rem)] bg-white p-6 rounded-xl shadow-md border-l-4 border-brand-green">
+                        <h3 class="font-bold text-lg text-brand-dark mb-2">体験授業・マッチング</h3>
+                        <p class="text-gray-600 text-sm">選抜された講師と顔合わせ。相性を確認してからスタートできます。</p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section: Impactful Footer -->
+    <section id="cta" class="py-32 bg-brand-dark relative overflow-hidden text-center">
+        <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <h2 class="font-serif text-4xl md:text-5xl font-bold text-white mb-8">
+                その「悩み」を、<br>「自信」に変える一歩を。
+            </h2>
+            <p class="text-green-200 text-lg mb-12">
+                無理な勧誘は一切ありません。<br>まずはお子様の学習状況をご相談ください。
+            </p>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-6 max-w-2xl mx-auto">
+                <button class="w-full bg-gradient-to-r from-brand-green to-emerald-500 hover:from-emerald-500 hover:to-emerald-600 text-white p-6 rounded-2xl shadow-2xl transform transition hover:-translate-y-1 group">
+                    <p class="text-sm font-bold text-green-100 mb-1 group-hover:text-white">受講プランを知りたい方</p>
+                    <span class="text-2xl font-bold flex items-center justify-center gap-3">
+                        無料相談・お試し <i class="fas fa-chevron-right"></i>
+                    </span>
+                </button>
+                
+                <button class="w-full bg-white hover:bg-gray-50 text-brand-dark p-6 rounded-2xl shadow-2xl transform transition hover:-translate-y-1 group">
+                     <p class="text-sm font-bold text-gray-500 mb-1">まずは資料を見たい方</p>
+                    <span class="text-2xl font-bold flex items-center justify-center gap-3">
+                        <i class="fab fa-line text-[#06C755]"></i> LINEで資料受取
+                    </span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sticky Mobile CTA (Visible only on Mobile) -->
+    <div class="fixed bottom-4 left-4 right-4 md:hidden z-50">
+        <a href="#cta" class="bg-brand-green text-white w-full py-4 rounded-full shadow-2xl flex items-center justify-center font-bold text-lg animate-pulse">
+            無料体験を予約する <i class="fas fa-paper-plane ml-2"></i>
+        </a>
+    </div>
+
+    <footer class="bg-gray-900 text-gray-500 py-8 text-center text-sm">
+        <p>&copy; 2023 トウコベPRIME. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
