@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トウコベPRIME - 最難関中学受験専門 オンライン個別指導</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Noto Sans JP (Gothic) & Noto Serif JP (Mincho) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Noto Sans JP', 'sans-serif'],
+                        serif: ['Noto Serif JP', 'serif'], // Added Serif for premium feel
+                    },
+                    colors: {
+                        brand: {
+                            green: '#38A956',
+                            dark: '#257a3e',
+                            light: '#f0fdf4', // lighter green for backgrounds
+                        },
+                    },
+                    backgroundImage: {
+                        'gold-gradient': 'linear-gradient(135deg, #CEA82D 0%, #FFDD6E 50%, #CEA82D 100%)',
+                        'green-gradient': 'linear-gradient(135deg, #38A956 0%, #007c29 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Typography & Utilities */
+        body {
+            font-feature-settings: "palt";
+        }
+        
+        .text-gold {
+            background: linear-gradient(to right, #CEA82D, #FFDD6E, #CEA82D);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Premium Button */
+        .btn-premium {
+            background: linear-gradient(90deg, #00B931 0%, #00E43C 50%, #00B931 100%);
+            background-size: 200% auto;
+            color: white;
+            font-weight: 700;
+            border: 1px solid rgba(255,255,255,0.3);
+            box-shadow: 0 4px 15px rgba(0, 185, 49, 0.4);
+            transition: all 0.3s ease;
+        }
+        .btn-premium:hover {
+            background-position: right center;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 185, 49, 0.6);
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* Decorative Lines */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, #CEA82D, #FFDD6E);
+            margin: 1.5rem auto 0;
+        }
+        
+        /* Custom Shape Divider */
+        .custom-shape-divider-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+        }
+        .custom-shape-divider-bottom svg {
+            position: relative;
+            display: block;
+            width: calc(136% + 1.3px);
+            height: 80px;
+            transform: rotate(180deg);
+        }
+        .custom-shape-divider-bottom .shape-fill {
+            fill: #FFFFFF;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased bg-white">
+
+    <!-- Sticky Header -->
+    <header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center h-full py-3 hover:opacity-80 transition">
+                <img src="https://www.toukobe.com/wp-content/uploads/Frame-594.png" alt="トウコベPRIME" class="h-full w-auto object-contain">
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 font-serif font-bold text-gray-600 text-sm tracking-wide">
+                <a href="#worries" class="hover:text-brand-green transition relative group">
+                    お悩み
+                    <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-brand-green transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#features" class="hover:text-brand-green transition relative group">
+                    特徴
+                    <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-brand-green transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#reasons" class="hover:text-brand-green transition relative group">
+                    選ばれる理由
+                    <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-brand-green transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#voice" class="hover:text-brand-green transition relative group">
+                    お客様の声
+                    <span class="absolute -bottom-2 left-0 w-0 h-0.5 bg-brand-green transition-all group-hover:w-full"></span>
+                </a>
+            </nav>
+
+            <div class="hidden md:block">
+                <button onclick="location.href='#contact'" class="btn-premium px-8 py-3 rounded-full text-sm shadow-lg">
+                    無料相談・お試し
+                </button>
+            </div>
+            
+            <!-- Mobile Hamburger (Simple implementation) -->
+            <button class="md:hidden text-gray-600 text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative w-full h-[90vh] min-h-[600px] flex items-center overflow-hidden">
+        <!-- Background Image with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <!-- 画像位置をスマホ向けに調整 (object-[75%_center]) -->
+            <img src="https://www.toukobe.com/wp-content/uploads/shutterstock_2434989305-2.png" alt="Hero" class="w-full h-full object-cover object-[75%_center] md:object-center">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-6 w-full grid md:grid-cols-2">
+            <div class="text-white space-y-8">
+                <div class="inline-block border border-white/30 bg-white/10 backdrop-blur-sm px-4 py-1 rounded-sm font-serif tracking-widest text-sm">
+                    最難関中学受験専門 オンライン個別指導
+                </div>
+                
+                <h1 class="font-serif font-bold text-4xl md:text-6xl leading-tight tracking-wide drop-shadow-2xl">
+                    中学受験の成功を、<br>
+                    <span class="text-gold">もっと確かに。</span>
+                </h1>
+                
+                <p class="font-sans font-medium text-lg md:text-xl opacity-90 leading-relaxed border-l-4 border-brand-green pl-4">
+                    集団塾の成績が伸び悩んでいる...<br>
+                    そんなお子様を、志望校合格へと導きます。
+                </p>
+
+                <div class="pt-4 flex flex-col sm:flex-row gap-4">
+                    <button class="btn-premium px-10 py-4 rounded-full text-lg shadow-2xl flex items-center justify-center gap-3">
+                        無料相談・体験授業 <i class="fas fa-chevron-right text-sm"></i>
+                    </button>
+                    <button class="bg-white text-brand-green border border-white hover:bg-gray-100 px-10 py-4 rounded-full text-lg font-bold shadow-lg transition flex items-center justify-center gap-3">
+                        資料ダウンロード <i class="fas fa-download text-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white text-center opacity-70">
+            <span class="text-xs tracking-widest mb-2 block">SCROLL</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Worries Section (Redesigned Zero-Base) -->
+    <section id="worries" class="py-24 px-4 bg-[#F9FAFB] relative overflow-hidden">
+        <!-- Background Decor -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-30 pointer-events-none">
+            <div class="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-gradient-to-br from-brand-green/20 to-transparent blur-3xl"></div>
+            <div class="absolute top-[40%] right-[-10%] w-[40%] h-[40%] rounded-full bg-gradient-to-bl from-yellow-400/20 to-transparent blur-3xl"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-800 mb-6">
+                    <span class="relative inline-block">
+                        こんなお悩み
+                        <span class="absolute bottom-1 left-0 w-full h-3 bg-yellow-200/50 -z-10 transform -rotate-1"></span>
+                    </span>
+                    、抱えていませんか？
+                </h2>
+                <p class="text-gray-500 text-sm md:text-base font-medium tracking-wide">
+                    最難関校を目指す過程で、<br class="md:hidden">多くのご家庭が直面する「壁」があります。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-brand-green to-emerald-600"></div>
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-brand-light rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-14 h-14 rounded-xl bg-brand-green/10 flex items-center justify-center text-brand-green text-2xl shadow-sm group-hover:bg-brand-green group-hover:text-white transition-colors duration-300">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="font-serif font-bold text-xl text-gray-800">算数が伸びない</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-6 border-b border-dashed border-gray-200 pb-6">
+                            志望校レベルには達しているが、算数だけが苦手で足を引っ張っている。<br>
+                            <span class="text-xs text-gray-400 mt-2 block">応用問題になると手が止まってしまう...</span>
+                        </p>
+                        <div class="flex items-center gap-2 text-xs font-bold text-brand-green opacity-80">
+                            <i class="far fa-check-circle"></i>
+                            <span>特定分野の弱点克服が必要</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-brand-green to-emerald-600"></div>
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-brand-light rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-6">
+                             <div class="w-14 h-14 rounded-xl bg-brand-green/10 flex items-center justify-center text-brand-green text-2xl shadow-sm group-hover:bg-brand-green group-hover:text-white transition-colors duration-300">
+                                <i class="fas fa-school"></i>
+                            </div>
+                            <h3 class="font-serif font-bold text-xl text-gray-800">クラス落ちの不安</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-6 border-b border-dashed border-gray-200 pb-6">
+                            集団塾で最上位クラスを維持できるか不安。フォローが追いつかない。<br>
+                            <span class="text-xs text-gray-400 mt-2 block">宿題をこなすだけで精一杯...</span>
+                        </p>
+                         <div class="flex items-center gap-2 text-xs font-bold text-brand-green opacity-80">
+                            <i class="far fa-check-circle"></i>
+                            <span>効率的な学習サイクルの確立</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-brand-green to-emerald-600"></div>
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-brand-light rounded-full opacity-50 group-hover:scale-150 transition-transform duration-500"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-6">
+                             <div class="w-14 h-14 rounded-xl bg-brand-green/10 flex items-center justify-center text-brand-green text-2xl shadow-sm group-hover:bg-brand-green group-hover:text-white transition-colors duration-300">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <h3 class="font-serif font-bold text-xl text-gray-800">時間がない</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed mb-6 border-b border-dashed border-gray-200 pb-6">
+                            塾のカリキュラム消化に追われ、個別の苦手克服に時間を割けない。<br>
+                            <span class="text-xs text-gray-400 mt-2 block">過去問対策まで手が回らない...</span>
+                        </p>
+                         <div class="flex items-center gap-2 text-xs font-bold text-brand-green opacity-80">
+                            <i class="far fa-check-circle"></i>
+                            <span>優先順位の整理と取捨選択</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Transition Section (Arrows and Stars Removed) -->
+    <section class="relative py-20 md:py-28 bg-green-gradient overflow-hidden">
+        <!-- Decorative Pattern -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 30px 30px;"></div>
+        
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-10 md:gap-0">
+                
+                <!-- Left: Problem Statement -->
+                <div class="w-full md:w-1/3 flex flex-col items-center md:items-start text-center md:text-left order-1">
+                    <div class="relative mb-4">
+                        <img src="https://www.toukobe.com/wp-content/uploads/shutterstock_2306964343-full-1.png" alt="男性講師" class="w-40 md:w-56 h-auto object-contain drop-shadow-xl mask-image-fade">
+                    </div>
+                    <p class="text-white font-bold text-lg md:text-xl leading-relaxed drop-shadow-md">
+                        家庭教師や個別指導では<br>
+                        解決できない<br>
+                        そのお悩み…
+                    </p>
+                </div>
+
+                <!-- Center: Solution (CTA Area) - Arrows Removed -->
+                <div class="w-full md:w-1/3 flex flex-col items-center order-2 relative">
+                    <div class="glass-card p-8 md:p-10 rounded-2xl text-center w-full transform transition duration-500 hover:scale-105">
+                        <div class="mb-6 flex justify-center">
+                            <img src="https://www.toukobe.com/wp-content/uploads/Frame-594.png" alt="トウコベPRIME" class="h-12 md:h-14 w-auto object-contain">
+                        </div>
+                        <h2 class="text-2xl md:text-3xl font-serif font-bold text-brand-green mb-2">
+                            お任せください！
+                        </h2>
+                        <p class="text-xs text-gray-500 font-bold tracking-wider">PROFESSIONAL SUPPORT</p>
+                    </div>
+                </div>
+
+                <!-- Right: Future/Result - Stars Removed -->
+                <div class="w-full md:w-1/3 flex justify-center md:justify-end relative h-64 md:h-auto order-3">
+                    <div class="relative w-64 h-64">
+                        <img src="https://www.toukobe.com/wp-content/uploads/Mask-group-20.png" class="absolute top-0 left-0 w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-white shadow-lg object-cover z-10" alt="Student Girl">
+                        <img src="https://www.toukobe.com/wp-content/uploads/Mask-group-21.png" class="absolute bottom-0 right-0 w-36 h-36 md:w-44 md:h-44 rounded-full border-4 border-white shadow-lg object-cover z-20" alt="Student Boy">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- Wave Divider -->
+        <div class="custom-shape-divider-bottom">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Features Section (3 Steps) -->
+    <section id="features" class="py-24 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-20">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-800 section-title mb-6">
+                    <span class="text-brand-green">成果</span>につなげる3つの仕組み
+                </h2>
+                <p class="text-gray-600">集団塾では足りない「合格までのあと一歩」を、戦略的に後押しします。</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Step 1 -->
+                <div class="group relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition z-10"></div>
+                        <img src="https://www.toukobe.com/wp-content/uploads/shutterstock_2257928929.png" alt="Consultation" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+                        <div class="absolute top-4 left-4 bg-brand-green text-white px-3 py-1 rounded text-xs font-bold z-20 shadow-md">
+                            STEP 01
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h4 class="font-serif text-xl font-bold mb-4 text-gray-800 border-b pb-3 border-brand-green/30">
+                            保護者様のご要望を<br>学習方針に反映
+                        </h4>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            毎月の詳細なヒアリングで、ご家庭の教育方針や最新の要望を授業計画に即座に反映。お子様の性格を熟知する保護者様との連携を最重視します。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="group relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition z-10"></div>
+                        <img src="https://www.toukobe.com/wp-content/uploads/shutterstock_2289097565-1.png" alt="Studying" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+                        <div class="absolute top-4 left-4 bg-brand-green text-white px-3 py-1 rounded text-xs font-bold z-20 shadow-md">
+                            STEP 02
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h4 class="font-serif text-xl font-bold mb-4 text-gray-800 border-b pb-3 border-brand-green/30">
+                            学習方針を<br>確実に実行する
+                        </h4>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            計画を絵に描いた餅にしません。授業後には詳細なレポートを共有。「今何をしていて、どこまで伸びたか」を可視化し、確実な実行を担保します。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="group relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300">
+                    <div class="h-56 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition z-10"></div>
+                        <img src="https://www.toukobe.com/wp-content/uploads/shutterstock_2321413855-1.png" alt="Feedback" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+                        <div class="absolute top-4 left-4 bg-brand-green text-white px-3 py-1 rounded text-xs font-bold z-20 shadow-md">
+                            STEP 03
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h4 class="font-serif text-xl font-bold mb-4 text-gray-800 border-b pb-3 border-brand-green/30">
+                            運営による<br>学習方針の改善
+                        </h4>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            授業はすべて録画し、運営チームが品質をモニタリング。万が一、講師との相性や指導法にズレが生じた場合は、何度でも無料で講師変更が可能です。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reasons Section (Premium Design - Fixed for SP) -->
+    <section id="reasons" class="py-24 px-4 bg-brand-green text-white relative overflow-hidden">
+        <!-- Background decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10">
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 right-0 w-80 h-80 bg-yellow-400 rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold mb-4 section-title">選ばれる理由</h2>
+                <p class="text-white/80">最難関合格に必要な「質」へのこだわり</p>
+            </div>
+
+            <!-- Reason 1: Main Highlight -->
+            <div class="bg-white text-gray-800 rounded-2xl shadow-2xl p-6 md:p-12 mb-12 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-brand-green to-emerald-800"></div>
+                
+                <div class="flex flex-col md:flex-row gap-8 items-start">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-4 mb-6">
+                            <!-- flex-shrink-0 added to prevent oval shape -->
+                            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-brand-green text-white flex items-center justify-center text-2xl font-serif font-bold shadow-lg">1</div>
+                            <h3 class="text-2xl md:text-3xl font-serif font-bold text-brand-green">一流講師との最適マッチング</h3>
+                        </div>
+                        <p class="text-gray-600 leading-loose mb-6 text-sm md:text-base">
+                            開成・麻布・桜蔭など、最難関中学出身の講師のみが在籍。実際に厳しい受験戦争を勝ち抜いた経験があるからこそ、精神面まで含めた実践的な指導が可能です。SAPIXや日能研などの塾別対策も万全です。
+                        </p>
+                        <p class="text-xs md:text-sm text-gray-500 mt-4 border-t pt-4">
+                            ※東京一工・早慶など最難関大学に在籍する講師のみを採用。学力だけでなく、指導力と人間性も厳格に審査しています。
+                        </p>
+                    </div>
+                    
+                    <!-- Gold List Box -->
+                    <div class="w-full md:w-80 flex-shrink-0">
+                        <div class="rounded-xl p-1 bg-gradient-to-br from-[#CEA82D] to-[#FFDD6E] shadow-inner">
+                            <div class="bg-white rounded-lg p-5 h-full text-center">
+                                <h4 class="text-gold font-bold border-b border-yellow-200 pb-2 mb-3 inline-block">在籍講師 出身校</h4>
+                                <p class="text-sm font-medium text-gray-700 leading-8 font-serif">
+                                    開成 / 筑駒 / 麻布 / 桜蔭<br>
+                                    早稲田 / 慶應 / 栄光 / 聖光<br>
+                                    渋幕 / 渋々 / 海城 / 女子学院<br>
+                                    豊島岡 / 雙葉 / 武蔵 / 駒東
+                                </p>
+                                <p class="text-xs text-right text-gray-400 mt-2">他多数 (一部略称)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reason 2 & 3 Grid -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 md:p-8 hover:bg-white/20 transition duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                         <!-- flex-shrink-0 added -->
+                         <div class="flex-shrink-0 w-10 h-10 rounded-full bg-white text-brand-green flex items-center justify-center text-xl font-serif font-bold">2</div>
+                        <h3 class="text-xl font-bold font-serif">徹底した進捗管理システム</h3>
+                    </div>
+                    <p class="text-white/90 leading-relaxed text-sm">
+                        授業動画のモニタリングと詳細なレポートで、ブラックボックス化しがちな個別指導を「見える化」。保護者様も安心してお任せいただけます。
+                    </p>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 md:p-8 hover:bg-white/20 transition duration-300">
+                    <div class="flex items-center gap-4 mb-4">
+                         <!-- flex-shrink-0 added -->
+                         <div class="flex-shrink-0 w-10 h-10 rounded-full bg-white text-brand-green flex items-center justify-center text-xl font-serif font-bold">3</div>
+                        <h3 class="text-xl font-bold font-serif">シンプルで明朗な料金体系</h3>
+                    </div>
+                    <p class="text-white/90 leading-relaxed text-sm">
+                        必要なのは授業料だけ。高額な教材費や解約金、不明瞭な管理費は一切いただきません。質の高い指導を、適正な価格で提供します。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice Section -->
+    <section id="voice" class="py-24 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-800 section-title">お客様の声</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="flex items-center gap-4 mb-4 border-b pb-4">
+                        <img src="https://www.toukobe.com/wp-content/uploads/Mask-group-17.png" alt="User" class="w-14 h-14 rounded-full object-cover border-2 border-brand-light">
+                        <div>
+                            <p class="text-sm font-bold text-gray-800">小学6年生 保護者様</p>
+                            <div class="text-yellow-400 text-xs">★★★★★</div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-brand-green mb-2 text-sm">「テストの点数に反映されました」</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        日程を調整いただき、また事前に文章を読んでいただかなくてはならないご面倒な内容をお受けいただいて、ありがたく思っています。先生のご指導のおかげで、以前よりできることが増え、テストにも反映されています。
+                    </p>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="flex items-center gap-4 mb-4 border-b pb-4">
+                        <img src="https://www.toukobe.com/wp-content/uploads/Mask-group-18.png" alt="User" class="w-14 h-14 rounded-full object-cover border-2 border-brand-light">
+                        <div>
+                            <p class="text-sm font-bold text-gray-800">小学5年生 保護者様</p>
+                            <div class="text-yellow-400 text-xs">★★★★★</div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-brand-green mb-2 text-sm">「時間配分のコツが掴めました」</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        問題を解く際に時間を見ながら、どのくらいで解くべきなのかを教えていただき、今後に生かせるよう取り組んでいます。時間変更などの連絡も細かくしていただき安心です。
+                    </p>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition duration-300">
+                    <div class="flex items-center gap-4 mb-4 border-b pb-4">
+                        <img src="https://www.toukobe.com/wp-content/uploads/Mask-group-19.png" alt="User" class="w-14 h-14 rounded-full object-cover border-2 border-brand-light">
+                        <div>
+                            <p class="text-sm font-bold text-gray-800">小学6年生 保護者様</p>
+                            <div class="text-yellow-400 text-xs">★★★★★</div>
+                        </div>
+                    </div>
+                    <h4 class="font-bold text-brand-green mb-2 text-sm">「志望校出身の先生でやる気UP」</h4>
+                    <p class="text-xs text-gray-600 leading-relaxed">
+                        いつも落ち着いた雰囲気でわかりやすく教えてくださり、息子も信頼しているようです。自分が行きたい中学の卒業生ということもあり、やる気が出ております。いつもありがとうございます。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guarantee -->
+    <section class="py-20 px-4 bg-white border-t border-gray-100">
+        <div class="max-w-4xl mx-auto">
+            <div class="relative bg-white border-2 border-yellow-400 rounded-3xl p-10 md:p-16 text-center shadow-2xl overflow-hidden">
+                <!-- Ribbon -->
+                <div class="absolute top-0 right-0">
+                    <div class="bg-yellow-400 text-white text-xs font-bold px-12 py-2 transform rotate-45 translate-x-10 translate-y-6 shadow-md">
+                        安心保証
+                    </div>
+                </div>
+
+                <h2 class="text-2xl font-bold text-gray-600 mb-2">まずは安心してお試しください</h2>
+                <h3 class="font-serif text-4xl md:text-5xl font-bold text-gold mb-8 drop-shadow-sm">30日間全額返金保証</h3>
+                
+                <p class="text-gray-600 mb-8 leading-relaxed text-sm md:text-base">
+                    指導内容にご満足いただけない場合は、入会金を含めて全額を返金いたします。<br>
+                    リスクなく、最高品質の指導をご体験ください。
+                </p>
+                
+                <div class="inline-block">
+                    <button onclick="location.href='#contact'" class="btn-premium px-12 py-4 rounded-full text-lg shadow-lg">
+                        詳しくはこちら
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flow Section (Optimized for SP) -->
+    <section id="flow" class="py-24 px-4 bg-brand-light">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-gray-800 section-title">受講までの流れ</h2>
+            </div>
+
+            <!-- Mobile Layout: Timeline Style (Left: Number, Right: Content) -->
+            <div class="md:hidden">
+                <!-- Step 1 -->
+                <div class="flex gap-4 mb-8 relative">
+                    <!-- Timeline Line -->
+                    <div class="absolute left-6 top-12 bottom-[-2rem] w-0.5 bg-brand-green/30 z-0"></div>
+                    
+                    <!-- Number -->
+                    <div class="relative z-10 flex-shrink-0">
+                         <div class="w-12 h-12 bg-brand-green text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg border-4 border-white">1</div>
+                    </div>
+                    <!-- Content -->
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex-1">
+                        <h3 class="text-lg font-bold text-brand-green mb-1">お問い合わせ</h3>
+                        <p class="text-gray-600 text-sm">フォームより無料相談のご予約、または資料請求を行ってください。</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="flex gap-4 mb-8 relative">
+                     <!-- Timeline Line -->
+                     <div class="absolute left-6 top-12 bottom-[-2rem] w-0.5 bg-brand-green/30 z-0"></div>
+                     
+                     <div class="relative z-10 flex-shrink-0">
+                        <div class="w-12 h-12 bg-brand-green text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg border-4 border-white">2</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex-1">
+                        <h3 class="text-lg font-bold text-brand-green mb-1">無料相談・ヒアリング</h3>
+                        <p class="text-gray-600 text-sm">学習状況を詳細にヒアリングし、最適なプランをご提案します。</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="flex gap-4">
+                     <div class="relative z-10 flex-shrink-0">
+                        <div class="w-12 h-12 bg-brand-green text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg border-4 border-white">3</div>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100 flex-1">
+                        <h3 class="text-lg font-bold text-brand-green mb-1">講師選定・体験授業</h3>
+                        <p class="text-gray-600 text-sm">お子様にベストな講師を選定。相性を確認してからスタート。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desktop Layout: Original Zigzag -->
+            <div class="hidden md:block relative">
+                <!-- Vertical Line -->
+                <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-brand-green/30 -ml-px"></div>
+
+                <!-- Step 1 -->
+                <div class="relative flex flex-row items-center mb-12">
+                    <div class="w-1/2 pr-12 text-right">
+                        <h3 class="text-xl font-bold text-brand-green mb-2">お問い合わせ</h3>
+                        <p class="text-gray-600 text-sm">フォームより無料相談のご予約、<br>または資料請求を行ってください。</p>
+                    </div>
+                    <div class="w-12 h-12 bg-brand-green text-white rounded-full flex items-center justify-center z-10 font-bold text-xl shadow-lg border-4 border-white">1</div>
+                    <div class="w-1/2 pl-12"></div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative flex flex-row items-center mb-12">
+                    <div class="w-1/2 pr-12"></div>
+                    <div class="w-12 h-12 bg-brand-green text-white rounded-full flex items-center justify-center z-10 font-bold text-xl shadow-lg border-4 border-white">2</div>
+                    <div class="w-1/2 pl-12 text-left">
+                        <h3 class="text-xl font-bold text-brand-green mb-2">無料相談・ヒアリング</h3>
+                        <p class="text-gray-600 text-sm">学習状況を詳細にヒアリングし、<br>最適なプランをご提案します。</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative flex flex-row items-center">
+                    <div class="w-1/2 pr-12 text-right">
+                        <h3 class="text-xl font-bold text-brand-green mb-2">講師選定・体験授業</h3>
+                        <p class="text-gray-600 text-sm">お子様にベストな講師を選定。<br>相性を確認してからスタート。</p>
+                    </div>
+                    <div class="w-12 h-12 bg-brand-green text-white rounded-full flex items-center justify-center z-10 font-bold text-xl shadow-lg border-4 border-white">3</div>
+                    <div class="w-1/2 pl-12"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / CTA Area -->
+    <section id="contact" class="bg-white py-20 px-4">
+        <div class="max-w-3xl mx-auto">
+             <div class="bg-gray-50 rounded-3xl p-8 md:p-12 shadow-inner text-center border border-gray-100">
+                <h2 class="text-2xl md:text-3xl font-serif font-bold text-gray-800 mb-8">
+                    まずは無料相談から
+                </h2>
+                
+                <div class="space-y-4 max-w-md mx-auto">
+                    <!-- Primary CTA -->
+                    <button class="btn-premium w-full py-4 rounded-xl shadow-lg text-lg flex items-center justify-center gap-3 group">
+                        無料相談/お試しはこちら 
+                        <i class="fas fa-chevron-right group-hover:translate-x-1 transition"></i>
+                    </button>
+
+                    <!-- Secondary CTA -->
+                    <button class="w-full bg-white border-2 border-brand-green text-brand-green font-bold py-4 rounded-xl shadow-sm text-lg flex items-center justify-center gap-3 hover:bg-brand-light transition">
+                        サービス資料ダウンロード
+                        <i class="fas fa-file-download"></i>
+                    </button>
+
+                    <!-- LINE CTA -->
+                    <div class="pt-6 mt-6 border-t border-gray-200">
+                         <p class="text-xs text-gray-500 mb-3">LINEでもお気軽にご相談いただけます</p>
+                         <button class="bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-4 rounded-xl shadow-md text-lg w-full flex items-center justify-center gap-2 transition">
+                            <i class="fab fa-line text-2xl"></i> LINEで質問する
+                        </button>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-green text-white py-16 px-4 text-sm">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start gap-3 mb-4 mx-auto md:mx-0">
+                    <img src="https://www.toukobe.com/wp-content/uploads/Frame-586.png" alt="トウコベPRIME" class="h-12 w-auto object-contain">
+                </div>
+                <p class="text-xs opacity-80">© 2024 Tokobe PRIME. All rights reserved.</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-8 text-xs md:text-sm font-bold">
+                <a href="#" class="hover:text-white/80 transition">会社概要</a>
+                <a href="#" class="hover:text-white/80 transition">プライバシーポリシー</a>
+                <a href="#" class="hover:text-white/80 transition">特定商取引法に基づく表記</a>
+                <a href="#" class="hover:text-white/80 transition">お問い合わせ</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple smooth scroll behavior for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
