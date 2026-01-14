@@ -639,38 +639,42 @@
                 <div class="w-10 h-1 bg-manabi-black mx-auto mt-6"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 reveal">
-                <!-- コンテンツは同じだが、SPでは縦積みになる -->
-                <div class="bg-white p-6 md:p-8 border-l-4 border-manabi-purple hover:-translate-y-2 transition-transform duration-300 shadow-sm">
-                    <h4 class="font-bold text-manabi-purple mb-4 md:mb-6 text-xs md:text-sm tracking-widest">戦略コンサル</h4>
-                    <ul class="text-xs md:text-sm space-y-2 md:space-y-3 text-gray-600 font-medium font-english">
-                        <li>McKinsey & Company</li>
+            <!-- SP版: 2列グリッドに変更 (grid-cols-2 md:grid-cols-2 lg:grid-cols-4) -->
+            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 reveal">
+                <!-- 戦略コンサル -->
+                <div class="bg-white p-4 md:p-8 border-l-4 border-manabi-purple hover:-translate-y-2 transition-transform duration-300 shadow-sm">
+                    <h4 class="font-bold text-manabi-purple mb-3 md:mb-6 text-[10px] md:text-sm tracking-widest border-b border-gray-100 pb-2 md:border-none md:pb-0">戦略コンサル</h4>
+                    <ul class="text-[10px] md:text-sm space-y-1.5 md:space-y-3 text-gray-600 font-medium font-english">
+                        <li>McKinsey</li> <!-- SP用に表記短縮を検討または改行許容 -->
                         <li>BCG</li>
-                        <li>Bain & Company</li>
+                        <li>Bain</li>
                         <li>Kearney</li>
                     </ul>
                 </div>
-                <div class="bg-white p-6 md:p-8 border-l-4 border-manabi-orange hover:-translate-y-2 transition-transform duration-300 shadow-sm">
-                    <h4 class="font-bold text-manabi-orange mb-4 md:mb-6 text-xs md:text-sm tracking-widest">メガベンチャー</h4>
-                    <ul class="text-xs md:text-sm space-y-2 md:space-y-3 text-gray-600 font-medium font-english">
+                <!-- メガベンチャー -->
+                <div class="bg-white p-4 md:p-8 border-l-4 border-manabi-orange hover:-translate-y-2 transition-transform duration-300 shadow-sm">
+                    <h4 class="font-bold text-manabi-orange mb-3 md:mb-6 text-[10px] md:text-sm tracking-widest border-b border-gray-100 pb-2 md:border-none md:pb-0">メガベンチャー</h4>
+                    <ul class="text-[10px] md:text-sm space-y-1.5 md:space-y-3 text-gray-600 font-medium font-english">
                         <li>Recruit</li>
                         <li>CyberAgent</li>
                         <li>Leverages</li>
                         <li>RAKSUL</li>
                     </ul>
                 </div>
-                <div class="bg-white p-6 md:p-8 border-l-4 border-manabi-blue hover:-translate-y-2 transition-transform duration-300 shadow-sm">
-                    <h4 class="font-bold text-manabi-blue mb-4 md:mb-6 text-xs md:text-sm tracking-widest">金融・財閥系</h4>
-                    <ul class="text-xs md:text-sm space-y-2 md:space-y-3 text-gray-600 font-medium">
+                <!-- 金融・財閥系 -->
+                <div class="bg-white p-4 md:p-8 border-l-4 border-manabi-blue hover:-translate-y-2 transition-transform duration-300 shadow-sm">
+                    <h4 class="font-bold text-manabi-blue mb-3 md:mb-6 text-[10px] md:text-sm tracking-widest border-b border-gray-100 pb-2 md:border-none md:pb-0">金融・財閥系</h4>
+                    <ul class="text-[10px] md:text-sm space-y-1.5 md:space-y-3 text-gray-600 font-medium">
                         <li class="font-english">Morgan Stanley</li>
                         <li class="font-english">Citi</li>
                         <li>三井物産</li>
                         <li>三菱重工</li>
                     </ul>
                 </div>
-                <div class="bg-white p-6 md:p-8 border-l-4 border-gray-400 hover:-translate-y-2 transition-transform duration-300 shadow-sm">
-                    <h4 class="font-bold text-gray-400 mb-4 md:mb-6 text-xs md:text-sm tracking-widest">理系難関企業</h4>
-                    <ul class="text-xs md:text-sm space-y-2 md:space-y-3 text-gray-600 font-medium font-english">
+                <!-- 理系難関企業 -->
+                <div class="bg-white p-4 md:p-8 border-l-4 border-gray-400 hover:-translate-y-2 transition-transform duration-300 shadow-sm">
+                    <h4 class="font-bold text-gray-400 mb-3 md:mb-6 text-[10px] md:text-sm tracking-widest border-b border-gray-100 pb-2 md:border-none md:pb-0">理系難関企業</h4>
+                    <ul class="text-[10px] md:text-sm space-y-1.5 md:space-y-3 text-gray-600 font-medium font-english">
                         <li>JAXA</li>
                         <li>FUJIFILM</li>
                         <li>AWS</li>
@@ -812,35 +816,40 @@
     <!-- Footer -->
     <footer class="bg-manabi-black text-white pt-16 md:pt-20 pb-8 md:pb-10 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-12 mb-12 md:mb-16">
-                <div class="md:col-span-1 text-center md:text-left">
-                    <h3 class="text-2xl font-black font-english tracking-tighter mb-6">MANABI Inc.</h3>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-16">
+                <div class="md:col-span-1 text-center md:text-left mb-8 md:mb-0">
+                    <h3 class="text-2xl font-black font-english tracking-tighter mb-2 md:mb-6">MANABI Inc.</h3>
                 </div>
                 
-                <div class="text-center md:text-left">
-                    <h4 class="text-xs font-bold text-gray-500 mb-6 tracking-widest">ABOUT</h4>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="#mission" class="hover:text-manabi-purple transition-colors block py-1">ミッション</a></li>
-                        <li><a href="#business" class="hover:text-manabi-purple transition-colors block py-1">事業内容</a></li>
-                        <li><a href="#culture" class="hover:text-manabi-purple transition-colors block py-1">組織文化</a></li>
-                    </ul>
-                </div>
-                
-                <div class="text-center md:text-left">
-                    <h4 class="text-xs font-bold text-gray-500 mb-6 tracking-widest">RECRUIT</h4>
-                    <ul class="space-y-4 text-sm">
-                        <li><a href="#" class="hover:text-manabi-blue transition-colors block py-1">募集要項</a></li>
-                        <li><a href="#" class="hover:text-manabi-blue transition-colors block py-1">選考フロー</a></li>
-                        <li><a href="#entry" class="hover:text-manabi-blue transition-colors block py-1">エントリー</a></li>
-                    </ul>
-                </div>
+                <!-- SP版: 2列グリッドで表示 (grid-cols-2) -->
+                <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-8 text-left">
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-500 mb-4 md:mb-6 tracking-widest">ABOUT</h4>
+                        <ul class="space-y-3 md:space-y-4 text-xs md:text-sm">
+                            <li><a href="#mission" class="hover:text-manabi-purple transition-colors block">ミッション</a></li>
+                            <li><a href="#business" class="hover:text-manabi-purple transition-colors block">事業内容</a></li>
+                            <li><a href="#culture" class="hover:text-manabi-purple transition-colors block">組織文化</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-500 mb-4 md:mb-6 tracking-widest">RECRUIT</h4>
+                        <ul class="space-y-3 md:space-y-4 text-xs md:text-sm">
+                            <li><a href="#" class="hover:text-manabi-blue transition-colors block">募集要項</a></li>
+                            <li><a href="#" class="hover:text-manabi-blue transition-colors block">選考フロー</a></li>
+                            <li><a href="#entry" class="hover:text-manabi-blue transition-colors block">エントリー</a></li>
+                        </ul>
+                    </div>
 
-                <div class="text-center md:text-left">
-                    <h4 class="text-xs font-bold text-gray-500 mb-6 tracking-widest">CONTACT</h4>
-                    <div class="flex justify-center md:justify-start space-x-6">
-                        <a href="#" class="text-xl text-gray-500 hover:text-manabi-orange transition-colors"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" class="text-xl text-gray-500 hover:text-manabi-orange transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="text-xl text-gray-500 hover:text-manabi-orange transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <!-- SP版では2列に収まらないため、col-span-2で下段に配置するか、そのまま流す -->
+                    <!-- ここではcol-span-2 w-full等で調整 -->
+                    <div class="col-span-2 md:col-span-1 mt-4 md:mt-0">
+                        <h4 class="text-xs font-bold text-gray-500 mb-4 md:mb-6 tracking-widest">CONTACT</h4>
+                        <div class="flex justify-start space-x-6">
+                            <a href="#" class="text-xl text-gray-500 hover:text-manabi-orange transition-colors"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" class="text-xl text-gray-500 hover:text-manabi-orange transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="text-xl text-gray-500 hover:text-manabi-orange transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
