@@ -60,6 +60,13 @@
             font-family: 'Noto Sans JP', sans-serif;
             color: #111;
             overflow-x: hidden;
+            /* 日本語の改行最適化 */
+            word-break: break-all; 
+        }
+        @media (min-width: 768px) {
+            body {
+                word-break: keep-all; /* PCでは単語の途中改行を防ぐ */
+            }
         }
         
         /* 画像ホバーエフェクト */
@@ -105,7 +112,7 @@
             left: 0;
             width: 0%;
             height: 2px;
-            background-color: #3852E3; /* 青単色に変更 */
+            background-color: #3852E3;
             transition: width 0.3s ease;
         }
         .hover-line:hover::after {
@@ -118,49 +125,61 @@
             overflow: hidden;
             transition: max-height 0.4s ease-out;
         }
-        .faq-item.active .faq-content {
-            /* JSで高さを設定するためここでは指定しないが、クラス付与の目印 */
-        }
         .faq-icon {
             transition: transform 0.3s ease;
         }
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
+        
+        /* インラインブロックによる改行制御クラス */
+        .ib {
+            display: inline-block;
         }
     </style>
 </head>
 <body class="bg-white">
 
     <!-- Header -->
-    <header class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-gray-100" id="header">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <a href="#" class="text-2xl font-black font-english tracking-tighter hover:opacity-70 transition-opacity">
-                MANABI <span class="text-xs font-normal font-sans ml-2 tracking-widest text-manabi-purple">Inc.</span>
+    <header class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-gray-100" id="header">
+        <div class="max-w-7xl mx-auto px-6 h-16 md:h-20 flex justify-between items-center">
+            <a href="#" class="text-xl md:text-2xl font-black font-english tracking-tighter hover:opacity-70 transition-opacity z-50 relative">
+                MANABI <span class="text-[10px] md:text-xs font-normal font-sans ml-1 tracking-widest text-manabi-purple">Inc.</span>
             </a>
             
-            <nav class="hidden md:flex items-center space-x-10">
-                <a href="#mission" class="text-sm font-bold tracking-widest hover:text-manabi-blue transition-colors hover-line relative">MISSION</a>
-                <a href="#business" class="text-sm font-bold tracking-widest hover:text-manabi-blue transition-colors hover-line relative">BUSINESS</a>
-                <a href="#culture" class="text-sm font-bold tracking-widest hover:text-manabi-blue transition-colors hover-line relative">CULTURE</a>
-                <a href="#data" class="text-sm font-bold tracking-widest hover:text-manabi-blue transition-colors hover-line relative">DATA</a>
-                <!-- グラデーション削除 -> 黒背景 -->
-                <a href="#entry" class="bg-manabi-black text-white px-8 py-3 text-sm font-bold tracking-widest hover:bg-manabi-blue transition-all duration-300 shadow-md transform hover:-translate-y-0.5">
+            <!-- PC Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 lg:space-x-10">
+                <a href="#mission" class="text-xs lg:text-sm font-bold tracking-widest hover:text-manabi-blue transition-colors hover-line relative">MISSION</a>
+                <a href="#business" class="text-xs lg:text-sm font-bold tracking-widest hover:text-manabi-blue transition-colors hover-line relative">BUSINESS</a>
+                <a href="#culture" class="text-xs lg:text-sm font-bold tracking-widest hover:text-manabi-blue transition-colors hover-line relative">CULTURE</a>
+                <a href="#data" class="text-xs lg:text-sm font-bold tracking-widest hover:text-manabi-blue transition-colors hover-line relative">DATA</a>
+                <a href="#entry" class="bg-manabi-black text-white px-6 lg:px-8 py-2 lg:py-3 text-xs lg:text-sm font-bold tracking-widest hover:bg-manabi-blue transition-all duration-300 shadow-md transform hover:-translate-y-0.5">
                     ENTRY
                 </a>
             </nav>
 
             <!-- Mobile Menu Button -->
-            <button class="md:hidden text-2xl focus:outline-none">
-                <i class="fa-solid fa-bars"></i>
+            <button class="md:hidden text-2xl focus:outline-none z-50 relative w-8 h-8 flex items-center justify-center" id="menu-btn">
+                <i class="fa-solid fa-bars transition-all duration-300"></i>
             </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="fixed inset-0 bg-white z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-menu">
+            <nav class="flex flex-col items-center space-y-8 text-center">
+                <a href="#mission" class="text-xl font-bold tracking-widest hover:text-manabi-blue mobile-link">MISSION</a>
+                <a href="#business" class="text-xl font-bold tracking-widest hover:text-manabi-blue mobile-link">BUSINESS</a>
+                <a href="#culture" class="text-xl font-bold tracking-widest hover:text-manabi-blue mobile-link">CULTURE</a>
+                <a href="#data" class="text-xl font-bold tracking-widest hover:text-manabi-blue mobile-link">DATA</a>
+                <a href="#entry" class="bg-manabi-black text-white px-12 py-4 text-lg font-bold tracking-widest shadow-lg mt-4 mobile-link">
+                    ENTRY
+                </a>
+            </nav>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="relative h-screen w-full overflow-hidden flex items-center justify-start bg-gray-50">
-        <!-- Background Decoration (濃さを調整: /15 -> /30) -->
-        <div class="absolute top-[-20%] right-[-10%] w-[600px] h-[600px] bg-manabi-blue/30 rounded-full blur-[100px] animate-pulse"></div>
-        <div class="absolute bottom-[-20%] left-[-10%] w-[500px] h-[500px] bg-manabi-orange/30 rounded-full blur-[80px] animate-pulse" style="animation-duration: 4s;"></div>
+        <!-- Background Decoration -->
+        <div class="absolute top-[-20%] right-[-10%] w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-manabi-blue/30 rounded-full blur-[80px] md:blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-[-20%] left-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-manabi-orange/30 rounded-full blur-[60px] md:blur-[80px] animate-pulse" style="animation-duration: 4s;"></div>
 
         <!-- Background Image -->
         <div class="absolute inset-0 z-0 opacity-40 mix-blend-multiply">
@@ -169,94 +188,98 @@
                  class="w-full h-full object-cover object-center">
         </div>
         
-        <div class="relative z-10 text-manabi-black text-left px-6 md:px-20 max-w-7xl w-full mt-10">
-            <p class="text-sm md:text-base tracking-[0.3em] font-bold mb-8 font-english animate-fade-in-up flex items-center justify-start gap-4">
-                <span class="w-12 h-[2px] bg-manabi-black"></span>
+        <div class="relative z-10 text-manabi-black text-left px-6 md:px-20 max-w-7xl w-full mt-10 md:mt-20">
+            <p class="text-xs md:text-base tracking-[0.2em] md:tracking-[0.3em] font-bold mb-6 md:mb-8 font-english animate-fade-in-up flex items-center justify-start gap-3 md:gap-4">
+                <span class="w-8 md:w-12 h-[2px] bg-manabi-black"></span>
                 INTERN RECRUITMENT
             </p>
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-tight mb-10 animate-fade-in-up" style="animation-delay: 0.2s;">
-                未来は<br>
-                <span class="inline-block">“いま”変えられる</span>
+            <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tight leading-tight mb-8 md:mb-10 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <span class="ib">未来は</span><br>
+                <span class="ib">“いま”変えられる</span>
             </h1>
             <div class="animate-fade-in-up" style="animation-delay: 0.4s;">
-                <p class="text-sm md:text-lg font-bold tracking-widest bg-white/80 backdrop-blur-md px-8 py-3 inline-block border border-gray-200 shadow-sm rounded-sm">
+                <p class="text-xs md:text-lg font-bold tracking-widest bg-white/80 backdrop-blur-md px-6 md:px-8 py-2 md:py-3 inline-block border border-gray-200 shadow-sm rounded-sm">
                     MANABI Inc.
                 </p>
             </div>
         </div>
 
         <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-20">
-            <span class="text-[10px] tracking-widest text-manabi-black mb-3 font-english">SCROLL</span>
-            <div class="w-[1px] h-20 bg-gray-300 relative overflow-hidden">
+        <div class="absolute bottom-8 md:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-20">
+            <span class="text-[10px] tracking-widest text-manabi-black mb-2 md:mb-3 font-english">SCROLL</span>
+            <div class="w-[1px] h-12 md:h-20 bg-gray-300 relative overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-full bg-manabi-orange animate-scroll-line"></div>
             </div>
         </div>
     </section>
 
     <!-- Intro -->
-    <section class="py-32 px-6 bg-white relative overflow-hidden">
-        <!-- 背景装飾を追加してつながりを持たせる（FVの流れで少し濃く: /5 -> /15） -->
-        <div class="absolute top-[-10%] left-[-5%] w-[400px] h-[400px] bg-manabi-orange/15 rounded-full blur-[80px]"></div>
-        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-manabi-blue/15 rounded-full blur-[100px]"></div>
+    <section class="py-20 md:py-32 px-6 bg-white relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-[-10%] left-[-5%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-manabi-orange/15 rounded-full blur-[60px] md:blur-[80px]"></div>
+        <div class="absolute bottom-0 right-0 w-[400px] md:w-[500px] h-[400px] md:h-[500px] bg-manabi-blue/15 rounded-full blur-[80px] md:blur-[100px]"></div>
 
         <div class="max-w-5xl mx-auto reveal relative z-10">
-            <!-- テキストサイズを大きく、左揃えに変更 -->
-            <div class="text-xl md:text-2xl font-bold leading-loose space-y-12 text-gray-900 tracking-wider text-left border-l-4 border-gray-100 pl-8 md:pl-12">
+            <!-- Text -->
+            <div class="text-lg md:text-2xl font-bold leading-relaxed md:leading-loose space-y-8 md:space-y-12 text-gray-900 tracking-wider text-left border-l-4 border-gray-100 pl-6 md:pl-12">
                 <p>
-                    「このままの大学生活でいいのか」<br>
-                    「もっとチャレンジするべきではないか」
+                    <span class="ib">「このままの</span><span class="ib">大学生活で</span><span class="ib">いいのか」</span><br>
+                    <span class="ib">「もっとチャレンジ</span><span class="ib">するべきでは</span><span class="ib">ないか」</span>
                 </p>
                 <p class="relative inline-block">
-                    そんな問いが、頭をよぎったことがあるかもしれない。<br>
-                    ここは、その問いに向き合い、行動するための場だ。
+                    <span class="ib">そんな問いが、</span><span class="ib">頭をよぎったことが</span><span class="ib">あるかもしれない。</span><br class="hidden md:block">
+                    <span class="ib">ここは、</span><span class="ib">その問いに向き合い、</span><span class="ib">行動するための場だ。</span>
                 </p>
                 <p>
-                    大きな未来は、突然手渡されるものではない。<br>
-                    一歩ずつ動いた先で、自分だけの可能性が見えてくる。
+                    <span class="ib">大きな未来は、</span><span class="ib">突然手渡されるものではない。</span><br class="hidden md:block">
+                    <span class="ib">一歩ずつ動いた先で、</span><span class="ib">自分だけの可能性が</span><span class="ib">見えてくる。</span>
                 </p>
                 <p>
-                    明確なビジョンがなくてもいい。<br>
-                    <span class="bg-manabi-orange/20 px-1">「もっと大きな自分になりたい」</span>という気持ちがあるなら、<br>
-                    それが最初の一歩になる。
+                    <span class="ib">明確なビジョンが</span><span class="ib">なくてもいい。</span><br class="hidden md:block">
+                    <span class="bg-manabi-orange/20 px-1 inline-block">「もっと大きな自分になりたい」</span><br class="md:hidden">
+                    <span class="ib">という気持ちがあるなら、</span><br class="hidden md:block">
+                    <span class="ib">それが最初の一歩になる。</span>
                 </p>
             </div>
         </div>
     </section>
 
     <!-- Mission -->
-    <section id="mission" class="bg-manabi-gray py-32">
+    <section id="mission" class="bg-manabi-gray py-20 md:py-32">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="flex flex-col lg:flex-row justify-between items-start mb-24 reveal">
-                <div class="mb-12 lg:mb-0 relative">
-                    <span class="text-xs font-bold font-english tracking-widest text-gray-500 block mb-4 flex items-center">
-                        <span class="w-6 h-[2px] bg-manabi-purple mr-2"></span>
+            <div class="flex flex-col lg:flex-row justify-between items-start mb-16 md:mb-24 reveal">
+                <div class="mb-10 lg:mb-0 relative">
+                    <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-gray-500 block mb-3 md:mb-4 flex items-center">
+                        <span class="w-4 md:w-6 h-[2px] bg-manabi-purple mr-2"></span>
                         OUR MISSION
                     </span>
-                    <h2 class="text-6xl md:text-8xl font-black tracking-tighter leading-none text-black">
+                    <h2 class="text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter leading-none text-black">
                         Cultivate<br>
                         <span class="text-manabi-purple">Potential</span>
                     </h2>
                 </div>
                 <div class="lg:max-w-xl lg:pt-8">
-                    <!-- グラデーション背景を削除 -->
-                    <h3 class="text-2xl font-bold mb-8 leading-relaxed border-l-4 border-manabi-purple pl-6">
-                        関係者全員に<br>
-                        想像を超える程の成長可能性を
+                    <h3 class="text-xl md:text-2xl font-bold mb-6 md:mb-8 leading-relaxed border-l-4 border-manabi-purple pl-6">
+                        <span class="ib">関係者全員に</span><br>
+                        <span class="ib">想像を超える程の</span><span class="ib">成長可能性を</span>
                     </h3>
-                    <ul class="space-y-8">
+                    <ul class="space-y-6 md:space-y-8">
                         <li class="flex items-start group">
-                            <span class="text-manabi-orange font-english text-xl font-bold mr-4 mt-1">01</span>
+                            <span class="text-manabi-orange font-english text-lg md:text-xl font-bold mr-4 mt-1 flex-shrink-0">01</span>
                             <div>
-                                <strong class="block text-xl mb-2 font-bold">全世界の未就学児〜高校生</strong>
-                                <p class="text-sm text-gray-600 leading-relaxed">憧れによる学習の動機づけと自主学習法の習得支援を行う</p>
+                                <strong class="block text-lg md:text-xl mb-2 font-bold">全世界の未就学児〜高校生</strong>
+                                <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
+                                    <span class="ib">憧れによる学習の動機づけと</span><span class="ib">自主学習法の習得支援を行う</span>
+                                </p>
                             </div>
                         </li>
                         <li class="flex items-start group">
-                            <span class="text-manabi-blue font-english text-xl font-bold mr-4 mt-1">02</span>
+                            <span class="text-manabi-blue font-english text-lg md:text-xl font-bold mr-4 mt-1 flex-shrink-0">02</span>
                             <div>
-                                <strong class="block text-xl mb-2 font-bold">全世界の大学生／大学院生</strong>
-                                <p class="text-sm text-gray-600 leading-relaxed">学生主体の事業運営を通じてキャリアの想定解を増やす</p>
+                                <strong class="block text-lg md:text-xl mb-2 font-bold">全世界の大学生／大学院生</strong>
+                                <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
+                                    <span class="ib">学生主体の事業運営を通じて</span><span class="ib">キャリアの想定解を増やす</span>
+                                </p>
                             </div>
                         </li>
                     </ul>
@@ -266,18 +289,17 @@
             <!-- Philosophy Image & Text -->
             <div class="relative reveal delay-100">
                 <div class="absolute top-0 right-0 w-2/3 h-full bg-white shadow-xl z-0 transform translate-x-10 translate-y-10 hidden md:block"></div>
-                <div class="relative z-10 flex flex-col md:flex-row bg-white md:bg-transparent">
-                    <div class="w-full md:w-1/2 h-[400px] md:h-[500px] relative overflow-hidden group">
-                        <!-- 企業理念の写真を差し替え -->
+                <div class="relative z-10 flex flex-col md:flex-row bg-white md:bg-transparent shadow-sm md:shadow-none">
+                    <div class="w-full md:w-1/2 h-64 md:h-[500px] relative overflow-hidden group">
                         <img src="https://www.toukobe.com/wp-content/uploads/Frame-711.jpg" alt="Corporate Philosophy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                         <div class="absolute inset-0 bg-manabi-blue/5 mix-blend-multiply"></div>
                     </div>
-                    <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center bg-white">
-                        <h3 class="text-3xl font-black mb-8 flex items-center">
+                    <div class="w-full md:w-1/2 p-8 md:p-16 flex flex-col justify-center bg-white">
+                        <h3 class="text-2xl md:text-3xl font-black mb-6 md:mb-8 flex items-center">
                             企業理念
-                            <span class="w-12 h-[2px] bg-manabi-blue ml-4"></span>
+                            <span class="w-8 md:w-12 h-[2px] bg-manabi-blue ml-4"></span>
                         </h3>
-                        <div class="space-y-6 text-sm leading-loose text-justify text-gray-700 font-medium">
+                        <div class="space-y-4 md:space-y-6 text-sm leading-loose text-left text-gray-700 font-medium">
                             <p>
                                 私たちが目指すのは、すべてのステークホルダーのポテンシャルを、共に耕し、育て合う組織です。
                             </p>
@@ -298,40 +320,43 @@
     </section>
 
     <!-- Business -->
-    <section id="business" class="py-32 px-6 bg-white">
+    <section id="business" class="py-20 md:py-32 px-6 bg-white">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-20 reveal">
+            <!-- 修正箇所：SPで左揃え(items-start)、PCで右揃え(items-end) -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 reveal">
                 <div>
-                    <span class="text-xs font-bold font-english tracking-widest text-manabi-blue block mb-2">BUSINESS</span>
-                    <h2 class="text-4xl md:text-5xl font-black">事業内容／沿革</h2>
+                    <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-manabi-blue block mb-2">BUSINESS</span>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black">事業内容／沿革</h2>
                 </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border border-gray-100 reveal">
-                <div class="p-12 md:p-20 bg-gray-50 flex flex-col justify-center border-b md:border-b-0 md:border-r border-gray-200">
-                    <h3 class="text-3xl font-bold mb-8">オンライン個別指導事業<br>「トウコベ」「キョウコベ」</h3>
-                    <p class="text-gray-600 leading-loose mb-8">
+                <div class="p-8 md:p-20 bg-gray-50 flex flex-col justify-center border-b md:border-b-0 md:border-r border-gray-200">
+                    <h3 class="text-xl md:text-3xl font-bold mb-6 md:mb-8 leading-snug">
+                        <span class="ib">オンライン個別指導事業</span><br>
+                        <span class="ib">「トウコベ」</span><span class="ib">「キョウコベ」</span>
+                    </h3>
+                    <p class="text-sm text-gray-600 leading-loose mb-8">
                         現在、1,000人以上の生徒様と、2,000人以上の講師が登録するサービスへと成長し、生徒様一人ひとりに合わせた学びの支援を日々行っています。
                     </p>
                     <div class="flex gap-4">
                         <div class="text-center">
-                            <span class="block text-xs text-gray-500 mb-1">生徒数</span>
-                            <span class="text-3xl font-english font-bold text-manabi-blue">1,000+</span>
+                            <span class="block text-[10px] md:text-xs text-gray-500 mb-1">生徒数</span>
+                            <span class="text-3xl md:text-4xl font-english font-bold text-manabi-blue">1,000+</span>
                         </div>
                         <div class="w-[1px] bg-gray-300"></div>
                         <div class="text-center">
-                            <span class="block text-xs text-gray-500 mb-1">講師数</span>
-                            <span class="text-3xl font-english font-bold text-manabi-orange">2,000+</span>
+                            <span class="block text-[10px] md:text-xs text-gray-500 mb-1">講師数</span>
+                            <span class="text-3xl md:text-4xl font-english font-bold text-manabi-orange">2,000+</span>
                         </div>
                     </div>
                 </div>
-                <div class="img-hover-container h-[400px] md:h-auto relative">
-                    <!-- ONLINE TUTORINGの写真を差し替え -->
+                <div class="img-hover-container h-64 md:h-auto relative order-first md:order-last">
                     <img src="https://www.toukobe.com/wp-content/uploads/image-65-2.png" alt="Online Tutoring" class="w-full h-full object-cover">
                     <div class="img-overlay"></div>
-                    <div class="absolute bottom-8 right-8 bg-white/90 backdrop-blur px-6 py-4">
-                        <p class="text-xs font-bold tracking-widest text-gray-500">SERVICE</p>
-                        <p class="text-lg font-bold">ONLINE TUTORING</p>
+                    <div class="absolute bottom-4 right-4 md:bottom-8 md:right-8 bg-white/90 backdrop-blur px-4 py-2 md:px-6 md:py-4">
+                        <p class="text-[10px] md:text-xs font-bold tracking-widest text-gray-500">SERVICE</p>
+                        <p class="text-sm md:text-lg font-bold">ONLINE TUTORING</p>
                     </div>
                 </div>
             </div>
@@ -339,35 +364,35 @@
     </section>
 
     <!-- Culture (Values) -->
-    <section id="culture" class="bg-white py-32 border-t border-gray-100">
+    <section id="culture" class="bg-white py-20 md:py-32 border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-20 reveal">
-                <span class="text-xs font-bold font-english tracking-widest text-manabi-orange block mb-2">CULTURE</span>
-                <h2 class="text-4xl md:text-5xl font-black text-black">VALUES</h2>
-                <p class="text-gray-400 mt-4 font-bold tracking-widest">組織文化・行動指針</p>
+            <div class="mb-12 md:mb-20 reveal">
+                <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-manabi-orange block mb-2">CULTURE</span>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-black">VALUES</h2>
+                <p class="text-xs md:text-sm text-gray-400 mt-2 md:mt-4 font-bold tracking-widest">組織文化・行動指針</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                 <!-- Value 1 -->
-                <div class="group border-t-4 border-manabi-orange bg-gray-50 p-10 hover:bg-white hover:shadow-xl transition-all duration-300 reveal">
-                    <div class="flex justify-between items-start mb-6">
-                        <span class="text-manabi-orange font-english text-5xl font-bold opacity-30 group-hover:opacity-100 transition-opacity">01</span>
-                        <i class="fa-solid fa-flag text-2xl text-gray-300 group-hover:text-manabi-orange transition-colors"></i>
+                <div class="group border-t-4 border-manabi-orange bg-gray-50 p-8 md:p-10 hover:bg-white hover:shadow-xl transition-all duration-300 reveal">
+                    <div class="flex justify-between items-start mb-4 md:mb-6">
+                        <span class="text-manabi-orange font-english text-4xl md:text-5xl font-bold opacity-30 group-hover:opacity-100 transition-opacity">01</span>
+                        <i class="fa-solid fa-flag text-xl md:text-2xl text-gray-300 group-hover:text-manabi-orange transition-colors"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-6">ラストマンシップを持つ</h3>
-                    <p class="text-gray-600 leading-loose text-sm">
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">ラストマンシップを持つ</h3>
+                    <p class="text-gray-600 leading-loose text-xs md:text-sm">
                         自分自身を「仕事の最終責任者」と自ら定義して仕事に取組もう。そこに役職や年次は関係ない。どんな仕事も自分事として行動しよう。全ての物事は直接／間接的に制御可能である。
                     </p>
                 </div>
 
                 <!-- Value 2 -->
-                <div class="group border-t-4 border-manabi-blue bg-gray-50 p-10 hover:bg-white hover:shadow-xl transition-all duration-300 reveal delay-100">
-                    <div class="flex justify-between items-start mb-6">
-                        <span class="text-manabi-blue font-english text-5xl font-bold opacity-30 group-hover:opacity-100 transition-opacity">02</span>
-                        <i class="fa-solid fa-earth-asia text-2xl text-gray-300 group-hover:text-manabi-blue transition-colors"></i>
+                <div class="group border-t-4 border-manabi-blue bg-gray-50 p-8 md:p-10 hover:bg-white hover:shadow-xl transition-all duration-300 reveal delay-100">
+                    <div class="flex justify-between items-start mb-4 md:mb-6">
+                        <span class="text-manabi-blue font-english text-4xl md:text-5xl font-bold opacity-30 group-hover:opacity-100 transition-opacity">02</span>
+                        <i class="fa-solid fa-earth-asia text-xl md:text-2xl text-gray-300 group-hover:text-manabi-blue transition-colors"></i>
                     </div>
-                    <h3 class="text-2xl font-bold mb-6">全体最適を体現する</h3>
-                    <p class="text-gray-600 leading-loose text-sm">
+                    <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">全体最適を体現する</h3>
+                    <p class="text-gray-600 leading-loose text-xs md:text-sm">
                         視座を上げて常に事業全体の現在・将来を俯瞰しよう。個別最適に陥らず、事業全体・将来にわたって価値のある行動をとろう。
                     </p>
                 </div>
@@ -376,43 +401,43 @@
     </section>
 
     <!-- Communication (Revised Layout) -->
-    <section class="py-32 px-6 bg-manabi-gray">
+    <section class="py-20 md:py-32 px-6 bg-manabi-gray">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col lg:flex-row items-center gap-16 reveal">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 reveal">
                 <!-- Image Side -->
                 <div class="w-full lg:w-1/2 relative order-2 lg:order-1">
                     <!-- アクセントの枠線 -->
                     <div class="absolute -top-4 -left-4 w-full h-full border-2 border-manabi-orange rounded-sm z-0 hidden md:block"></div>
-                    <div class="relative z-10 overflow-hidden rounded-sm shadow-xl">
-                        <img src="https://www.toukobe.com/wp-content/uploads/IMG_0291-1.jpg" alt="WinParty Member Photo" class="w-full h-auto object-cover hover:scale-105 transition-transform duration-700">
+                    <div class="relative z-10 overflow-hidden rounded-sm shadow-xl aspect-video lg:aspect-auto">
+                        <img src="https://www.toukobe.com/wp-content/uploads/IMG_0291-1.jpg" alt="WinParty Member Photo" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
                     </div>
                 </div>
 
                 <!-- Text Side -->
                 <div class="w-full lg:w-1/2 order-1 lg:order-2">
-                    <h3 class="text-3xl font-english font-bold mb-10 text-manabi-orange tracking-wider border-b border-gray-300 pb-4 inline-block">
+                    <h3 class="text-2xl md:text-3xl font-english font-bold mb-8 md:mb-10 text-manabi-orange tracking-wider border-b border-gray-300 pb-4 inline-block">
                         COMMUNICATION
                     </h3>
-                    <div class="space-y-12">
+                    <div class="space-y-8 md:space-y-12">
                         <div>
-                            <h4 class="font-bold text-xl mb-4 flex items-center text-black">
-                                <span class="bg-manabi-orange/10 w-12 h-12 flex items-center justify-center rounded-full mr-4 text-manabi-orange shrink-0">
-                                    <i class="fa-brands fa-slack text-xl"></i>
+                            <h4 class="font-bold text-lg md:text-xl mb-2 md:mb-4 flex items-center text-black">
+                                <span class="bg-manabi-orange/10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full mr-3 md:mr-4 text-manabi-orange shrink-0 text-base md:text-xl">
+                                    <i class="fa-brands fa-slack"></i>
                                 </span>
                                 普段のやり取り
                             </h4>
-                            <p class="text-sm text-gray-600 leading-loose pl-16">
+                            <p class="text-xs md:text-sm text-gray-600 leading-loose pl-14 md:pl-16">
                                 リモートワークではありますが、Slackにてウェットなコミュニケーションを行っています。日々の業務連絡だけでなく、雑談や称賛の文化も大切にしています。
                             </p>
                         </div>
                         <div>
-                            <h4 class="font-bold text-xl mb-4 flex items-center text-black">
-                                <span class="bg-manabi-orange/10 w-12 h-12 flex items-center justify-center rounded-full mr-4 text-manabi-orange shrink-0">
-                                    <i class="fa-solid fa-champagne-glasses text-xl"></i>
+                            <h4 class="font-bold text-lg md:text-xl mb-2 md:mb-4 flex items-center text-black">
+                                <span class="bg-manabi-orange/10 w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-full mr-3 md:mr-4 text-manabi-orange shrink-0 text-base md:text-xl">
+                                    <i class="fa-solid fa-champagne-glasses"></i>
                                 </span>
                                 社内イベント
                             </h4>
-                            <p class="text-sm text-gray-600 leading-loose pl-16">
+                            <p class="text-xs md:text-sm text-gray-600 leading-loose pl-14 md:pl-16">
                                 2か月に1回の懇親会、半年に一回のWinParty（全社表彰会）を開催しています。オンライン・オフラインを組み合わせ、メンバー同士の絆を深める機会を定期的に設けています。
                             </p>
                         </div>
@@ -423,43 +448,43 @@
     </section>
 
     <!-- Growth (Split) -->
-    <section class="py-32 px-6 bg-manabi-black text-white relative overflow-hidden">
+    <section class="py-20 md:py-32 px-6 bg-manabi-black text-white relative overflow-hidden">
         <!-- Decoration -->
-        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-manabi-blue/10 rounded-full blur-[120px] transform translate-x-1/2 -translate-y-1/2"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-manabi-purple/10 rounded-full blur-[80px] transform -translate-x-1/2 translate-y-1/2"></div>
+        <div class="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-manabi-blue/10 rounded-full blur-[80px] md:blur-[120px] transform translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-manabi-purple/10 rounded-full blur-[60px] md:blur-[80px] transform -translate-x-1/2 translate-y-1/2"></div>
 
         <div class="max-w-7xl mx-auto relative z-10">
-            <div class="reveal mb-16 text-center md:text-left">
-                <span class="text-xs font-bold font-english tracking-widest text-manabi-blue block mb-2">CAREER PATH</span>
-                <h2 class="text-4xl md:text-5xl font-black mb-6">GROWTH</h2>
-                <p class="text-gray-400">圧倒的な成長環境</p>
+            <div class="reveal mb-12 md:mb-16 text-left">
+                <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-manabi-blue block mb-2">CAREER PATH</span>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-black mb-4 md:mb-6">GROWTH</h2>
+                <p class="text-xs md:text-sm text-gray-400">圧倒的な成長環境</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                 <!-- Course 1 -->
-                <div class="group bg-white/5 border border-white/10 p-10 hover:bg-white/10 hover:border-manabi-blue transition-all duration-300">
-                    <h4 class="font-bold text-2xl mb-6 text-white group-hover:text-manabi-blue transition-colors flex items-center justify-between">
+                <div class="group bg-white/5 border border-white/10 p-8 md:p-10 hover:bg-white/10 hover:border-manabi-blue transition-all duration-300">
+                    <h4 class="font-bold text-lg md:text-2xl mb-4 md:mb-6 text-white group-hover:text-manabi-blue transition-colors flex items-center justify-between">
                         経営幹部候補採用コース
                         <i class="fa-solid fa-user-tie text-manabi-blue opacity-50 group-hover:opacity-100"></i>
                     </h4>
-                    <p class="text-sm text-gray-400 leading-loose mb-8 h-20">
+                    <p class="text-xs md:text-sm text-gray-400 leading-loose mb-6 md:mb-8 min-h-[5em] md:h-20">
                         事業に主体的にコミットし、将来の経営層となる学生を募集しています。裁量権を持って事業を推進したい方に最適です。
                     </p>
-                    <a href="#" class="inline-flex items-center text-xs font-bold tracking-widest border border-gray-600 px-8 py-4 text-white hover:bg-manabi-blue hover:border-manabi-blue transition-all duration-300 w-full justify-center md:w-auto">
+                    <a href="#" class="inline-flex items-center text-[10px] md:text-xs font-bold tracking-widest border border-gray-600 px-6 md:px-8 py-3 md:py-4 text-white hover:bg-manabi-blue hover:border-manabi-blue transition-all duration-300 w-full justify-center md:w-auto">
                         VIEW DETAILS <i class="fa-solid fa-arrow-right ml-2"></i>
                     </a>
                 </div>
 
                 <!-- Course 2 -->
-                <div class="group bg-white/5 border border-white/10 p-10 hover:bg-white/10 hover:border-manabi-blue transition-all duration-300">
-                    <h4 class="font-bold text-2xl mb-6 text-white group-hover:text-manabi-blue transition-colors flex items-center justify-between">
+                <div class="group bg-white/5 border border-white/10 p-8 md:p-10 hover:bg-white/10 hover:border-manabi-blue transition-all duration-300">
+                    <h4 class="font-bold text-lg md:text-2xl mb-4 md:mb-6 text-white group-hover:text-manabi-blue transition-colors flex items-center justify-between">
                         職種別採用コース
                         <i class="fa-solid fa-briefcase text-manabi-blue opacity-50 group-hover:opacity-100"></i>
                     </h4>
-                    <p class="text-sm text-gray-400 leading-loose mb-8 h-20">
+                    <p class="text-xs md:text-sm text-gray-400 leading-loose mb-6 md:mb-8 min-h-[5em] md:h-20">
                         マーケティング、セールス、エンジニアなど、キャリアの可能性を広げる幅広い職種を募集しています。専門性を高めたい方へ。
                     </p>
-                    <a href="#" class="inline-flex items-center text-xs font-bold tracking-widest border border-gray-600 px-8 py-4 text-white hover:bg-manabi-blue hover:border-manabi-blue transition-all duration-300 w-full justify-center md:w-auto">
+                    <a href="#" class="inline-flex items-center text-[10px] md:text-xs font-bold tracking-widest border border-gray-600 px-6 md:px-8 py-3 md:py-4 text-white hover:bg-manabi-blue hover:border-manabi-blue transition-all duration-300 w-full justify-center md:w-auto">
                         VIEW DETAILS <i class="fa-solid fa-arrow-right ml-2"></i>
                     </a>
                 </div>
@@ -468,50 +493,49 @@
     </section>
 
     <!-- Data (Members) -->
-    <section id="data" class="py-32 bg-white">
+    <section id="data" class="py-20 md:py-32 bg-white">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="mb-20 reveal text-center">
-                <span class="text-xs font-bold font-english tracking-widest text-gray-400 block mb-2">MEMBER DATA</span>
-                <h2 class="text-4xl md:text-5xl font-black text-black">在籍メンバーのデータ</h2>
-                <p class="text-xs text-gray-400 mt-4 tracking-widest font-english">N=35 / 2026.01</p>
+            <div class="mb-12 md:mb-20 reveal text-center">
+                <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-gray-400 block mb-2">MEMBER DATA</span>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-black">在籍メンバーのデータ</h2>
+                <p class="text-[10px] md:text-xs text-gray-400 mt-2 md:mt-4 tracking-widest font-english">N=35 / 2026.01</p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center reveal">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8 text-center reveal">
                 <!-- University (Pie Chart) -->
-                <div class="p-8 border border-gray-100 hover:border-manabi-purple transition-all duration-300 shadow-sm hover:shadow-lg group flex flex-col h-full">
-                    <!-- アイコン削除 -->
-                    <h3 class="text-gray-900 font-bold tracking-widest mb-8 border-b-2 border-manabi-purple inline-block pb-1 mx-auto">大学区分</h3>
+                <div class="p-6 md:p-8 border border-gray-100 hover:border-manabi-purple transition-all duration-300 shadow-sm hover:shadow-lg group flex flex-col h-full">
+                    <h3 class="text-gray-900 font-bold tracking-widest mb-6 md:mb-8 border-b-2 border-manabi-purple inline-block pb-1 mx-auto text-sm md:text-base">大学区分</h3>
                     
                     <div class="flex-1 flex flex-col items-center justify-center">
-                        <div class="relative w-48 h-48 rounded-full mb-6" 
+                        <div class="relative w-40 h-40 md:w-48 md:h-48 rounded-full mb-6" 
                              style="background: conic-gradient(
                                  #9B6A99 0% 51.4%, 
                                  #3852E3 51.4% 82.8%, 
                                  #e5e7eb 82.8% 100%
                              );">
                              <div class="absolute inset-4 bg-white rounded-full flex items-center justify-center">
-                                 <span class="text-xs text-gray-400 font-bold">RATIO</span>
+                                 <span class="text-[10px] md:text-xs text-gray-400 font-bold">RATIO</span>
                              </div>
                         </div>
 
-                        <div class="w-full space-y-3 text-sm font-bold text-gray-700">
-                            <div class="flex justify-between items-center px-4">
+                        <div class="w-full space-y-3 text-xs md:text-sm font-bold text-gray-700">
+                            <div class="flex justify-between items-center px-2 md:px-4">
                                 <div class="flex items-center">
-                                    <span class="w-3 h-3 rounded-full bg-manabi-purple mr-2"></span>
+                                    <span class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-manabi-purple mr-2"></span>
                                     <span>京都大学</span>
                                 </div>
                                 <span class="font-english text-manabi-purple">51.4%</span>
                             </div>
-                            <div class="flex justify-between items-center px-4">
+                            <div class="flex justify-between items-center px-2 md:px-4">
                                 <div class="flex items-center">
-                                    <span class="w-3 h-3 rounded-full bg-manabi-blue mr-2"></span>
+                                    <span class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-manabi-blue mr-2"></span>
                                     <span>東京大学</span>
                                 </div>
                                 <span class="font-english text-manabi-blue">31.4%</span>
                             </div>
-                            <div class="flex justify-between items-center px-4">
+                            <div class="flex justify-between items-center px-2 md:px-4">
                                 <div class="flex items-center">
-                                    <span class="w-3 h-3 rounded-full bg-gray-200 mr-2"></span>
+                                    <span class="w-2 h-2 md:w-3 md:h-3 rounded-full bg-gray-200 mr-2"></span>
                                     <span class="text-gray-500">その他大学</span>
                                 </div>
                                 <span class="font-english text-gray-400">17.1%</span>
@@ -521,87 +545,85 @@
                 </div>
                 
                 <!-- Gender (Stacked Bar) -->
-                <div class="p-8 border border-gray-100 hover:border-manabi-blue transition-all duration-300 shadow-sm hover:shadow-lg group flex flex-col h-full">
-                     <!-- アイコン削除 -->
-                    <h3 class="text-gray-900 font-bold tracking-widest mb-8 border-b-2 border-manabi-blue inline-block pb-1 mx-auto">性別</h3>
+                <div class="p-6 md:p-8 border border-gray-100 hover:border-manabi-blue transition-all duration-300 shadow-sm hover:shadow-lg group flex flex-col h-full">
+                    <h3 class="text-gray-900 font-bold tracking-widest mb-6 md:mb-8 border-b-2 border-manabi-blue inline-block pb-1 mx-auto text-sm md:text-base">性別</h3>
                     
-                    <div class="flex-1 flex flex-col justify-center items-center w-full px-4">
-                        <div class="w-full flex h-24 rounded-lg overflow-hidden mb-6 relative">
+                    <div class="flex-1 flex flex-col justify-center items-center w-full px-2 md:px-4">
+                        <div class="w-full flex h-20 md:h-24 rounded-lg overflow-hidden mb-6 relative">
                             <div class="bg-manabi-blue h-full flex items-center justify-center relative group/male" style="width: 65.7%">
-                                <span class="text-white font-english font-bold text-2xl z-10">66%</span>
+                                <span class="text-white font-english font-bold text-xl md:text-2xl z-10">66%</span>
                                 <div class="absolute inset-0 bg-black/10 opacity-0 group-hover/male:opacity-100 transition-opacity"></div>
                             </div>
                             <div class="bg-manabi-orange h-full flex items-center justify-center relative group/female" style="width: 34.3%">
-                                <span class="text-white font-english font-bold text-2xl z-10">34%</span>
+                                <span class="text-white font-english font-bold text-xl md:text-2xl z-10">34%</span>
                                 <div class="absolute inset-0 bg-black/10 opacity-0 group-hover/female:opacity-100 transition-opacity"></div>
                             </div>
                         </div>
 
-                        <div class="w-full flex justify-between px-2">
+                        <div class="w-full flex justify-between px-1 md:px-2">
                             <div class="text-left">
                                 <div class="flex items-center mb-1">
-                                    <span class="w-3 h-3 bg-manabi-blue rounded-full mr-2"></span>
-                                    <span class="font-bold text-gray-700">MALE</span>
+                                    <span class="w-2 h-2 md:w-3 md:h-3 bg-manabi-blue rounded-full mr-2"></span>
+                                    <span class="font-bold text-gray-700 text-xs md:text-sm">MALE</span>
                                 </div>
-                                <p class="text-xs text-gray-400 pl-5">男性 (23名)</p>
+                                <p class="text-[10px] md:text-xs text-gray-400 pl-4 md:pl-5">男性 (23名)</p>
                             </div>
                             <div class="text-right">
                                 <div class="flex items-center justify-end mb-1">
-                                    <span class="font-bold text-gray-700 mr-2">FEMALE</span>
-                                    <span class="w-3 h-3 bg-manabi-orange rounded-full"></span>
+                                    <span class="font-bold text-gray-700 mr-2 text-xs md:text-sm">FEMALE</span>
+                                    <span class="w-2 h-2 md:w-3 md:h-3 bg-manabi-orange rounded-full"></span>
                                 </div>
-                                <p class="text-xs text-gray-400 pr-5">女性 (12名)</p>
+                                <p class="text-[10px] md:text-xs text-gray-400 pr-4 md:pr-5">女性 (12名)</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Grade (Sorted List) -->
-                <div class="p-8 border border-gray-100 hover:border-manabi-orange transition-all duration-300 shadow-sm hover:shadow-lg group flex flex-col h-full">
-                     <!-- アイコン削除 -->
-                    <h3 class="text-gray-900 font-bold tracking-widest mb-8 border-b-2 border-manabi-orange inline-block pb-1 mx-auto">学年</h3>
-                    <div class="flex flex-col justify-center gap-4 w-full">
-                        <div class="flex items-center gap-3 text-sm">
+                <div class="p-6 md:p-8 border border-gray-100 hover:border-manabi-orange transition-all duration-300 shadow-sm hover:shadow-lg group flex flex-col h-full">
+                    <h3 class="text-gray-900 font-bold tracking-widest mb-6 md:mb-8 border-b-2 border-manabi-orange inline-block pb-1 mx-auto text-sm md:text-base">学年</h3>
+                    <div class="flex flex-col justify-center gap-3 md:gap-4 w-full">
+                        <div class="flex items-center gap-3 text-xs md:text-sm">
                             <span class="w-16 font-bold text-right text-gray-600">学部1年</span>
                             <div class="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
                                 <div class="bg-manabi-orange h-full rounded-full opacity-30" style="width: 5.7%"></div>
                             </div>
-                            <span class="w-10 text-right font-english font-bold text-manabi-orange opacity-30">6%</span>
+                            <span class="w-8 md:w-10 text-right font-english font-bold text-manabi-orange opacity-30">6%</span>
                         </div>
-                        <div class="flex items-center gap-3 text-sm">
+                        <div class="flex items-center gap-3 text-xs md:text-sm">
                             <span class="w-16 font-bold text-right text-gray-600">学部2年</span>
                             <div class="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
                                 <div class="bg-manabi-orange h-full rounded-full opacity-40" style="width: 8.6%"></div>
                             </div>
-                            <span class="w-10 text-right font-english font-bold text-manabi-orange opacity-40">9%</span>
+                            <span class="w-8 md:w-10 text-right font-english font-bold text-manabi-orange opacity-40">9%</span>
                         </div>
-                        <div class="flex items-center gap-3 text-sm">
+                        <div class="flex items-center gap-3 text-xs md:text-sm">
                             <span class="w-16 font-bold text-right text-gray-600">学部3年</span>
                             <div class="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
                                 <div class="bg-manabi-orange h-full rounded-full opacity-80" style="width: 28.6%"></div>
                             </div>
-                            <span class="w-10 text-right font-english font-bold text-manabi-orange opacity-80">29%</span>
+                            <span class="w-8 md:w-10 text-right font-english font-bold text-manabi-orange opacity-80">29%</span>
                         </div>
-                        <div class="flex items-center gap-3 text-sm">
+                        <div class="flex items-center gap-3 text-xs md:text-sm">
                             <span class="w-16 font-bold text-right text-gray-600">学部4年</span>
                             <div class="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
                                 <div class="bg-manabi-orange h-full rounded-full" style="width: 31.4%"></div>
                             </div>
-                            <span class="w-10 text-right font-english font-bold text-manabi-orange">31%</span>
+                            <span class="w-8 md:w-10 text-right font-english font-bold text-manabi-orange">31%</span>
                         </div>
-                        <div class="flex items-center gap-3 text-sm">
+                        <div class="flex items-center gap-3 text-xs md:text-sm">
                             <span class="w-16 font-bold text-right text-gray-600">修士1年</span>
                             <div class="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
                                 <div class="bg-manabi-orange h-full rounded-full opacity-50" style="width: 11.4%"></div>
                             </div>
-                            <span class="w-10 text-right font-english font-bold text-manabi-orange opacity-50">11%</span>
+                            <span class="w-8 md:w-10 text-right font-english font-bold text-manabi-orange opacity-50">11%</span>
                         </div>
-                        <div class="flex items-center gap-3 text-sm">
+                        <div class="flex items-center gap-3 text-xs md:text-sm">
                             <span class="w-16 font-bold text-right text-gray-600">修士2年</span>
                             <div class="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
                                 <div class="bg-manabi-orange h-full rounded-full opacity-60" style="width: 14.3%"></div>
                             </div>
-                            <span class="w-10 text-right font-english font-bold text-manabi-orange opacity-60">14%</span>
+                            <span class="w-8 md:w-10 text-right font-english font-bold text-manabi-orange opacity-60">14%</span>
                         </div>
                     </div>
                 </div>
@@ -610,44 +632,45 @@
     </section>
 
     <!-- Alumni (Graduates) -->
-    <section class="py-32 bg-gray-50">
+    <section class="py-20 md:py-32 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-20 reveal">
-                <h2 class="text-3xl md:text-4xl font-black text-black">卒業生の進路実績</h2>
+            <div class="text-center mb-12 md:mb-20 reveal">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-black">卒業生の進路実績</h2>
                 <div class="w-10 h-1 bg-manabi-black mx-auto mt-6"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 reveal">
-                <div class="bg-white p-8 border-l-4 border-manabi-purple hover:-translate-y-2 transition-transform duration-300 shadow-sm">
-                    <h4 class="font-bold text-manabi-purple mb-6 text-sm tracking-widest">戦略コンサル</h4>
-                    <ul class="text-sm space-y-3 text-gray-600 font-medium font-english">
+                <!-- コンテンツは同じだが、SPでは縦積みになる -->
+                <div class="bg-white p-6 md:p-8 border-l-4 border-manabi-purple hover:-translate-y-2 transition-transform duration-300 shadow-sm">
+                    <h4 class="font-bold text-manabi-purple mb-4 md:mb-6 text-xs md:text-sm tracking-widest">戦略コンサル</h4>
+                    <ul class="text-xs md:text-sm space-y-2 md:space-y-3 text-gray-600 font-medium font-english">
                         <li>McKinsey & Company</li>
                         <li>BCG</li>
                         <li>Bain & Company</li>
                         <li>Kearney</li>
                     </ul>
                 </div>
-                <div class="bg-white p-8 border-l-4 border-manabi-orange hover:-translate-y-2 transition-transform duration-300 shadow-sm">
-                    <h4 class="font-bold text-manabi-orange mb-6 text-sm tracking-widest">メガベンチャー</h4>
-                    <ul class="text-sm space-y-3 text-gray-600 font-medium font-english">
+                <div class="bg-white p-6 md:p-8 border-l-4 border-manabi-orange hover:-translate-y-2 transition-transform duration-300 shadow-sm">
+                    <h4 class="font-bold text-manabi-orange mb-4 md:mb-6 text-xs md:text-sm tracking-widest">メガベンチャー</h4>
+                    <ul class="text-xs md:text-sm space-y-2 md:space-y-3 text-gray-600 font-medium font-english">
                         <li>Recruit</li>
                         <li>CyberAgent</li>
                         <li>Leverages</li>
                         <li>RAKSUL</li>
                     </ul>
                 </div>
-                <div class="bg-white p-8 border-l-4 border-manabi-blue hover:-translate-y-2 transition-transform duration-300 shadow-sm">
-                    <h4 class="font-bold text-manabi-blue mb-6 text-sm tracking-widest">金融・財閥系</h4>
-                    <ul class="text-sm space-y-3 text-gray-600 font-medium">
+                <div class="bg-white p-6 md:p-8 border-l-4 border-manabi-blue hover:-translate-y-2 transition-transform duration-300 shadow-sm">
+                    <h4 class="font-bold text-manabi-blue mb-4 md:mb-6 text-xs md:text-sm tracking-widest">金融・財閥系</h4>
+                    <ul class="text-xs md:text-sm space-y-2 md:space-y-3 text-gray-600 font-medium">
                         <li class="font-english">Morgan Stanley</li>
                         <li class="font-english">Citi</li>
                         <li>三井物産</li>
                         <li>三菱重工</li>
                     </ul>
                 </div>
-                <div class="bg-white p-8 border-l-4 border-gray-400 hover:-translate-y-2 transition-transform duration-300 shadow-sm">
-                    <h4 class="font-bold text-gray-400 mb-6 text-sm tracking-widest">理系難関企業</h4>
-                    <ul class="text-sm space-y-3 text-gray-600 font-medium font-english">
+                <div class="bg-white p-6 md:p-8 border-l-4 border-gray-400 hover:-translate-y-2 transition-transform duration-300 shadow-sm">
+                    <h4 class="font-bold text-gray-400 mb-4 md:mb-6 text-xs md:text-sm tracking-widest">理系難関企業</h4>
+                    <ul class="text-xs md:text-sm space-y-2 md:space-y-3 text-gray-600 font-medium font-english">
                         <li>JAXA</li>
                         <li>FUJIFILM</li>
                         <li>AWS</li>
@@ -659,44 +682,44 @@
     </section>
 
     <!-- Process -->
-    <section class="py-32 bg-white">
+    <section class="py-20 md:py-32 bg-white">
         <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-3xl font-black text-center mb-20">入社までのプロセス</h2>
+            <h2 class="text-3xl font-black text-center mb-12 md:mb-20">入社までのプロセス</h2>
             
-            <div class="reveal space-y-8">
+            <div class="reveal space-y-6 md:space-y-8">
                 <!-- Step 1 -->
                 <div class="flex items-start group">
-                    <div class="flex-shrink-0 w-12 h-12 bg-manabi-blue text-white rounded-full flex items-center justify-center font-bold font-english text-xl shadow-lg z-10">1</div>
-                    <div class="ml-8 pt-1 w-full border-b border-gray-100 pb-8">
-                        <h3 class="font-bold text-xl mb-2 text-manabi-blue">オンライン説明会</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">オンライン上の説明会を個別で実施します</p>
+                    <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-manabi-blue text-white rounded-full flex items-center justify-center font-bold font-english text-lg md:text-xl shadow-lg z-10">1</div>
+                    <div class="ml-6 md:ml-8 pt-1 w-full border-b border-gray-100 pb-6 md:pb-8">
+                        <h3 class="font-bold text-lg md:text-xl mb-2 text-manabi-blue">オンライン説明会</h3>
+                        <p class="text-xs md:text-sm text-gray-600 leading-relaxed">オンライン上の説明会を個別で実施します</p>
                     </div>
                 </div>
 
                 <!-- Step 2 -->
                 <div class="flex items-start group">
-                    <div class="flex-shrink-0 w-12 h-12 bg-manabi-blue text-white rounded-full flex items-center justify-center font-bold font-english text-xl shadow-lg z-10">2</div>
-                    <div class="ml-8 pt-1 w-full border-b border-gray-100 pb-8">
-                        <h3 class="font-bold text-xl mb-2 text-manabi-blue">面接</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">過去のご経験やキャリアについて、カジュアルにお話しします</p>
+                    <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-manabi-blue text-white rounded-full flex items-center justify-center font-bold font-english text-lg md:text-xl shadow-lg z-10">2</div>
+                    <div class="ml-6 md:ml-8 pt-1 w-full border-b border-gray-100 pb-6 md:pb-8">
+                        <h3 class="font-bold text-lg md:text-xl mb-2 text-manabi-blue">面接</h3>
+                        <p class="text-xs md:text-sm text-gray-600 leading-relaxed">過去のご経験やキャリアについて、カジュアルにお話しします</p>
                     </div>
                 </div>
 
                 <!-- Step 3 -->
                 <div class="flex items-start group">
-                    <div class="flex-shrink-0 w-12 h-12 bg-manabi-blue text-white rounded-full flex items-center justify-center font-bold font-english text-xl shadow-lg z-10">3</div>
-                    <div class="ml-8 pt-1 w-full border-b border-gray-100 pb-8">
-                        <h3 class="font-bold text-xl mb-2 text-manabi-blue">内定者面談</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">他インターン生との交流を通じて、懸念点を解消していただきます</p>
+                    <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-manabi-blue text-white rounded-full flex items-center justify-center font-bold font-english text-lg md:text-xl shadow-lg z-10">3</div>
+                    <div class="ml-6 md:ml-8 pt-1 w-full border-b border-gray-100 pb-6 md:pb-8">
+                        <h3 class="font-bold text-lg md:text-xl mb-2 text-manabi-blue">内定者面談</h3>
+                        <p class="text-xs md:text-sm text-gray-600 leading-relaxed">他インターン生との交流を通じて、懸念点を解消していただきます</p>
                     </div>
                 </div>
 
                 <!-- Step 4 -->
                 <div class="flex items-start group">
-                    <div class="flex-shrink-0 w-12 h-12 bg-manabi-black text-white rounded-full flex items-center justify-center font-bold font-english text-xl shadow-lg z-10">4</div>
-                    <div class="ml-8 pt-1 w-full pb-8">
-                        <h3 class="font-bold text-xl mb-2 text-black">研修</h3>
-                        <p class="text-sm text-gray-600 leading-relaxed">入社初日から活躍できるよう、OJT研修を実施します</p>
+                    <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-manabi-black text-white rounded-full flex items-center justify-center font-bold font-english text-lg md:text-xl shadow-lg z-10">4</div>
+                    <div class="ml-6 md:ml-8 pt-1 w-full pb-6 md:pb-8">
+                        <h3 class="font-bold text-lg md:text-xl mb-2 text-black">研修</h3>
+                        <p class="text-xs md:text-sm text-gray-600 leading-relaxed">入社初日から活躍できるよう、OJT研修を実施します</p>
                     </div>
                 </div>
             </div>
@@ -704,21 +727,21 @@
     </section>
 
     <!-- FAQ (Accordion Style) -->
-    <section class="py-32 bg-gray-50">
+    <section class="py-20 md:py-32 bg-gray-50">
         <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-3xl font-black text-center mb-16 text-black">FAQ</h2>
-            <div class="space-y-4 reveal" id="faq-accordion">
+            <h2 class="text-3xl font-black text-center mb-12 md:mb-16 text-black">FAQ</h2>
+            <div class="space-y-3 md:space-y-4 reveal" id="faq-accordion">
                 <!-- FAQ Item 1 -->
                 <div class="bg-white border-b border-gray-100 faq-item shadow-sm">
                     <button class="w-full text-left p-6 md:p-8 flex justify-between items-center focus:outline-none hover:bg-gray-50 transition-colors">
-                        <span class="font-bold text-lg flex items-baseline">
-                            <span class="text-manabi-blue mr-4 font-english font-black">Q.</span>
+                        <span class="font-bold text-base md:text-lg flex items-baseline">
+                            <span class="text-manabi-blue mr-3 md:mr-4 font-english font-black">Q.</span>
                             他の仕事や学業と両立できますか？
                         </span>
                         <i class="fa-solid fa-plus faq-icon text-gray-400"></i>
                     </button>
                     <div class="faq-content bg-gray-50">
-                        <div class="p-6 md:p-8 pt-0 text-gray-600 text-sm leading-loose">
+                        <div class="p-6 md:p-8 pt-0 text-gray-600 text-xs md:text-sm leading-loose">
                             はい。可能です。研究室や実習、他のアルバイトと両立しているメンバーも多数在籍しています。
                         </div>
                     </div>
@@ -727,14 +750,14 @@
                 <!-- FAQ Item 2 -->
                 <div class="bg-white border-b border-gray-100 faq-item shadow-sm">
                     <button class="w-full text-left p-6 md:p-8 flex justify-between items-center focus:outline-none hover:bg-gray-50 transition-colors">
-                        <span class="font-bold text-lg flex items-baseline">
-                            <span class="text-manabi-blue mr-4 font-english font-black">Q.</span>
+                        <span class="font-bold text-base md:text-lg flex items-baseline">
+                            <span class="text-manabi-blue mr-3 md:mr-4 font-english font-black">Q.</span>
                             応募するか迷っているのですが、話を聞くだけでも大丈夫ですか？
                         </span>
                         <i class="fa-solid fa-plus faq-icon text-gray-400"></i>
                     </button>
                     <div class="faq-content bg-gray-50">
-                        <div class="p-6 md:p-8 pt-0 text-gray-600 text-sm leading-loose">
+                        <div class="p-6 md:p-8 pt-0 text-gray-600 text-xs md:text-sm leading-loose">
                             はい。大丈夫です。業務内容や会社の説明をカジュアルにさせていただきますので、まずはページ下部のボタンより説明会をご予約ください。
                         </div>
                     </div>
@@ -743,14 +766,14 @@
                 <!-- FAQ Item 3 -->
                 <div class="bg-white border-b border-gray-100 faq-item shadow-sm">
                     <button class="w-full text-left p-6 md:p-8 flex justify-between items-center focus:outline-none hover:bg-gray-50 transition-colors">
-                        <span class="font-bold text-lg flex items-baseline">
-                            <span class="text-manabi-blue mr-4 font-english font-black">Q.</span>
+                        <span class="font-bold text-base md:text-lg flex items-baseline">
+                            <span class="text-manabi-blue mr-3 md:mr-4 font-english font-black">Q.</span>
                             研修やサポートはありますか？
                         </span>
                         <i class="fa-solid fa-plus faq-icon text-gray-400"></i>
                     </button>
                     <div class="faq-content bg-gray-50">
-                        <div class="p-6 md:p-8 pt-0 text-gray-600 text-sm leading-loose">
+                        <div class="p-6 md:p-8 pt-0 text-gray-600 text-xs md:text-sm leading-loose">
                             はい。ございます。先輩のインターン生からOJT形式で業務立ち上がりのサポートをさせていただきます。
                         </div>
                     </div>
@@ -759,56 +782,62 @@
         </div>
     </section>
 
-    <!-- Entry CTA Section (Solid Black Background) -->
-    <section id="entry" class="py-32 px-6 bg-manabi-black flex flex-col items-center justify-center text-center text-white relative overflow-hidden">
+    <!-- Entry CTA Section -->
+    <section id="entry" class="py-20 md:py-32 px-6 bg-manabi-black flex flex-col items-center justify-center text-center text-white relative overflow-hidden">
         <!-- Decoration -->
         <div class="absolute inset-0 bg-white/5"></div>
-        <div class="absolute top-0 right-0 w-96 h-96 bg-manabi-blue/20 rounded-full blur-[100px]"></div>
-        <div class="absolute bottom-0 left-0 w-96 h-96 bg-manabi-purple/20 rounded-full blur-[100px]"></div>
+        <div class="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-manabi-blue/20 rounded-full blur-[80px] md:blur-[100px]"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-manabi-purple/20 rounded-full blur-[80px] md:blur-[100px]"></div>
         
         <div class="reveal max-w-3xl relative z-10">
-            <h2 class="text-5xl md:text-6xl font-black mb-10 tracking-tighter text-white">JOIN OUR TEAM</h2>
-            <p class="text-sm md:text-base font-medium mb-12 leading-loose text-gray-300">
-                まずは個別のオンライン説明会にご参加ください。<br>
-                インターンに興味を持たれているきっかけ等をお伺いしたうえで、<br>
-                インターン業務の詳細をご紹介いたします。<br><br>
-                <span class="font-bold border border-white/20 px-4 py-2 inline-block text-white">選考要素は一切ございませんので、お気軽にご参加ください。</span>
-            </p>
-            <a href="#" class="inline-block bg-white text-black text-lg font-bold py-6 px-20 tracking-[0.2em] shadow-2xl hover:bg-manabi-blue hover:text-white transition-all duration-300">
+            <h2 class="text-4xl md:text-6xl font-black mb-8 md:mb-10 tracking-tighter text-white">JOIN OUR TEAM</h2>
+            <div class="text-xs md:text-sm font-medium mb-10 md:mb-12 leading-loose text-gray-300 space-y-4">
+                <p>
+                    <span class="ib">まずは個別の</span><span class="ib">オンライン説明会に</span><span class="ib">ご参加ください。</span>
+                </p>
+                <p>
+                    <span class="ib">インターンに興味を</span><span class="ib">持たれている</span><span class="ib">きっかけ等を</span><span class="ib">お伺いしたうえで、</span><br class="hidden md:block">
+                    <span class="ib">インターン業務の詳細を</span><span class="ib">ご紹介いたします。</span>
+                </p>
+                <div class="pt-4">
+                    <span class="font-bold border border-white/20 px-3 py-2 md:px-4 md:py-2 inline-block text-white text-[10px] md:text-sm">選考要素は一切ございませんので、お気軽にご参加ください。</span>
+                </div>
+            </div>
+            <a href="#" class="inline-block bg-white text-black text-base md:text-lg font-bold py-5 md:py-6 px-16 md:px-20 tracking-[0.2em] shadow-2xl hover:bg-manabi-blue hover:text-white transition-all duration-300 w-full md:w-auto">
                 ENTRY
             </a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-manabi-black text-white pt-20 pb-10 border-t border-gray-800">
+    <footer class="bg-manabi-black text-white pt-16 md:pt-20 pb-8 md:pb-10 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-                <div class="md:col-span-1">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-12 mb-12 md:mb-16">
+                <div class="md:col-span-1 text-center md:text-left">
                     <h3 class="text-2xl font-black font-english tracking-tighter mb-6">MANABI Inc.</h3>
                 </div>
                 
-                <div>
+                <div class="text-center md:text-left">
                     <h4 class="text-xs font-bold text-gray-500 mb-6 tracking-widest">ABOUT</h4>
                     <ul class="space-y-4 text-sm">
-                        <li><a href="#mission" class="hover:text-manabi-purple transition-colors">ミッション</a></li>
-                        <li><a href="#business" class="hover:text-manabi-purple transition-colors">事業内容</a></li>
-                        <li><a href="#culture" class="hover:text-manabi-purple transition-colors">組織文化</a></li>
+                        <li><a href="#mission" class="hover:text-manabi-purple transition-colors block py-1">ミッション</a></li>
+                        <li><a href="#business" class="hover:text-manabi-purple transition-colors block py-1">事業内容</a></li>
+                        <li><a href="#culture" class="hover:text-manabi-purple transition-colors block py-1">組織文化</a></li>
                     </ul>
                 </div>
                 
-                <div>
+                <div class="text-center md:text-left">
                     <h4 class="text-xs font-bold text-gray-500 mb-6 tracking-widest">RECRUIT</h4>
                     <ul class="space-y-4 text-sm">
-                        <li><a href="#" class="hover:text-manabi-blue transition-colors">募集要項</a></li>
-                        <li><a href="#" class="hover:text-manabi-blue transition-colors">選考フロー</a></li>
-                        <li><a href="#entry" class="hover:text-manabi-blue transition-colors">エントリー</a></li>
+                        <li><a href="#" class="hover:text-manabi-blue transition-colors block py-1">募集要項</a></li>
+                        <li><a href="#" class="hover:text-manabi-blue transition-colors block py-1">選考フロー</a></li>
+                        <li><a href="#entry" class="hover:text-manabi-blue transition-colors block py-1">エントリー</a></li>
                     </ul>
                 </div>
 
-                <div>
+                <div class="text-center md:text-left">
                     <h4 class="text-xs font-bold text-gray-500 mb-6 tracking-widest">CONTACT</h4>
-                    <div class="flex space-x-6">
+                    <div class="flex justify-center md:justify-start space-x-6">
                         <a href="#" class="text-xl text-gray-500 hover:text-manabi-orange transition-colors"><i class="fa-brands fa-twitter"></i></a>
                         <a href="#" class="text-xl text-gray-500 hover:text-manabi-orange transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="#" class="text-xl text-gray-500 hover:text-manabi-orange transition-colors"><i class="fa-brands fa-instagram"></i></a>
@@ -816,9 +845,9 @@
                 </div>
             </div>
             
-            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <p class="text-xs text-gray-500 tracking-widest">&copy; MANABI Inc. ALL RIGHTS RESERVED.</p>
-                <div class="flex space-x-6 mt-4 md:mt-0 text-xs text-gray-500">
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-[10px] md:text-xs text-gray-500 tracking-widest">&copy; MANABI Inc. ALL RIGHTS RESERVED.</p>
+                <div class="flex space-x-6 mt-0 md:mt-0 text-[10px] md:text-xs text-gray-500">
                     <a href="#" class="hover:text-white transition-colors">プライバシーポリシー</a>
                 </div>
             </div>
@@ -832,7 +861,7 @@
             const reveals = document.querySelectorAll('.reveal');
             const revealOnScroll = () => {
                 const windowHeight = window.innerHeight;
-                const elementVisible = 150;
+                const elementVisible = 100; // SP用に少し早めに表示
                 reveals.forEach((reveal) => {
                     const elementTop = reveal.getBoundingClientRect().top;
                     if (elementTop < windowHeight - elementVisible) {
@@ -851,10 +880,8 @@
                     const content = btn.nextElementSibling;
                     const icon = btn.querySelector('.faq-icon');
                     
-                    // Toggle Active Class
                     item.classList.toggle('active');
 
-                    // Toggle Content Height
                     if (content.style.maxHeight) {
                         content.style.maxHeight = null;
                         icon.classList.remove('fa-minus');
@@ -866,6 +893,39 @@
                         icon.classList.add('fa-minus');
                         icon.style.transform = 'rotate(180deg)';
                     }
+                });
+            });
+
+            // Mobile Menu Toggle
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+            const menuIcon = menuBtn.querySelector('i');
+            let isMenuOpen = false;
+
+            menuBtn.addEventListener('click', () => {
+                isMenuOpen = !isMenuOpen;
+                if (isMenuOpen) {
+                    mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                    mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-xmark');
+                } else {
+                    mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
+                }
+            });
+
+            // Close menu when link is clicked
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    isMenuOpen = false;
+                    mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
                 });
             });
         });
