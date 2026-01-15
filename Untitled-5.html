@@ -37,6 +37,7 @@
                     animation: {
                         'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                         'scroll-line': 'scrollLine 2s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         fadeInUp: {
@@ -138,9 +139,9 @@
 <body class="bg-white">
 
     <!-- Header -->
-    <header class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-gray-100" id="header">
-        <div class="max-w-7xl mx-auto px-6 h-16 md:h-20 flex justify-between items-center">
-            <a href="#" class="text-xl md:text-2xl font-black font-english tracking-tighter hover:opacity-70 transition-opacity z-50 relative">
+    <header class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-gray-100" id="header">
+        <div class="max-w-7xl mx-auto px-6 h-16 md:h-20 flex justify-between items-center relative z-[60]">
+            <a href="#" class="text-xl md:text-2xl font-black font-english tracking-tighter hover:opacity-70 transition-opacity">
                 MANABI <span class="text-[10px] md:text-xs font-normal font-sans ml-1 tracking-widest text-manabi-purple">Inc.</span>
             </a>
             
@@ -156,14 +157,15 @@
             </nav>
 
             <!-- Mobile Menu Button -->
-            <button class="md:hidden text-2xl focus:outline-none z-50 relative w-8 h-8 flex items-center justify-center" id="menu-btn">
+            <!-- z-indexを上げてメニューより手前に表示 -->
+            <button class="md:hidden text-2xl focus:outline-none z-[60] relative w-8 h-8 flex items-center justify-center" id="menu-btn">
                 <i class="fa-solid fa-bars transition-all duration-300"></i>
             </button>
         </div>
 
         <!-- Mobile Menu Overlay -->
-        <!-- 修正: min-h-screenとjustify-centerを組み合わせ、画面サイズに応じてスクロール可能な中央揃えを実現 -->
-        <div class="fixed inset-0 bg-white z-40 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto" id="mobile-menu">
+        <!-- z-indexを50に設定、ボタンより後ろだがヘッダー背景より手前になるように配置 -->
+        <div class="fixed inset-0 bg-white z-[50] opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto" id="mobile-menu">
             <nav class="min-h-screen w-full flex flex-col items-center justify-center space-y-8 py-24 text-center">
                 <a href="#mission" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">MISSION</a>
                 <a href="#business" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">BUSINESS</a>
@@ -177,18 +179,11 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="relative h-screen w-full overflow-hidden flex items-center justify-start bg-gray-50">
-        <!-- Background Decoration -->
-        <div class="absolute top-[-20%] right-[-10%] w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-manabi-blue/30 rounded-full blur-[80px] md:blur-[100px] animate-pulse"></div>
-        <div class="absolute bottom-[-20%] left-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-manabi-orange/30 rounded-full blur-[60px] md:blur-[80px] animate-pulse" style="animation-duration: 4s;"></div>
+    <section class="relative h-screen w-full overflow-hidden flex items-center justify-start bg-white">
+        <!-- Background Decoration (CSS Shapes only) -->
+        <div class="absolute top-[-20%] right-[-10%] w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-manabi-blue/30 rounded-full blur-[80px] md:blur-[100px] animate-pulse-slow"></div>
+        <div class="absolute bottom-[-20%] left-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-manabi-orange/30 rounded-full blur-[60px] md:blur-[80px] animate-pulse-slow" style="animation-duration: 4s;"></div>
 
-        <!-- Background Image -->
-        <div class="absolute inset-0 z-0 opacity-40 mix-blend-multiply">
-            <img src="http://googleusercontent.com/image_generation_content/1" 
-                 alt="Abstract Hero Visual" 
-                 class="w-full h-full object-cover object-center">
-        </div>
-        
         <div class="relative z-10 text-manabi-black text-left px-6 md:px-20 max-w-7xl w-full mt-10 md:mt-20">
             <p class="text-xs md:text-base tracking-[0.2em] md:tracking-[0.3em] font-bold mb-6 md:mb-8 font-english animate-fade-in-up flex items-center justify-start gap-3 md:gap-4">
                 <span class="w-8 md:w-12 h-[2px] bg-manabi-black"></span>
@@ -199,7 +194,7 @@
                 <span class="ib">“いま”変えられる</span>
             </h1>
             <div class="animate-fade-in-up" style="animation-delay: 0.4s;">
-                <p class="text-xs md:text-lg font-bold tracking-widest bg-white/80 backdrop-blur-md px-6 md:px-8 py-2 md:py-3 inline-block border border-gray-200 shadow-sm rounded-sm">
+                <p class="text-xs md:text-lg font-bold tracking-widest bg-white/60 backdrop-blur-sm px-6 md:px-8 py-2 md:py-3 inline-block border border-gray-200 shadow-sm rounded-sm">
                     MANABI Inc.
                 </p>
             </div>
@@ -216,9 +211,9 @@
 
     <!-- Intro -->
     <section class="py-20 md:py-32 px-6 bg-white relative overflow-hidden">
-        <!-- Decoration -->
-        <div class="absolute top-[-10%] left-[-5%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-manabi-orange/15 rounded-full blur-[60px] md:blur-[80px]"></div>
-        <div class="absolute bottom-0 right-0 w-[400px] md:w-[500px] h-[400px] md:h-[500px] bg-manabi-blue/15 rounded-full blur-[80px] md:blur-[100px]"></div>
+        <!-- Decoration (つながりを持たせる) -->
+        <div class="absolute top-[-20%] left-[-10%] w-[400px] h-[400px] bg-manabi-orange/10 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-manabi-blue/10 rounded-full blur-[120px]"></div>
 
         <div class="max-w-5xl mx-auto reveal relative z-10">
             <!-- Text -->
@@ -323,7 +318,6 @@
     <!-- Business -->
     <section id="business" class="py-20 md:py-32 px-6 bg-white">
         <div class="max-w-7xl mx-auto">
-            <!-- 修正箇所：SPで左揃え(items-start)、PCで右揃え(items-end) -->
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 reveal">
                 <div>
                     <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-manabi-blue block mb-2">BUSINESS</span>
@@ -499,7 +493,6 @@
             <div class="mb-12 md:mb-20 reveal text-center">
                 <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-gray-400 block mb-2">MEMBER DATA</span>
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-black">在籍メンバーのデータ</h2>
-                <!-- 修正: N=35を削除 -->
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8 text-center reveal">
@@ -567,14 +560,14 @@
                                     <span class="w-2 h-2 md:w-3 md:h-3 bg-manabi-blue rounded-full mr-2"></span>
                                     <span class="font-bold text-gray-700 text-xs md:text-sm">MALE</span>
                                 </div>
-                                <p class="text-[10px] md:text-xs text-gray-400 pl-4 md:pl-5">男性 (23名)</p>
+                                <p class="text-[10px] md:text-xs text-gray-400 pl-4 md:pl-5">男性</p>
                             </div>
                             <div class="text-right">
                                 <div class="flex items-center justify-end mb-1">
                                     <span class="font-bold text-gray-700 mr-2 text-xs md:text-sm">FEMALE</span>
                                     <span class="w-2 h-2 md:w-3 md:h-3 bg-manabi-orange rounded-full"></span>
                                 </div>
-                                <p class="text-[10px] md:text-xs text-gray-400 pr-4 md:pr-5">女性 (12名)</p>
+                                <p class="text-[10px] md:text-xs text-gray-400 pr-4 md:pr-5">女性</p>
                             </div>
                         </div>
                     </div>
@@ -732,7 +725,6 @@
     </section>
 
     <!-- FAQ (Accordion Style) -->
-    <!-- 修正: Q. が改行されないように whitespace-nowrap shrink-0 を追加 -->
     <section class="py-20 md:py-32 bg-gray-50">
         <div class="max-w-4xl mx-auto px-6">
             <h2 class="text-3xl font-black text-center mb-12 md:mb-16 text-black">FAQ</h2>
@@ -917,15 +909,19 @@
             menuBtn.addEventListener('click', () => {
                 isMenuOpen = !isMenuOpen;
                 if (isMenuOpen) {
+                    // Open Menu
                     mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
                     mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
                     menuIcon.classList.remove('fa-bars');
                     menuIcon.classList.add('fa-xmark');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
                 } else {
+                    // Close Menu
                     mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
                     mobileMenu.classList.add('opacity-0', 'pointer-events-none');
                     menuIcon.classList.remove('fa-xmark');
                     menuIcon.classList.add('fa-bars');
+                    document.body.style.overflow = ''; // Restore scrolling
                 }
             });
 
@@ -937,6 +933,7 @@
                     mobileMenu.classList.add('opacity-0', 'pointer-events-none');
                     menuIcon.classList.remove('fa-xmark');
                     menuIcon.classList.add('fa-bars');
+                    document.body.style.overflow = ''; // Restore scrolling
                 });
             });
         });
