@@ -58,12 +58,11 @@
             font-family: 'Noto Sans JP', sans-serif;
             color: #111;
             overflow-x: hidden;
-            /* 日本語の改行最適化 */
             word-break: break-all; 
         }
         @media (min-width: 768px) {
             body {
-                word-break: keep-all; /* PCでは単語の途中改行を防ぐ */
+                word-break: keep-all;
             }
         }
         
@@ -127,16 +126,14 @@
             transition: transform 0.3s ease;
         }
         
-        /* インラインブロックによる改行制御クラス */
-        .ib {
-            display: inline-block;
-        }
+        /* インラインブロック */
+        .ib { display: inline-block; }
     </style>
 </head>
 <body class="bg-white">
 
     <header class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-gray-100" id="header">
-        <div class="max-w-7xl mx-auto px-6 h-16 md:h-20 flex justify-between items-center relative z-[60]">
+        <div class="max-w-7xl mx-auto px-6 h-16 md:h-20 flex justify-between items-center relative">
             <a href="#" class="text-xl md:text-2xl font-black font-english tracking-tighter hover:opacity-70 transition-opacity">
                 MANABI <span class="text-[10px] md:text-xs font-normal font-sans ml-1 tracking-widest text-manabi-purple">Inc.</span>
             </a>
@@ -151,23 +148,29 @@
                 </a>
             </nav>
 
-            <button class="md:hidden text-2xl focus:outline-none z-[100] relative w-10 h-10 flex items-center justify-center" id="menu-btn">
-                <i class="fa-solid fa-bars transition-all duration-300"></i>
+            <button class="md:hidden text-2xl focus:outline-none w-10 h-10 flex items-center justify-center" id="menu-open-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="fixed inset-0 w-full h-full bg-white z-[9999] hidden flex flex-col">
+        <div class="h-16 md:h-20 flex justify-end items-center px-6 border-b border-gray-100">
+            <button id="menu-close-btn" class="text-3xl focus:outline-none w-10 h-10 flex items-center justify-center text-manabi-black">
+                <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
 
-        <div class="fixed inset-0 bg-white z-[999] opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto hidden" id="mobile-menu">
-            <nav class="min-h-screen w-full flex flex-col items-center justify-center space-y-8 py-24 text-center">
-                <a href="#mission" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">MISSION</a>
-                <a href="#business" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">BUSINESS</a>
-                <a href="#culture" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">CULTURE</a>
-                <a href="#data" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">DATA</a>
-                <a href="#entry" class="bg-manabi-black text-white px-12 py-4 text-xl font-bold tracking-widest shadow-lg mt-6 mobile-link hover:bg-manabi-blue transition-colors">
-                    ENTRY
-                </a>
-            </nav>
-        </div>
-    </header>
+        <nav class="flex-1 flex flex-col items-center justify-center space-y-8 pb-20 overflow-y-auto">
+            <a href="#mission" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">MISSION</a>
+            <a href="#business" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">BUSINESS</a>
+            <a href="#culture" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">CULTURE</a>
+            <a href="#data" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">DATA</a>
+            <a href="#entry" class="bg-manabi-black text-white px-12 py-4 text-xl font-bold tracking-widest shadow-lg mt-6 mobile-link hover:bg-manabi-blue transition-colors">
+                ENTRY
+            </a>
+        </nav>
+    </div>
 
     <section class="relative h-screen w-full overflow-hidden flex items-center justify-start bg-white">
         <div class="absolute top-[-20%] right-[-10%] w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-manabi-blue/30 rounded-full blur-[80px] md:blur-[100px] animate-pulse-slow"></div>
@@ -198,8 +201,8 @@
     </section>
 
     <section class="py-20 md:py-32 px-6 bg-white relative overflow-hidden">
-        <div class="absolute top-[-20%] left-[-10%] w-[400px] h-[400px] bg-manabi-orange/10 rounded-full blur-[100px]"></div>
-        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-manabi-blue/10 rounded-full blur-[120px]"></div>
+        <div class="absolute top-[-10%] left-[-5%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-manabi-orange/15 rounded-full blur-[60px] md:blur-[80px]"></div>
+        <div class="absolute bottom-0 right-0 w-[400px] md:w-[500px] h-[400px] md:h-[500px] bg-manabi-blue/15 rounded-full blur-[80px] md:blur-[100px]"></div>
 
         <div class="max-w-5xl mx-auto reveal relative z-10">
             <div class="text-lg md:text-2xl font-bold leading-relaxed md:leading-loose space-y-8 md:space-y-12 text-gray-900 tracking-wider text-left border-l-4 border-gray-100 pl-6 md:pl-12">
@@ -843,51 +846,32 @@
                 });
             });
 
-            // Mobile Menu Toggle
-            const menuBtn = document.getElementById('menu-btn');
+            // ==========================================
+            // Mobile Menu Logic (Simple & Robust)
+            // ==========================================
+            const menuOpenBtn = document.getElementById('menu-open-btn');
+            const menuCloseBtn = document.getElementById('menu-close-btn');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileLinks = document.querySelectorAll('.mobile-link');
-            const menuIcon = menuBtn.querySelector('i');
-            let isMenuOpen = false;
 
-            menuBtn.addEventListener('click', () => {
-                isMenuOpen = !isMenuOpen;
-                if (isMenuOpen) {
-                    // Open Menu
-                    mobileMenu.classList.remove('hidden'); // まず存在させる
-                    setTimeout(() => { // わずかに遅らせてアニメーションを効かせる
-                        mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-                        mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
-                    }, 10);
-                    menuIcon.classList.remove('fa-bars');
-                    menuIcon.classList.add('fa-xmark');
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling
-                } else {
-                    // Close Menu
-                    mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-                    menuIcon.classList.remove('fa-xmark');
-                    menuIcon.classList.add('fa-bars');
-                    document.body.style.overflow = ''; // Restore scrolling
-                    setTimeout(() => {
-                        mobileMenu.classList.add('hidden'); // 完全に消す
-                    }, 300); // transitionの時間に合わせて隠す
-                }
+            // Open Menu
+            menuOpenBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Stop background scrolling
             });
 
-            // Close menu when link is clicked
+            // Close Menu Function
+            const closeMenu = () => {
+                mobileMenu.classList.add('hidden');
+                document.body.style.overflow = ''; // Restore scrolling
+            };
+
+            // Bind Close Button
+            menuCloseBtn.addEventListener('click', closeMenu);
+
+            // Bind Links to Close
             mobileLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    isMenuOpen = false;
-                    mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-                    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-                    menuIcon.classList.remove('fa-xmark');
-                    menuIcon.classList.add('fa-bars');
-                    document.body.style.overflow = ''; // Restore scrolling
-                    setTimeout(() => {
-                        mobileMenu.classList.add('hidden');
-                    }, 300);
-                });
+                link.addEventListener('click', closeMenu);
             });
         });
     </script>
