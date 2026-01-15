@@ -5,15 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RECRUIT | MANABI Inc.</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script>
@@ -138,14 +135,12 @@
 </head>
 <body class="bg-white">
 
-    <!-- Header -->
-    <header class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-gray-100" id="header">
+    <header class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md border-b border-gray-100" id="header">
         <div class="max-w-7xl mx-auto px-6 h-16 md:h-20 flex justify-between items-center relative z-[60]">
             <a href="#" class="text-xl md:text-2xl font-black font-english tracking-tighter hover:opacity-70 transition-opacity">
                 MANABI <span class="text-[10px] md:text-xs font-normal font-sans ml-1 tracking-widest text-manabi-purple">Inc.</span>
             </a>
             
-            <!-- PC Navigation -->
             <nav class="hidden md:flex items-center space-x-8 lg:space-x-10">
                 <a href="#mission" class="text-xs lg:text-sm font-bold tracking-widest hover:text-manabi-blue transition-colors hover-line relative">MISSION</a>
                 <a href="#business" class="text-xs lg:text-sm font-bold tracking-widest hover:text-manabi-blue transition-colors hover-line relative">BUSINESS</a>
@@ -156,16 +151,12 @@
                 </a>
             </nav>
 
-            <!-- Mobile Menu Button -->
-            <!-- z-indexを上げてメニューより手前に表示 -->
-            <button class="md:hidden text-2xl focus:outline-none z-[60] relative w-8 h-8 flex items-center justify-center" id="menu-btn">
+            <button class="md:hidden text-2xl focus:outline-none z-[100] relative w-10 h-10 flex items-center justify-center" id="menu-btn">
                 <i class="fa-solid fa-bars transition-all duration-300"></i>
             </button>
         </div>
 
-        <!-- Mobile Menu Overlay -->
-        <!-- z-indexを50に設定、ボタンより後ろだがヘッダー背景より手前になるように配置 -->
-        <div class="fixed inset-0 bg-white z-[50] opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto" id="mobile-menu">
+        <div class="fixed inset-0 bg-white z-[999] opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto hidden" id="mobile-menu">
             <nav class="min-h-screen w-full flex flex-col items-center justify-center space-y-8 py-24 text-center">
                 <a href="#mission" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">MISSION</a>
                 <a href="#business" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">BUSINESS</a>
@@ -178,9 +169,7 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="relative h-screen w-full overflow-hidden flex items-center justify-start bg-white">
-        <!-- Background Decoration (CSS Shapes only) -->
         <div class="absolute top-[-20%] right-[-10%] w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-manabi-blue/30 rounded-full blur-[80px] md:blur-[100px] animate-pulse-slow"></div>
         <div class="absolute bottom-[-20%] left-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-manabi-orange/30 rounded-full blur-[60px] md:blur-[80px] animate-pulse-slow" style="animation-duration: 4s;"></div>
 
@@ -200,7 +189,6 @@
             </div>
         </div>
 
-        <!-- Scroll Indicator -->
         <div class="absolute bottom-8 md:bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-20">
             <span class="text-[10px] tracking-widest text-manabi-black mb-2 md:mb-3 font-english">SCROLL</span>
             <div class="w-[1px] h-12 md:h-20 bg-gray-300 relative overflow-hidden">
@@ -209,14 +197,11 @@
         </div>
     </section>
 
-    <!-- Intro -->
     <section class="py-20 md:py-32 px-6 bg-white relative overflow-hidden">
-        <!-- Decoration (つながりを持たせる) -->
         <div class="absolute top-[-20%] left-[-10%] w-[400px] h-[400px] bg-manabi-orange/10 rounded-full blur-[100px]"></div>
         <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-manabi-blue/10 rounded-full blur-[120px]"></div>
 
         <div class="max-w-5xl mx-auto reveal relative z-10">
-            <!-- Text -->
             <div class="text-lg md:text-2xl font-bold leading-relaxed md:leading-loose space-y-8 md:space-y-12 text-gray-900 tracking-wider text-left border-l-4 border-gray-100 pl-6 md:pl-12">
                 <p>
                     <span class="ib">「このままの</span><span class="ib">大学生活で</span><span class="ib">いいのか」</span><br>
@@ -240,7 +225,6 @@
         </div>
     </section>
 
-    <!-- Mission -->
     <section id="mission" class="bg-manabi-gray py-20 md:py-32">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col lg:flex-row justify-between items-start mb-16 md:mb-24 reveal">
@@ -282,7 +266,6 @@
                 </div>
             </div>
 
-            <!-- Philosophy Image & Text -->
             <div class="relative reveal delay-100">
                 <div class="absolute top-0 right-0 w-2/3 h-full bg-white shadow-xl z-0 transform translate-x-10 translate-y-10 hidden md:block"></div>
                 <div class="relative z-10 flex flex-col md:flex-row bg-white md:bg-transparent shadow-sm md:shadow-none">
@@ -315,13 +298,12 @@
         </div>
     </section>
 
-    <!-- Business -->
     <section id="business" class="py-20 md:py-32 px-6 bg-white">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 reveal">
                 <div>
                     <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-manabi-blue block mb-2">BUSINESS</span>
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black">事業内容／沿革</h2>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black">事業内容</h2>
                 </div>
             </div>
             
@@ -358,7 +340,6 @@
         </div>
     </section>
 
-    <!-- Culture (Values) -->
     <section id="culture" class="bg-white py-20 md:py-32 border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-6">
             <div class="mb-12 md:mb-20 reveal">
@@ -368,7 +349,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                <!-- Value 1 -->
                 <div class="group border-t-4 border-manabi-orange bg-gray-50 p-8 md:p-10 hover:bg-white hover:shadow-xl transition-all duration-300 reveal">
                     <div class="flex justify-between items-start mb-4 md:mb-6">
                         <span class="text-manabi-orange font-english text-4xl md:text-5xl font-bold opacity-30 group-hover:opacity-100 transition-opacity">01</span>
@@ -380,7 +360,6 @@
                     </p>
                 </div>
 
-                <!-- Value 2 -->
                 <div class="group border-t-4 border-manabi-blue bg-gray-50 p-8 md:p-10 hover:bg-white hover:shadow-xl transition-all duration-300 reveal delay-100">
                     <div class="flex justify-between items-start mb-4 md:mb-6">
                         <span class="text-manabi-blue font-english text-4xl md:text-5xl font-bold opacity-30 group-hover:opacity-100 transition-opacity">02</span>
@@ -395,20 +374,16 @@
         </div>
     </section>
 
-    <!-- Communication (Revised Layout) -->
     <section class="py-20 md:py-32 px-6 bg-manabi-gray">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 reveal">
-                <!-- Image Side -->
                 <div class="w-full lg:w-1/2 relative order-2 lg:order-1">
-                    <!-- アクセントの枠線 -->
                     <div class="absolute -top-4 -left-4 w-full h-full border-2 border-manabi-orange rounded-sm z-0 hidden md:block"></div>
                     <div class="relative z-10 overflow-hidden rounded-sm shadow-xl aspect-video lg:aspect-auto">
                         <img src="https://www.toukobe.com/wp-content/uploads/IMG_0291-1.jpg" alt="WinParty Member Photo" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
                     </div>
                 </div>
 
-                <!-- Text Side -->
                 <div class="w-full lg:w-1/2 order-1 lg:order-2">
                     <h3 class="text-2xl md:text-3xl font-english font-bold mb-8 md:mb-10 text-manabi-orange tracking-wider border-b border-gray-300 pb-4 inline-block">
                         COMMUNICATION
@@ -442,9 +417,7 @@
         </div>
     </section>
 
-    <!-- Growth (Split) -->
     <section class="py-20 md:py-32 px-6 bg-manabi-black text-white relative overflow-hidden">
-        <!-- Decoration -->
         <div class="absolute top-0 right-0 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-manabi-blue/10 rounded-full blur-[80px] md:blur-[120px] transform translate-x-1/2 -translate-y-1/2"></div>
         <div class="absolute bottom-0 left-0 w-[200px] md:w-[400px] h-[200px] md:h-[400px] bg-manabi-purple/10 rounded-full blur-[60px] md:blur-[80px] transform -translate-x-1/2 translate-y-1/2"></div>
 
@@ -456,7 +429,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                <!-- Course 1 -->
                 <div class="group bg-white/5 border border-white/10 p-8 md:p-10 hover:bg-white/10 hover:border-manabi-blue transition-all duration-300">
                     <h4 class="font-bold text-lg md:text-2xl mb-4 md:mb-6 text-white group-hover:text-manabi-blue transition-colors flex items-center justify-between">
                         経営幹部候補採用コース
@@ -470,7 +442,6 @@
                     </a>
                 </div>
 
-                <!-- Course 2 -->
                 <div class="group bg-white/5 border border-white/10 p-8 md:p-10 hover:bg-white/10 hover:border-manabi-blue transition-all duration-300">
                     <h4 class="font-bold text-lg md:text-2xl mb-4 md:mb-6 text-white group-hover:text-manabi-blue transition-colors flex items-center justify-between">
                         職種別採用コース
@@ -487,7 +458,6 @@
         </div>
     </section>
 
-    <!-- Data (Members) -->
     <section id="data" class="py-20 md:py-32 bg-white">
         <div class="max-w-7xl mx-auto px-6">
             <div class="mb-12 md:mb-20 reveal text-center">
@@ -496,7 +466,6 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8 text-center reveal">
-                <!-- University (Pie Chart) -->
                 <div class="p-6 md:p-8 border border-gray-100 hover:border-manabi-purple transition-all duration-300 shadow-sm hover:shadow-lg group flex flex-col h-full">
                     <h3 class="text-gray-900 font-bold tracking-widest mb-6 md:mb-8 border-b-2 border-manabi-purple inline-block pb-1 mx-auto text-sm md:text-base">大学区分</h3>
                     
@@ -538,7 +507,6 @@
                     </div>
                 </div>
                 
-                <!-- Gender (Stacked Bar) -->
                 <div class="p-6 md:p-8 border border-gray-100 hover:border-manabi-blue transition-all duration-300 shadow-sm hover:shadow-lg group flex flex-col h-full">
                     <h3 class="text-gray-900 font-bold tracking-widest mb-6 md:mb-8 border-b-2 border-manabi-blue inline-block pb-1 mx-auto text-sm md:text-base">性別</h3>
                     
@@ -573,7 +541,6 @@
                     </div>
                 </div>
 
-                <!-- Grade (Sorted List) -->
                 <div class="p-6 md:p-8 border border-gray-100 hover:border-manabi-orange transition-all duration-300 shadow-sm hover:shadow-lg group flex flex-col h-full">
                     <h3 class="text-gray-900 font-bold tracking-widest mb-6 md:mb-8 border-b-2 border-manabi-orange inline-block pb-1 mx-auto text-sm md:text-base">学年</h3>
                     <div class="flex flex-col justify-center gap-3 md:gap-4 w-full">
@@ -625,7 +592,6 @@
         </div>
     </section>
 
-    <!-- Alumni (Graduates) -->
     <section class="py-20 md:py-32 bg-gray-50">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12 md:mb-20 reveal">
@@ -633,19 +599,15 @@
                 <div class="w-10 h-1 bg-manabi-black mx-auto mt-6"></div>
             </div>
 
-            <!-- SP版: 2列グリッドに変更 (grid-cols-2 md:grid-cols-2 lg:grid-cols-4) -->
             <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 reveal">
-                <!-- 戦略コンサル -->
                 <div class="bg-white p-4 md:p-8 border-l-4 border-manabi-purple hover:-translate-y-2 transition-transform duration-300 shadow-sm">
                     <h4 class="font-bold text-manabi-purple mb-3 md:mb-6 text-[10px] md:text-sm tracking-widest border-b border-gray-100 pb-2 md:border-none md:pb-0">戦略コンサル</h4>
                     <ul class="text-[10px] md:text-sm space-y-1.5 md:space-y-3 text-gray-600 font-medium font-english">
-                        <li>McKinsey</li> <!-- SP用に表記短縮を検討または改行許容 -->
-                        <li>BCG</li>
+                        <li>McKinsey</li> <li>BCG</li>
                         <li>Bain</li>
                         <li>Kearney</li>
                     </ul>
                 </div>
-                <!-- メガベンチャー -->
                 <div class="bg-white p-4 md:p-8 border-l-4 border-manabi-orange hover:-translate-y-2 transition-transform duration-300 shadow-sm">
                     <h4 class="font-bold text-manabi-orange mb-3 md:mb-6 text-[10px] md:text-sm tracking-widest border-b border-gray-100 pb-2 md:border-none md:pb-0">メガベンチャー</h4>
                     <ul class="text-[10px] md:text-sm space-y-1.5 md:space-y-3 text-gray-600 font-medium font-english">
@@ -655,7 +617,6 @@
                         <li>RAKSUL</li>
                     </ul>
                 </div>
-                <!-- 金融・財閥系 -->
                 <div class="bg-white p-4 md:p-8 border-l-4 border-manabi-blue hover:-translate-y-2 transition-transform duration-300 shadow-sm">
                     <h4 class="font-bold text-manabi-blue mb-3 md:mb-6 text-[10px] md:text-sm tracking-widest border-b border-gray-100 pb-2 md:border-none md:pb-0">金融・財閥系</h4>
                     <ul class="text-[10px] md:text-sm space-y-1.5 md:space-y-3 text-gray-600 font-medium">
@@ -665,7 +626,6 @@
                         <li>三菱重工</li>
                     </ul>
                 </div>
-                <!-- 理系難関企業 -->
                 <div class="bg-white p-4 md:p-8 border-l-4 border-gray-400 hover:-translate-y-2 transition-transform duration-300 shadow-sm">
                     <h4 class="font-bold text-gray-400 mb-3 md:mb-6 text-[10px] md:text-sm tracking-widest border-b border-gray-100 pb-2 md:border-none md:pb-0">理系難関企業</h4>
                     <ul class="text-[10px] md:text-sm space-y-1.5 md:space-y-3 text-gray-600 font-medium font-english">
@@ -679,13 +639,11 @@
         </div>
     </section>
 
-    <!-- Process -->
     <section class="py-20 md:py-32 bg-white">
         <div class="max-w-4xl mx-auto px-6">
             <h2 class="text-3xl font-black text-center mb-12 md:mb-20">入社までのプロセス</h2>
             
             <div class="reveal space-y-6 md:space-y-8">
-                <!-- Step 1 -->
                 <div class="flex items-start group">
                     <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-manabi-blue text-white rounded-full flex items-center justify-center font-bold font-english text-lg md:text-xl shadow-lg z-10">1</div>
                     <div class="ml-6 md:ml-8 pt-1 w-full border-b border-gray-100 pb-6 md:pb-8">
@@ -694,7 +652,6 @@
                     </div>
                 </div>
 
-                <!-- Step 2 -->
                 <div class="flex items-start group">
                     <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-manabi-blue text-white rounded-full flex items-center justify-center font-bold font-english text-lg md:text-xl shadow-lg z-10">2</div>
                     <div class="ml-6 md:ml-8 pt-1 w-full border-b border-gray-100 pb-6 md:pb-8">
@@ -703,7 +660,6 @@
                     </div>
                 </div>
 
-                <!-- Step 3 -->
                 <div class="flex items-start group">
                     <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-manabi-blue text-white rounded-full flex items-center justify-center font-bold font-english text-lg md:text-xl shadow-lg z-10">3</div>
                     <div class="ml-6 md:ml-8 pt-1 w-full border-b border-gray-100 pb-6 md:pb-8">
@@ -712,7 +668,6 @@
                     </div>
                 </div>
 
-                <!-- Step 4 -->
                 <div class="flex items-start group">
                     <div class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-manabi-black text-white rounded-full flex items-center justify-center font-bold font-english text-lg md:text-xl shadow-lg z-10">4</div>
                     <div class="ml-6 md:ml-8 pt-1 w-full pb-6 md:pb-8">
@@ -724,12 +679,10 @@
         </div>
     </section>
 
-    <!-- FAQ (Accordion Style) -->
     <section class="py-20 md:py-32 bg-gray-50">
         <div class="max-w-4xl mx-auto px-6">
             <h2 class="text-3xl font-black text-center mb-12 md:mb-16 text-black">FAQ</h2>
             <div class="space-y-3 md:space-y-4 reveal" id="faq-accordion">
-                <!-- FAQ Item 1 -->
                 <div class="bg-white border-b border-gray-100 faq-item shadow-sm">
                     <button class="w-full text-left p-6 md:p-8 flex justify-between items-center focus:outline-none hover:bg-gray-50 transition-colors">
                         <span class="font-bold text-base md:text-lg flex items-baseline">
@@ -745,7 +698,6 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 2 -->
                 <div class="bg-white border-b border-gray-100 faq-item shadow-sm">
                     <button class="w-full text-left p-6 md:p-8 flex justify-between items-center focus:outline-none hover:bg-gray-50 transition-colors">
                         <span class="font-bold text-base md:text-lg flex items-baseline">
@@ -761,7 +713,6 @@
                     </div>
                 </div>
 
-                <!-- FAQ Item 3 -->
                 <div class="bg-white border-b border-gray-100 faq-item shadow-sm">
                     <button class="w-full text-left p-6 md:p-8 flex justify-between items-center focus:outline-none hover:bg-gray-50 transition-colors">
                         <span class="font-bold text-base md:text-lg flex items-baseline">
@@ -780,9 +731,7 @@
         </div>
     </section>
 
-    <!-- Entry CTA Section -->
     <section id="entry" class="py-20 md:py-32 px-6 bg-manabi-black flex flex-col items-center justify-center text-center text-white relative overflow-hidden">
-        <!-- Decoration -->
         <div class="absolute inset-0 bg-white/5"></div>
         <div class="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-manabi-blue/20 rounded-full blur-[80px] md:blur-[100px]"></div>
         <div class="absolute bottom-0 left-0 w-64 h-64 md:w-96 md:h-96 bg-manabi-purple/20 rounded-full blur-[80px] md:blur-[100px]"></div>
@@ -807,7 +756,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-manabi-black text-white pt-16 md:pt-20 pb-8 md:pb-10 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-16">
@@ -815,7 +763,6 @@
                     <h3 class="text-2xl font-black font-english tracking-tighter mb-2 md:mb-6">MANABI Inc.</h3>
                 </div>
                 
-                <!-- SP版: 2列グリッドで表示 (grid-cols-2) -->
                 <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-8 text-left">
                     <div>
                         <h4 class="text-xs font-bold text-gray-500 mb-4 md:mb-6 tracking-widest">ABOUT</h4>
@@ -835,8 +782,6 @@
                         </ul>
                     </div>
 
-                    <!-- SP版では2列に収まらないため、col-span-2で下段に配置するか、そのまま流す -->
-                    <!-- ここではcol-span-2 w-full等で調整 -->
                     <div class="col-span-2 md:col-span-1 mt-4 md:mt-0">
                         <h4 class="text-xs font-bold text-gray-500 mb-4 md:mb-6 tracking-widest">CONTACT</h4>
                         <div class="flex justify-start space-x-6">
@@ -857,7 +802,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Scroll Reveal
@@ -910,8 +854,11 @@
                 isMenuOpen = !isMenuOpen;
                 if (isMenuOpen) {
                     // Open Menu
-                    mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-                    mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                    mobileMenu.classList.remove('hidden'); // まず存在させる
+                    setTimeout(() => { // わずかに遅らせてアニメーションを効かせる
+                        mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                        mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                    }, 10);
                     menuIcon.classList.remove('fa-bars');
                     menuIcon.classList.add('fa-xmark');
                     document.body.style.overflow = 'hidden'; // Prevent scrolling
@@ -922,6 +869,9 @@
                     menuIcon.classList.remove('fa-xmark');
                     menuIcon.classList.add('fa-bars');
                     document.body.style.overflow = ''; // Restore scrolling
+                    setTimeout(() => {
+                        mobileMenu.classList.add('hidden'); // 完全に消す
+                    }, 300); // transitionの時間に合わせて隠す
                 }
             });
 
@@ -934,6 +884,9 @@
                     menuIcon.classList.remove('fa-xmark');
                     menuIcon.classList.add('fa-bars');
                     document.body.style.overflow = ''; // Restore scrolling
+                    setTimeout(() => {
+                        mobileMenu.classList.add('hidden');
+                    }, 300);
                 });
             });
         });
