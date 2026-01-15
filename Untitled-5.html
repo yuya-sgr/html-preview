@@ -162,13 +162,14 @@
         </div>
 
         <!-- Mobile Menu Overlay -->
-        <div class="fixed inset-0 bg-white z-40 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300" id="mobile-menu">
-            <nav class="flex flex-col items-center space-y-8 text-center">
-                <a href="#mission" class="text-xl font-bold tracking-widest hover:text-manabi-blue mobile-link">MISSION</a>
-                <a href="#business" class="text-xl font-bold tracking-widest hover:text-manabi-blue mobile-link">BUSINESS</a>
-                <a href="#culture" class="text-xl font-bold tracking-widest hover:text-manabi-blue mobile-link">CULTURE</a>
-                <a href="#data" class="text-xl font-bold tracking-widest hover:text-manabi-blue mobile-link">DATA</a>
-                <a href="#entry" class="bg-manabi-black text-white px-12 py-4 text-lg font-bold tracking-widest shadow-lg mt-4 mobile-link">
+        <!-- 修正: min-h-screenとjustify-centerを組み合わせ、画面サイズに応じてスクロール可能な中央揃えを実現 -->
+        <div class="fixed inset-0 bg-white z-40 opacity-0 pointer-events-none transition-opacity duration-300 overflow-y-auto" id="mobile-menu">
+            <nav class="min-h-screen w-full flex flex-col items-center justify-center space-y-8 py-24 text-center">
+                <a href="#mission" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">MISSION</a>
+                <a href="#business" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">BUSINESS</a>
+                <a href="#culture" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">CULTURE</a>
+                <a href="#data" class="text-2xl font-bold tracking-widest hover:text-manabi-blue mobile-link text-black transition-colors">DATA</a>
+                <a href="#entry" class="bg-manabi-black text-white px-12 py-4 text-xl font-bold tracking-widest shadow-lg mt-6 mobile-link hover:bg-manabi-blue transition-colors">
                     ENTRY
                 </a>
             </nav>
@@ -326,7 +327,7 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-20 reveal">
                 <div>
                     <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-manabi-blue block mb-2">BUSINESS</span>
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black">事業内容</h2>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-black">事業内容／沿革</h2>
                 </div>
             </div>
             
@@ -498,7 +499,7 @@
             <div class="mb-12 md:mb-20 reveal text-center">
                 <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-gray-400 block mb-2">MEMBER DATA</span>
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-black">在籍メンバーのデータ</h2>
-                <p class="text-[10px] md:text-xs text-gray-400 mt-2 md:mt-4 tracking-widest font-english">N=35 / 2026.01</p>
+                <!-- 修正: N=35を削除 -->
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8 text-center reveal">
@@ -731,6 +732,7 @@
     </section>
 
     <!-- FAQ (Accordion Style) -->
+    <!-- 修正: Q. が改行されないように whitespace-nowrap shrink-0 を追加 -->
     <section class="py-20 md:py-32 bg-gray-50">
         <div class="max-w-4xl mx-auto px-6">
             <h2 class="text-3xl font-black text-center mb-12 md:mb-16 text-black">FAQ</h2>
@@ -739,7 +741,7 @@
                 <div class="bg-white border-b border-gray-100 faq-item shadow-sm">
                     <button class="w-full text-left p-6 md:p-8 flex justify-between items-center focus:outline-none hover:bg-gray-50 transition-colors">
                         <span class="font-bold text-base md:text-lg flex items-baseline">
-                            <span class="text-manabi-blue mr-3 md:mr-4 font-english font-black">Q.</span>
+                            <span class="text-manabi-blue mr-3 md:mr-4 font-english font-black whitespace-nowrap shrink-0">Q.</span>
                             他の仕事や学業と両立できますか？
                         </span>
                         <i class="fa-solid fa-plus faq-icon text-gray-400"></i>
@@ -755,7 +757,7 @@
                 <div class="bg-white border-b border-gray-100 faq-item shadow-sm">
                     <button class="w-full text-left p-6 md:p-8 flex justify-between items-center focus:outline-none hover:bg-gray-50 transition-colors">
                         <span class="font-bold text-base md:text-lg flex items-baseline">
-                            <span class="text-manabi-blue mr-3 md:mr-4 font-english font-black">Q.</span>
+                            <span class="text-manabi-blue mr-3 md:mr-4 font-english font-black whitespace-nowrap shrink-0">Q.</span>
                             応募するか迷っているのですが、話を聞くだけでも大丈夫ですか？
                         </span>
                         <i class="fa-solid fa-plus faq-icon text-gray-400"></i>
@@ -771,7 +773,7 @@
                 <div class="bg-white border-b border-gray-100 faq-item shadow-sm">
                     <button class="w-full text-left p-6 md:p-8 flex justify-between items-center focus:outline-none hover:bg-gray-50 transition-colors">
                         <span class="font-bold text-base md:text-lg flex items-baseline">
-                            <span class="text-manabi-blue mr-3 md:mr-4 font-english font-black">Q.</span>
+                            <span class="text-manabi-blue mr-3 md:mr-4 font-english font-black whitespace-nowrap shrink-0">Q.</span>
                             研修やサポートはありますか？
                         </span>
                         <i class="fa-solid fa-plus faq-icon text-gray-400"></i>
@@ -941,4 +943,3 @@
     </script>
 </body>
 </html>
-
