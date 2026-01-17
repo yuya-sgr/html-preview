@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales | MANABI Inc.</title>
+    <!-- Fonts & CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Noto Sans JP"', 'sans-serif'], english: ['"Oswald"', 'sans-serif'] },
+                    colors: { 'manabi-blue': '#3852E3', 'manabi-gray': '#F5F5F5', 'manabi-black': '#111111' },
+                    animation: { 'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards' },
+                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(40px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
+                }
+            }
+        }
+    </script>
+    <style>body { font-family: 'Noto Sans JP', sans-serif; color: #111; overflow-x: hidden; word-break: break-all; } @media (min-width: 768px) { body { word-break: keep-all; } } .ib { display: inline-block; }</style>
+</head>
+<body class="bg-white">
+    <header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 h-16 md:h-20 flex items-center px-6 justify-between">
+        <a href="index.html" class="text-xl md:text-2xl font-black font-english tracking-tighter hover:opacity-70 transition-opacity">MANABI <span class="text-[10px] md:text-xs font-normal font-sans ml-1 tracking-widest text-manabi-blue">Sales</span></a>
+        <a href="index.html" class="text-xs font-bold border border-gray-200 px-4 py-2 rounded-sm hover:bg-gray-50 transition-colors">TOP</a>
+    </header>
+
+    <section class="pt-32 pb-20 px-6 bg-manabi-blue text-white relative overflow-hidden">
+        <div class="absolute top-[-50%] right-[-10%] w-[600px] h-[600px] bg-white/10 rounded-full blur-[100px]"></div>
+        <div class="max-w-4xl mx-auto relative z-10">
+            <span class="text-xs font-bold font-english tracking-widest opacity-70 block mb-4">JOB DESCRIPTION</span>
+            <h1 class="text-4xl md:text-6xl font-black mb-8 font-english">Sales</h1>
+            <p class="text-sm md:text-lg font-bold leading-loose opacity-90">
+                <span class="ib">ビジネスの最前線で、</span><span class="ib">本質的な提案力を磨く。</span>
+            </p>
+        </div>
+    </section>
+
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto space-y-16">
+            <div class="grid md:grid-cols-1 gap-8">
+                <div>
+                    <h4 class="text-sm font-bold text-gray-400 tracking-widest mb-3">役割</h4>
+                    <p class="text-gray-800 leading-loose text-sm md:text-base">ご検討中のお客様に弊サービス/自分を好きになってもらい、「ここなら自分の子供を任せられる」と思ってもらい、ご入会の後押しをしていただきます。</p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-gray-400 tracking-widest mb-3">任せたい仕事</h4>
+                    <p class="text-gray-800 leading-loose text-sm md:text-base">弊サービスを検討していただいている保護者様/お子様と個別のオンライン商談を実施していただきます。</p>
+                </div>
+            </div>
+
+            <div>
+                <h4 class="text-sm font-bold text-manabi-blue tracking-widest mb-6 border-b border-gray-200 pb-2">身につく能力 / 得られる経験</h4>
+                <ul class="space-y-8">
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-check text-manabi-blue mt-1 mr-4"></i>
+                        <div>
+                            <strong class="block text-base md:text-lg mb-2">ものを売る力</strong>
+                            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">ビジネスの基礎はモノを売る力/営業力です。学生のうちから実践的な営業を繰り返すことにより、商材によらない本質的な営業力を身に着けられます。</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-check text-manabi-blue mt-1 mr-4"></i>
+                        <div>
+                            <strong class="block text-base md:text-lg mb-2">コミュニケーション能力</strong>
+                            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">商談では保護者様/生徒様の本音を聞き出し、サービスのご提案を行う必要があります。相手から信頼してもらう能力/感情に寄り添う能力が身につきます。</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fa-solid fa-check text-manabi-blue mt-1 mr-4"></i>
+                        <div>
+                            <strong class="block text-base md:text-lg mb-2">論理的思考力</strong>
+                            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">弊社ではソリューション営業を行っており、保護者様/生徒様の本質的な課題がどこにあり、どうすればそれを解決できるのかを提案する必要があります。これを繰り返すことにより、論理的に課題を発見し、それを解決する力が身につきます。</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-gray-50 p-6 md:p-10 rounded-sm">
+                <h4 class="text-sm font-bold text-gray-500 tracking-widest mb-6">募集要項</h4>
+                <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 text-sm">
+                    <div><dt class="font-bold text-gray-400 text-xs mb-1">対象大学/大学院</dt><dd class="font-bold">東京大学 / 京都大学</dd></div>
+                    <div><dt class="font-bold text-gray-400 text-xs mb-1">稼働時間</dt><dd class="font-bold">週10h～</dd></div>
+                    <div><dt class="font-bold text-gray-400 text-xs mb-1">勤務場所</dt><dd class="font-bold">フルリモート</dd></div>
+                    <div><dt class="font-bold text-gray-400 text-xs mb-1">報酬</dt><dd class="font-bold">換算時給3,000円程度（成果報酬）</dd></div>
+                    <div><dt class="font-bold text-gray-400 text-xs mb-1">最低勤続期間</dt><dd class="font-bold">半年</dd></div>
+                </dl>
+            </div>
+        </div>
+    </section>
+
+    <section id="entry" class="py-20 px-6 bg-manabi-black text-center text-white">
+        <h2 class="text-3xl font-black mb-8 font-english">ENTRY</h2>
+        <p class="text-xs md:text-sm font-medium mb-10 text-gray-300">まずは個別のオンライン説明会にご参加ください。</p>
+        <a href="#" class="inline-block bg-white text-black text-base font-bold py-4 px-12 tracking-widest hover:bg-manabi-blue hover:text-white transition-all duration-300">応募する</a>
+    </section>
+
+    <footer class="bg-white py-10 text-center border-t border-gray-100">
+        <a href="index.html" class="text-xs font-bold text-gray-400 hover:text-manabi-blue transition-colors"><i class="fa-solid fa-arrow-left mr-2"></i>TOPページへ戻る</a>
+        <p class="text-[10px] text-gray-300 mt-8 tracking-widest">&copy; MANABI Inc.</p>
+    </footer>
+</body>
+</html>
