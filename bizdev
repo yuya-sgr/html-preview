@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizDev | MANABI Inc.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Oswald:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Noto Sans JP"', 'sans-serif'], english: ['"Oswald"', 'sans-serif'] },
+                    colors: { 'manabi-blue': '#3852E3', 'manabi-gray': '#F5F5F5', 'manabi-black': '#111111' },
+                    animation: { 'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards' },
+                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(40px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
+                }
+            }
+        }
+    </script>
+    <style>body { font-family: 'Noto Sans JP', sans-serif; color: #111; overflow-x: hidden; word-break: break-all; } @media (min-width: 768px) { body { word-break: keep-all; } } .ib { display: inline-block; }</style>
+</head>
+<body class="bg-white">
+    <header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 h-16 md:h-20 flex items-center px-6 justify-between">
+        <a href="index.html" class="text-xl md:text-2xl font-black font-english tracking-tighter hover:opacity-70 transition-opacity">MANABI <span class="text-[10px] md:text-xs font-normal font-sans ml-1 tracking-widest text-manabi-black">BizDev</span></a>
+        <a href="index.html" class="text-xs font-bold border border-gray-200 px-4 py-2 rounded-sm hover:bg-gray-50 transition-colors">TOP</a>
+    </header>
+
+    <section class="pt-32 pb-20 px-6 bg-manabi-black text-white relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-[-50%] right-[-10%] w-[600px] h-[600px] bg-manabi-blue/20 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] bg-purple-500/10 rounded-full blur-[80px]"></div>
+
+        <div class="max-w-4xl mx-auto relative z-10">
+            <span class="text-xs font-bold font-english tracking-widest opacity-70 block mb-4">JOB DESCRIPTION</span>
+            <h1 class="text-4xl md:text-6xl font-black mb-8 font-english">BizDev</h1>
+            <p class="text-sm md:text-lg font-bold leading-loose opacity-90">
+                <span class="ib">学生から、</span><span class="ib">経営者に。</span>
+            </p>
+            <div class="mt-8 space-y-6 text-sm md:text-base font-medium leading-loose text-gray-400">
+                <p>
+                    <span class="ib">誰かに指示される側から、</span><br class="md:hidden">
+                    <span class="ib">自分で考え、決め、動かす側へ。</span>
+                </p>
+                <p>
+                    <span class="ib">求められるのは完璧な準備ではなく、</span><br>
+                    <span class="ib">大きな責任に手を伸ばす覚悟と、</span><br class="md:hidden">
+                    <span class="ib">自ら動く意志だけ。</span>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto space-y-20">
+            <!-- 役割 -->
+            <div class="grid md:grid-cols-1 gap-8">
+                <div>
+                    <h4 class="text-sm font-bold text-gray-400 tracking-widest mb-3">役割</h4>
+                    <p class="text-gray-800 leading-loose text-sm md:text-base border-l-4 border-manabi-black pl-4">
+                        「既存の前提や慣習を意図的に揺さぶり、事業が非連続に成長する仕組みを作って、定着までやり切ること」
+                    </p>
+                    <p class="text-gray-600 leading-loose text-sm mt-4">
+                        既存組織の運用改善とは一線を画し、独立した権限のもとで、事業全体の価値を長期的に大きく成長させる枠組みを設計・実行していただきます。
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-gray-400 tracking-widest mb-3">任せたい仕事</h4>
+                    <p class="text-gray-800 leading-loose text-sm md:text-base">
+                        新規事業の立案から、収益モデルの改革（価格・パッケージ・販売経路等）、生産性の改革（業務改革・自動化・システム化等）まで、経営インパクトの大きいプロジェクトを担当していただきます。<br><br>
+                        また、目標指標や運用の前提など「既存事業の常識」を覆す実験を行い、組織全体の基準を引き上げることも重要な任務です。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 身につく能力 -->
+            <div>
+                <h4 class="text-sm font-bold text-manabi-black tracking-widest mb-8 border-b border-gray-200 pb-2">身につく能力 / 得られる経験</h4>
+                <ul class="space-y-10">
+                    <li class="flex items-start">
+                        <div class="bg-manabi-blue/10 w-12 h-12 flex items-center justify-center rounded-full mr-5 flex-shrink-0 text-manabi-blue text-xl">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <div>
+                            <strong class="block text-base md:text-lg mb-2 text-manabi-black">事業開発・推進力</strong>
+                            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
+                                単なる改善ではなく、新しい利益・新しい成長曲線を作る「非連続な成長」を生み出す経験ができます。
+                                机上の空論で終わらせず、実装・定着までやり切ることで、事業を形にする本質的な力が身につきます。
+                            </p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="bg-manabi-blue/10 w-12 h-12 flex items-center justify-center rounded-full mr-5 flex-shrink-0 text-manabi-blue text-xl">
+                            <i class="fa-regular fa-lightbulb"></i>
+                        </div>
+                        <div>
+                            <strong class="block text-base md:text-lg mb-2 text-manabi-black">高度な課題解決力</strong>
+                            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
+                                「なぜその課題に取り組むのか」「どこを変えれば成果が出るのか」という論点を緻密に設計し、事実に基づいて解を導き出す力が求められます。
+                                経営視点での重要課題の特定から解決策の実行までを行う過程で、高い思考力が養われます。
+                            </p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="bg-manabi-blue/10 w-12 h-12 flex items-center justify-center rounded-full mr-5 flex-shrink-0 text-manabi-blue text-xl">
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <div>
+                            <strong class="block text-base md:text-lg mb-2 text-manabi-black">組織変革・標準化力</strong>
+                            <p class="text-xs md:text-sm text-gray-600 leading-relaxed">
+                                個人の頑張りに頼るのではなく、組織全体の「当たり前」や「標準」を更新し、組織の行動そのものを変える仕組み作りの経験が得られます。
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 募集要項 -->
+            <div class="bg-gray-50 p-6 md:p-10 rounded-sm border border-gray-100">
+                <h4 class="text-sm font-bold text-gray-500 tracking-widest mb-6">募集要項</h4>
+                <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-8 text-sm">
+                    <div class="md:col-span-2">
+                        <dt class="font-bold text-gray-400 text-xs mb-2">対象大学/大学院</dt>
+                        <dd class="font-bold leading-relaxed">
+                            東京大学 / 京都大学 / 一橋大学 / 東京科学大学 / 慶應義塾大学 / 早稲田大学<br>
+                            <span class="text-xs text-gray-500 font-normal">※上記以外の大学でもご案内可能な場合がございますので、お気軽にお問合せ下さい</span>
+                        </dd>
+                    </div>
+                    <div class="md:col-span-2">
+                        <dt class="font-bold text-gray-400 text-xs mb-2">対象者</dt>
+                        <dd class="font-bold">就職活動を終了している方</dd>
+                    </div>
+                    <div>
+                        <dt class="font-bold text-gray-400 text-xs mb-1">稼働時間</dt>
+                        <dd class="font-bold">週35h～</dd>
+                    </div>
+                    <div>
+                        <dt class="font-bold text-gray-400 text-xs mb-1">勤務場所</dt>
+                        <dd class="font-bold">フルリモート</dd>
+                    </div>
+                    <div>
+                        <dt class="font-bold text-gray-400 text-xs mb-1">報酬</dt>
+                        <dd class="font-bold space-y-1">
+                            <div class="flex items-center"><span class="bg-gray-200 text-[10px] px-2 py-0.5 rounded mr-2">固定</span> 月額21万円～50万円</div>
+                            <div class="flex items-center"><span class="bg-manabi-blue/10 text-manabi-blue text-[10px] px-2 py-0.5 rounded mr-2">ボーナス</span> プロジェクト完了時に支給</div>
+                        </dd>
+                    </div>
+                    <div>
+                        <dt class="font-bold text-gray-400 text-xs mb-1">契約形態</dt>
+                        <dd class="font-bold">プロジェクト単位（終了時に更新判断）</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+    </section>
+
+    <section id="entry" class="py-20 px-6 bg-manabi-black text-center text-white">
+        <h2 class="text-3xl font-black mb-8 font-english">ENTRY</h2>
+        <p class="text-xs md:text-sm font-medium mb-10 text-gray-300">まずは個別のオンライン説明会にご参加ください。</p>
+        <a href="#" class="inline-block bg-white text-black text-base font-bold py-4 px-12 tracking-widest hover:bg-manabi-blue hover:text-white transition-all duration-300 shadow-xl">応募する</a>
+    </section>
+
+    <footer class="bg-white py-10 text-center border-t border-gray-100">
+        <a href="index.html" class="text-xs font-bold text-gray-400 hover:text-manabi-black transition-colors"><i class="fa-solid fa-arrow-left mr-2"></i>TOPページへ戻る</a>
+        <p class="text-[10px] text-gray-300 mt-8 tracking-widest">&copy; MANABI Inc.</p>
+    </footer>
+</body>
+</html>
