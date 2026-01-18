@@ -364,8 +364,13 @@
         display: inline-flex; align-items: center; gap: 5px;
         background: none; border: none; color: var(--c-navy);
         font-weight: 700; cursor: pointer; padding: 0; margin-top: 8px;
-        font-size: 14px; text-decoration: underline;
+        font-size: 14px; text-decoration: none; /* 下線を削除 */
     }
+    /* 追加: テキスト部分のみに下線を適用 */
+    .req-toggle-btn span {
+        text-decoration: underline;
+    }
+
     .req-toggle-btn i { transition: transform 0.3s; }
     .req-toggle-btn.is-active i { transform: rotate(180deg); }
     
@@ -955,7 +960,7 @@
                             早稲田大学・慶應義塾大学（※指定中学出身者）
                         </div>
                         <button class="req-toggle-btn" type="button" onclick="toggleReqDetail(this)">
-                            詳細を確認する <i class="fa-solid fa-chevron-down"></i>
+                            <span>詳細を確認する</span> <i class="fa-solid fa-chevron-down"></i>
                         </button>
                         <div class="req-detail-box">
                             <p>【国立大学】</p>
