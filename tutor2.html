@@ -26,12 +26,12 @@
 
         --c-cta-todai-bg: #FFF9F2;
         --c-cta-kyodai-bg: #EBF2FA;
-        --c-cta-sokei-bg: #FFF4F4; /* 早慶用：薄い赤 */
+        --c-cta-sokei-bg: #FFF4F4;
         --c-cta-other-bg: #F3EEF6;
 
         --c-text-todai: #D35400;
         --c-text-kyodai: #154360;
-        --c-text-sokei: #8B0000;   /* 早慶用：ダークレッド */
+        --c-text-sokei: #8B0000;
         --c-text-other: #6C3483;
 
         --font-base: "Noto Sans JP", sans-serif;
@@ -115,15 +115,10 @@
         position: relative;
     }
 
-    /* 左側を白くするグラデーション（PC） */
     .hero::before {
         content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        /* 左35%まで真っ白、60%地点で透明に */
+        top: 0; left: 0; width: 100%; height: 100%;
         background: linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 35%, rgba(255, 255, 255, 0) 60%);
         z-index: 1;
     }
@@ -161,29 +156,36 @@
 
     .badge-item {
         width: 150px; height: 150px; border-radius: 50%;
-        background: linear-gradient(135deg, #dcc077 0%, #cba55b 100%);
+        /* 変更: 濃いめのゴールドグラデーションで白文字を見やすく */
+        background: linear-gradient(135deg, #C59D5F 0%, #A9803C 100%);
         color: #3d2c0d; text-align: center;
         border: 4px solid #fff;
-        box-shadow: 0 0 0 2px #d6a354, 0 10px 20px rgba(0,0,0,0.1);
+        box-shadow: 0 0 0 2px #C59D5F, 0 10px 20px rgba(0,0,0,0.1);
         position: relative; display: flex; justify-content: center; align-items: center;
     }
 
     .badge-content { 
         z-index: 2; width: 100%; height: 100%; margin: 0; 
-        display: flex; flex-direction: column; justify-content: center; align-items: center;     
+        display: flex; flex-direction: column; justify-content: center; align-items: center;      
         padding-bottom: 15px;    
     }
     
     .badge-label { 
-        font-size: 13px; font-weight: 700; margin: 0; color: #3d2c0d; 
+        font-size: 13px; font-weight: 700; margin: 0; 
+        color: #fff; /* 文字色を白に */
         letter-spacing: 0.05em; line-height: 1; margin-bottom: 5px; white-space: nowrap;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.3); /* 視認性向上のための影 */
     }
 
     .badge-number { 
         font-family: var(--font-en); font-size: 38px; font-weight: 900; line-height: 1; color: #fff; margin: 0;
-        text-shadow: 2px 2px 0 #cc5e26, -2px -2px 0 #cc5e26, -2px 2px 0 #cc5e26, 2px -2px 0 #cc5e26, 2px 0 0 #cc5e26, -2px 0 0 #cc5e26, 0 2px 0 #cc5e26, 0 -2px 0 #cc5e26;
+        /* 白文字用のドロップシャドウ */
+        text-shadow: 2px 2px 0 rgba(169, 128, 60, 0.8), -1px -1px 0 rgba(169, 128, 60, 0.5);
     }
-    .badge-number .unit { font-size: 14px; font-family: var(--font-base); font-weight: 700; margin-left: 2px; color: #3d2c0d; text-shadow: none; }
+    .badge-number .unit { 
+        font-size: 14px; font-family: var(--font-base); font-weight: 700; margin-left: 2px; 
+        color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    }
     
     .curved-stars, .curved-stars-bottom { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
     .curved-stars text, .curved-stars-bottom text { fill: #ffffff; font-size: 12px; font-weight: bold; letter-spacing: 4px; }
@@ -204,12 +206,11 @@
     .cta-title__main, .cta-title__sub { display: inline; }
     .cta-title__sub::before, .cta-title__sub::after { content: none; }
 
-    /* CTA Grid (4列に変更) */
     .cta-grid { 
         display: grid; 
         grid-template-columns: repeat(4, 1fr); 
         gap: 15px; 
-        max-width: 100%; /* コンテナ幅いっぱいに */
+        max-width: 100%; 
         margin: 0 auto; 
     }
     .cta-card { border-radius: 8px; padding: 35px 15px; text-align: center; transition: transform 0.2s; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
@@ -222,6 +223,20 @@
     .cta-target { display: block; margin-bottom: 10px; line-height: 1.4; color: var(--c-navy); font-weight: 700; font-size: 18px; }
     .univ-name { display: inline-block; font-size: 22px; font-weight: 900; }
     .univ-suffix { display: inline-block; font-size: 15px; }
+
+    .cta-card--other .univ-name { font-size: 18px; line-height: 1.3; }
+
+    .sokei-req-link {
+        display: inline-block;
+        font-size: 13px;
+        margin-top: 8px; 
+        font-weight: 700;
+        color: #0066cc; 
+        text-decoration: underline;
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+    .sokei-req-link:hover { opacity: 0.7; }
 
     .cta-card--todai .univ-name, .cta-card--todai .univ-suffix { color: var(--c-text-todai); }
     .cta-card--kyodai .univ-name, .cta-card--kyodai .univ-suffix { color: var(--c-text-kyodai); }
@@ -241,6 +256,7 @@
         background: url('https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg') no-repeat center/contain;
         margin-right: 8px;
     }
+
     .cta-link-intern { display: block; text-align: center; color: #fff; font-size: 15px; font-weight: 700; margin-top: 25px; text-decoration: underline; opacity: 0.9; transition: opacity 0.2s; }
     .cta-link-intern:hover { opacity: 1; }
 
@@ -269,9 +285,7 @@
     .reason-head span { background: linear-gradient(transparent 70%, #F4EAD5 70%); padding-bottom: 2px; }
     .reason-desc { font-size: 16px; text-align: justify; }
 
-    /* =========================================
-       Flow Section (Updated Modern Design)
-       ========================================= */
+    /* Flow Section */
     .flow-modern-wrap {
         max-width: 600px;
         margin: 40px auto 0;
@@ -281,107 +295,35 @@
     .flow-modern-item {
         display: flex;
         position: relative;
-        padding-bottom: 40px; /* ステップ間の余白 */
+        padding-bottom: 40px;
     }
-
-    /* 最後のアイテムの余白を消す */
-    .flow-modern-item:last-child {
-        padding-bottom: 0;
-    }
-
-    /* 縦のライン (SP版) */
+    .flow-modern-item:last-child { padding-bottom: 0; }
     .flow-modern-item:not(:last-child)::before {
-        content: "";
-        position: absolute;
-        left: 20px; /* 円の中心に合わせる */
-        top: 40px;
-        width: 2px;
-        height: calc(100% - 40px);
-        background-color: #E0E0E0;
-        z-index: 1;
+        content: ""; position: absolute; left: 20px; top: 40px;
+        width: 2px; height: calc(100% - 40px); background-color: #E0E0E0; z-index: 1;
     }
 
-    /* ステップ番号の円 */
     .flow-modern-num {
-        flex-shrink: 0;
-        width: 40px;
-        height: 40px;
-        background-color: var(--c-navy);
-        color: #fff;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-family: var(--font-en);
-        font-size: 16px;
-        z-index: 2;
+        flex-shrink: 0; width: 40px; height: 40px;
+        background-color: var(--c-navy); color: #fff;
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+        font-weight: 700; font-family: var(--font-en); font-size: 16px; z-index: 2;
         box-shadow: 0 4px 10px rgba(37, 45, 130, 0.2);
     }
+    .flow-modern-content { margin-left: 25px; padding-top: 5px; width: 100%; }
+    .flow-modern-title { font-size: 18px; font-weight: 700; color: var(--c-navy); margin: 0 0 8px 0; line-height: 1.4; }
+    .flow-modern-desc { font-size: 14px; color: var(--c-text-light); line-height: 1.6; margin: 0; }
 
-    /* テキストコンテンツ */
-    .flow-modern-content {
-        margin-left: 25px;
-        padding-top: 5px;
-        width: 100%;
-    }
-
-    .flow-modern-title {
-        font-size: 18px;
-        font-weight: 700;
-        color: var(--c-navy);
-        margin: 0 0 8px 0;
-        line-height: 1.4;
-    }
-
-    .flow-modern-desc {
-        font-size: 14px;
-        color: var(--c-text-light);
-        line-height: 1.6;
-        margin: 0;
-    }
-
-    /* PC版（横並び） */
     @media (min-width: 769px) {
-        .flow-modern-wrap {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            max-width: 1100px;
-            padding-left: 0;
-        }
-        .flow-modern-item {
-            flex: 1;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding-bottom: 0;
-            position: relative; /* 必要 */
-        }
-        
-        /* PC版の横線 */
+        .flow-modern-wrap { display: flex; justify-content: space-between; gap: 20px; max-width: 1100px; padding-left: 0; }
+        .flow-modern-item { flex: 1; flex-direction: column; align-items: center; text-align: center; padding-bottom: 0; position: relative; }
         .flow-modern-item:not(:last-child)::before {
-            display: block;
-            content: "";
-            position: absolute;
-            top: 20px;         /* 円(40px)の中心 */
-            left: 50%;         /* 自分の中央から */
-            width: 100%;       /* 右隣の中央まで伸ばす */
-            height: 2px;       /* 線の太さ */
-            background-color: #E0E0E0;
-            z-index: 1;        /* 円の下 */
+            display: block; content: ""; position: absolute;
+            top: 20px; left: 50%; width: 100%; height: 2px; background-color: #E0E0E0; z-index: 1;
         }
-
-        .flow-modern-num {
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 2; /* 線より上に表示 */
-        }
-        .flow-modern-content {
-            margin-left: 0;
-        }
+        .flow-modern-num { margin-bottom: 15px; position: relative; z-index: 2; }
+        .flow-modern-content { margin-left: 0; }
     }
-
 
     .voice-section { padding: 60px 0; background: #fff; }
     .swiper-slide { height: auto; }
@@ -417,11 +359,36 @@
     .req-item dt { width: 30%; font-weight: 700; color: var(--c-navy); display: flex; align-items: center; font-size: 18px; }
     .req-item dd { width: 70%; margin: 0; font-size: 16px; }
 
+    /* 募集要項 トグル用 */
+    .req-toggle-btn {
+        display: inline-flex; align-items: center; gap: 5px;
+        background: none; border: none; color: var(--c-navy);
+        font-weight: 700; cursor: pointer; padding: 0; margin-top: 8px;
+        font-size: 14px; text-decoration: underline;
+    }
+    .req-toggle-btn i { transition: transform 0.3s; }
+    .req-toggle-btn.is-active i { transform: rotate(180deg); }
+    
+    .req-detail-box {
+        margin-top: 15px;
+        background: #f5f8fa;
+        padding: 15px;
+        border-radius: 8px;
+        display: none; /* デフォルト非表示 */
+        font-size: 14px;
+        line-height: 1.6;
+    }
+    .req-detail-box p { margin: 0 0 10px; font-weight: 700; color: var(--c-navy); }
+    
+    /* 修正: リストスタイル削除 */
+    .req-detail-box ul { list-style: none; padding-left: 0; }
+    .req-detail-box li { margin-bottom: 5px; }
+
     .footer { background: var(--c-navy); color: #fff; padding: 60px 0 100px; text-align: center; }
     .footer-logo img { width: 150px; height: auto; }
     .footer-info { font-size: 13px; opacity: 0.8; line-height: 1.8; }
 
-    /* Sticky CTA (Updated Design - Solid Style) */
+    /* Sticky CTA */
     .sticky-cta { 
         position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
         width: 92%; max-width: 420px; z-index: 9999;
@@ -431,20 +398,15 @@
         background: var(--c-line-light); color: #fff; padding: 16px 20px; 
         border-radius: 100px; font-weight: 900; font-size: 18px; 
         text-decoration: none; 
-        /* 立体的な影（ボタン風） */
         box-shadow: 0 4px 0 var(--c-line-dark), 0 10px 15px rgba(0,0,0,0.2);
         border: 2px solid rgba(255,255,255,0.4);
         transition: transform 0.1s, box-shadow 0.1s;
     }
-    /* ふわふわ動くアニメーションは控えめに */
-    .btn-sticky {
-        animation: float 3s ease-in-out infinite; 
-    }
+    .btn-sticky { animation: float 3s ease-in-out infinite; }
     .btn-sticky:active {
         transform: translateY(4px);
         box-shadow: 0 0 0 var(--c-line-dark), 0 5px 10px rgba(0,0,0,0.2);
     }
-    
     .btn-sticky::before {
         content: ""; display: inline-block; width: 28px; height: 28px;
         background: url('https://upload.wikimedia.org/wikipedia/commons/4/41/LINE_logo.svg') no-repeat center/contain;
@@ -495,16 +457,15 @@
         }
         .hero__sub-copy-box { font-size: 14px; padding: 8px 15px; margin-bottom: 20px; }
 
-        /* バッジSP調整（窮屈さ解消） */
         .badge-container {
             padding: 0; 
-            gap: 15px; /* バッジ間の余白を広げる */
+            gap: 15px; 
             width: 100%;
             justify-content: center;
             flex-wrap: nowrap; 
         }
         .badge-item {
-            width: 26vw; /* バッジサイズを少し縮小 (29vw -> 26vw) */
+            width: 26vw; 
             max-width: 85px;
             height: auto;
             aspect-ratio: 1 / 1;
@@ -515,7 +476,7 @@
         .badge-content { padding-bottom: 6px; }
 
         .badge-label { 
-            font-size: 9px; /* 文字サイズ調整 */
+            font-size: 9px; 
             margin-bottom: 2px; 
             white-space: nowrap;
         }
@@ -529,11 +490,10 @@
         .curved-stars text, .curved-stars-bottom text { font-size: 13px; }
         .hero__note { margin-top: 10px; font-size: 10px; }
         
-        /* CTA Title SP (改行あり・白背景なし) */
         .cta-title { 
             font-size: 20px; 
             line-height: 1.4; 
-            white-space: normal; /* 改行許可 */
+            white-space: normal;
             display: inline-block;
             width: auto;
         }
@@ -559,7 +519,6 @@
         .reason-item, .reason-item:nth-child(even) { flex-direction: column; gap: 20px; padding: 25px; }
         .reason-img img { height: auto; max-height: 200px; }
 
-        /* 募集要項 SP用追加 */
         .req-item { flex-direction: column; gap: 10px; }
         .req-item dt { width: 100%; margin-bottom: 5px; }
         .req-item dd { width: 100%; }
@@ -677,21 +636,21 @@
                             </text>
                         </svg>
                     </div>
-                    <!-- 注釈削除済み -->
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 以下、他セクション (変更なし) -->
+    <!-- 以下、他セクション -->
     <section class="cta-section" id="entry">
         <div class="l-container">
             <div class="cta-header">
                 <h2 class="cta-title">
-                    <span class="cta-title__main">講師登録は</span><br class="u-sp-only"><span class="cta-title__sub">説明会に参加するだけ</span>
+                    <span class="cta-title__main">講師登録は</span><br class="u-sp-only"><span class="cta-title__sub">オンライン説明会に参加するだけ</span>
                 </h2>
             </div>
             <div class="cta-grid">
+                <!-- 1. 東大 -->
                 <div class="cta-card cta-card--todai">
                     <span class="cta-target">
                         <span class="univ-name">東大生</span>
@@ -699,6 +658,7 @@
                     </span>
                     <a href="LINK_TODAI" class="btn-cta">LINEで詳細を見る</a>
                 </div>
+                <!-- 2. 京大 -->
                 <div class="cta-card cta-card--kyodai">
                     <span class="cta-target">
                         <span class="univ-name">京大生</span>
@@ -706,19 +666,22 @@
                     </span>
                     <a href="LINK_KYODAI" class="btn-cta">LINEで詳細を見る</a>
                 </div>
+                <!-- 3. その他（旧帝一科） ※並び順変更 -->
+                <div class="cta-card cta-card--other">
+                    <span class="cta-target">
+                        <span class="univ-name">東大京大を除く<br>旧帝一科</span>
+                        <span class="univ-suffix">の方</span>
+                    </span>
+                    <a href="LINK_OTHER" class="btn-cta">LINEで詳細を見る</a>
+                </div>
+                <!-- 4. 早慶 ※並び順変更 -->
                 <div class="cta-card cta-card--sokei">
                     <span class="cta-target">
                         <span class="univ-name">早慶生</span>
                         <span class="univ-suffix">の方</span>
                     </span>
                     <a href="LINK_SOKEI" class="btn-cta">LINEで詳細を見る</a>
-                </div>
-                <div class="cta-card cta-card--other">
-                    <span class="cta-target">
-                        <span class="univ-name">その他の大学</span>
-                        <span class="univ-suffix">の方</span>
-                    </span>
-                    <a href="LINK_OTHER" class="btn-cta">LINEで詳細を見る</a>
+                    <a href="#requirements" class="sokei-req-link js-open-req">（※ 中学指定あり）</a>
                 </div>
             </div>
             <a href="LINK_INTERN" class="cta-link-intern">インターン採用はこちら</a>
@@ -766,7 +729,7 @@
                 <div class="reason-item">
                     <div class="reason-text">
                         <div class="reason-no">02</div>
-                        <h3 class="reason-head">案件探しの手間ゼロ<br><span>こちらからご紹介</span></h3>
+                        <h3 class="reason-head">案件探しの手間ゼロ<br><span>運営から直接ご提案</span></h3>
                         <p class="reason-desc">講師登録時に条件を登録するだけで、マッチする案件を定期的にご案内。自分で探す手間がなく、学業と両立しながら効率的に働けます。</p>
                     </div>
                     <div class="reason-img">
@@ -805,7 +768,7 @@
                 <div class="flow-modern-item">
                     <div class="flow-modern-num">02</div>
                     <div class="flow-modern-content">
-                        <h3 class="flow-modern-title">説明会・講師登録</h3>
+                        <h3 class="flow-modern-title">オンライン説明会<br class="u-sp-only">・講師登録</h3>
                         <p class="flow-modern-desc">説明会（45〜60分）に参加し、講師登録を完了させてください。</p>
                     </div>
                 </div>
@@ -878,7 +841,7 @@
         <div class="l-container">
             <div class="cta-header">
                 <h2 class="cta-title">
-                    <span class="cta-title__main">講師登録は</span><br class="u-sp-only"><span class="cta-title__sub">説明会に参加するだけ</span>
+                    <span class="cta-title__main">講師登録は</span><br class="u-sp-only"><span class="cta-title__sub">オンライン説明会に参加するだけ</span>
                 </h2>
             </div>
             <div class="cta-grid">
@@ -896,19 +859,20 @@
                     </span>
                     <a href="LINK_KYODAI" class="btn-cta">LINEで詳細を見る</a>
                 </div>
+                <div class="cta-card cta-card--other">
+                    <span class="cta-target">
+                        <span class="univ-name">東大京大を除く<br>旧帝一科</span>
+                        <span class="univ-suffix">の方</span>
+                    </span>
+                    <a href="LINK_OTHER" class="btn-cta">LINEで詳細を見る</a>
+                </div>
                 <div class="cta-card cta-card--sokei">
                     <span class="cta-target">
                         <span class="univ-name">早慶生</span>
                         <span class="univ-suffix">の方</span>
                     </span>
                     <a href="LINK_SOKEI" class="btn-cta">LINEで詳細を見る</a>
-                </div>
-                <div class="cta-card cta-card--other">
-                    <span class="cta-target">
-                        <span class="univ-name">その他の大学</span>
-                        <span class="univ-suffix">の方</span>
-                    </span>
-                    <a href="LINK_OTHER" class="btn-cta">LINEで詳細を見る</a>
+                    <a href="#requirements" class="sokei-req-link js-open-req">（※ 中学指定あり）</a>
                 </div>
             </div>
             <a href="LINK_INTERN" class="cta-link-intern">インターン採用はこちら</a>
@@ -985,7 +949,29 @@
             <dl class="req-list">
                 <div class="req-item">
                     <dt>対象大学</dt>
-                    <dd>旧帝7大学・一橋大学・東京科学大学・早稲田大学・慶応大学</dd>
+                    <dd>
+                        <div>
+                            旧帝7大学・一橋大学・東京科学大学<br>
+                            早稲田大学・慶應義塾大学（※指定中学出身者）
+                        </div>
+                        <button class="req-toggle-btn" type="button" onclick="toggleReqDetail(this)">
+                            詳細を確認する <i class="fa-solid fa-chevron-down"></i>
+                        </button>
+                        <div class="req-detail-box">
+                            <p>【国立大学】</p>
+                            <ul>
+                                <li>北海道大学、東北大学、東京大学、名古屋大学、京都大学、大阪大学、九州大学、一橋大学、東京科学大学</li>
+                            </ul>
+                            <div style="margin-top: 15px;"></div>
+                            <p>【私立大学（早稲田・慶応）】</p>
+                            <p style="font-weight: 500; font-size: 13px; margin-bottom: 5px;">※下記中学校出身者に限ります</p>
+                            <ul>
+                                <li>開成、筑波大附属駒場、麻布、桜蔭、武蔵、駒場東邦、女子学院、雙葉</li>
+                                <li>早稲田、慶應義塾、慶應SFC、栄光学園、聖光学院、浅野</li>
+                                <li>渋谷教育学園幕張、渋谷教育学園渋谷、海城、豊島岡女子</li>
+                            </ul>
+                        </div>
+                    </dd>
                 </div>
                 <div class="req-item">
                     <dt>報酬</dt>
@@ -1011,7 +997,7 @@
 
 <div class="sticky-cta u-sp-only">
     <a href="#entry" class="btn-sticky">
-        LINEで説明会に参加する ▶
+        LINEでオンライン説明会を予約 ▶
     </a>
 </div>
 
@@ -1024,6 +1010,7 @@
         breakpoints: { 768: { slidesPerView: 2, spaceBetween: 30 } }
     });
 
+    // FAQの開閉
     document.querySelectorAll('.faq-question').forEach(button => {
         button.addEventListener('click', () => {
             const item = button.parentElement;
@@ -1037,13 +1024,55 @@
         });
     });
 
-    document.querySelectorAll('a[href="#entry"], a[href="#flow"]').forEach(anchor => {
+    // スムーススクロール
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
+            // .js-open-reqは個別に処理するのでここでは除外
+            if (this.classList.contains('js-open-req')) return;
+
             e.preventDefault();
             const href = this.getAttribute('href');
+            if(href === '#') return;
             const target = document.querySelector(href);
             if (target) {
                 target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    });
+
+    // 募集要項のトグル制御
+    function toggleReqDetail(btn) {
+        const detailBox = btn.nextElementSibling;
+        const icon = btn.querySelector('i');
+        
+        btn.classList.toggle('is-active');
+        
+        if (detailBox.style.display === "block") {
+            detailBox.style.display = "none";
+        } else {
+            detailBox.style.display = "block";
+        }
+    }
+
+    // 早慶生用リンクをクリックした時の挙動
+    document.querySelectorAll('.js-open-req').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // 募集要項セクションへスクロール
+            const reqSection = document.getElementById('requirements');
+            reqSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            // トグルを開く
+            const toggleBtn = document.querySelector('.req-toggle-btn');
+            const detailBox = document.querySelector('.req-detail-box');
+            
+            // まだ開いていない場合のみクリックイベントを発火させる（開閉処理を実行）
+            if (detailBox.style.display !== "block") {
+                // 少し遅らせてスクロール後に開く演出にする（任意）
+                setTimeout(() => {
+                    toggleBtn.click();
+                }, 300);
             }
         });
     });
