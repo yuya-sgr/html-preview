@@ -36,8 +36,8 @@
                         'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                         'scroll-line': 'scrollLine 2s ease-in-out infinite',
                         'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        /* ▼▼▼ 上から下へ流れるアニメーション ▼▼▼ */
                         'scroll-vertical': 'scrollVertical 20s linear infinite',
-                        /* ▼▼▼ 左から右へ流れるアニメーション ▼▼▼ */
                         'scroll-horizontal-reverse': 'scrollHorizontalReverse 20s linear infinite',
                     },
                     keyframes: {
@@ -50,11 +50,12 @@
                             '50%': { height: '50%', opacity: '1' },
                             '100%': { height: '100%', opacity: '0', transform: 'translateY(100%)' },
                         },
+                        /* ▼▼▼ 修正: 上から下へ（-50%地点から0%地点へ移動） ▼▼▼ */
                         scrollVertical: {
-                            '0%': { transform: 'translateY(0%)' },
-                            '100%': { transform: 'translateY(-50%)' },
+                            '0%': { transform: 'translateY(-50%)' },
+                            '100%': { transform: 'translateY(0%)' },
                         },
-                        /* ▼▼▼ 左から右へ（-50%地点から0%地点へ移動） ▼▼▼ */
+                        /* 左から右へ */
                         scrollHorizontalReverse: {
                             '0%': { transform: 'translateX(-50%)' },
                             '100%': { transform: 'translateX(0%)' },
@@ -164,7 +165,6 @@
         <div class="absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-white to-transparent z-10"></div>
 
         <div class="flex w-max animate-scroll-horizontal-reverse gap-4 px-2">
-            
             <div class="w-[30vw] h-[30vw] shrink-0 rounded-lg overflow-hidden shadow-md">
                 <img src="https://www.toukobe.com/wp-content/uploads/ChatGPT-Image-Jan-18-2026-07_06_03-PM.jpg" class="w-full h-full object-cover">
             </div>
@@ -190,39 +190,39 @@
             <div class="w-[30vw] h-[30vw] shrink-0 rounded-lg overflow-hidden shadow-md">
                 <img src="https://www.toukobe.com/wp-content/uploads/ChatGPT-Image-Jan-18-2026-07_07_36-PM.jpg" class="w-full h-full object-cover">
             </div>
-
         </div>
     </div>
+
     <section id="message" class="relative py-20 md:py-32 bg-white overflow-hidden min-h-[80vh] flex items-center">
         <div class="absolute top-[-10%] left-[-5%] w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-manabi-light rounded-full blur-[60px] md:blur-[80px] z-0"></div>
         
         <div class="absolute top-0 right-0 w-1/3 md:w-[28%] lg:w-1/4 h-full z-20 overflow-hidden hidden md:flex justify-end pointer-events-none bg-white/30 backdrop-blur-[2px]">
-             <div class="absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-white via-white/50 to-transparent z-30"></div>
+            <div class="absolute top-0 left-0 w-16 h-full bg-gradient-to-r from-white via-white/50 to-transparent z-30"></div>
             
             <div class="flex flex-col gap-6 w-full px-6 animate-scroll-vertical py-4">
-                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square aspect-square-box">
+                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square shrink-0">
                     <img src="https://www.toukobe.com/wp-content/uploads/ChatGPT-Image-Jan-18-2026-07_06_03-PM.jpg" class="w-full h-full object-cover">
                 </div>
-                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square aspect-square-box">
+                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square shrink-0">
                     <img src="https://www.toukobe.com/wp-content/uploads/ChatGPT-Image-Jan-18-2026-07_08_47-PM.jpg" class="w-full h-full object-cover">
                 </div>
-                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square aspect-square-box">
+                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square shrink-0">
                     <img src="https://www.toukobe.com/wp-content/uploads/ChatGPT-Image-Jan-18-2026-07_06_29-PM.jpg" class="w-full h-full object-cover">
                 </div>
-                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square aspect-square-box">
+                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square shrink-0">
                     <img src="https://www.toukobe.com/wp-content/uploads/ChatGPT-Image-Jan-18-2026-07_07_36-PM.jpg" class="w-full h-full object-cover">
                 </div>
                 
-                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square aspect-square-box">
+                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square shrink-0">
                     <img src="https://www.toukobe.com/wp-content/uploads/ChatGPT-Image-Jan-18-2026-07_06_03-PM.jpg" class="w-full h-full object-cover">
                 </div>
-                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square aspect-square-box">
+                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square shrink-0">
                     <img src="https://www.toukobe.com/wp-content/uploads/ChatGPT-Image-Jan-18-2026-07_08_47-PM.jpg" class="w-full h-full object-cover">
                 </div>
-                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square aspect-square-box">
+                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square shrink-0">
                     <img src="https://www.toukobe.com/wp-content/uploads/ChatGPT-Image-Jan-18-2026-07_06_29-PM.jpg" class="w-full h-full object-cover">
                 </div>
-                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square aspect-square-box">
+                <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square shrink-0">
                     <img src="https://www.toukobe.com/wp-content/uploads/ChatGPT-Image-Jan-18-2026-07_07_36-PM.jpg" class="w-full h-full object-cover">
                 </div>
             </div>
@@ -260,7 +260,6 @@
                         <span class="w-4 md:w-6 h-[2px] bg-manabi-purple mr-2"></span>
                         OUR MISSION
                     </span>
-                    
                     <h2 class="text-4xl md:text-6xl lg:text-8xl font-black tracking-tighter leading-none text-black font-english">
                         Cultivate<br>
                         <span class="text-manabi-purple">Potential</span>
@@ -307,18 +306,10 @@
                             <span class="w-8 md:w-12 h-[2px] bg-manabi-purple ml-4"></span>
                         </h3>
                         <div class="space-y-4 md:space-y-6 text-sm leading-loose text-left text-gray-700 font-medium">
-                            <p>
-                                私たちが目指すのは、すべてのステークホルダーのポテンシャルを、共に耕し、育て合う組織です。
-                            </p>
-                            <p>
-                                メンバーが挑戦し、成長し続けること。その成長が、事業の変革を生み出し、より多くの価値を社会に届けていく。
-                            </p>
-                            <p>
-                                そしてその価値が、生徒様の「自ら育つ力」を引き出し、ふたたび新たな成長の循環を生み出していく。
-                            </p>
-                            <p>
-                                私たちは、そんな成長の連鎖が循環する組織と社会を、事業を通じてつくっていきます。
-                            </p>
+                            <p>私たちが目指すのは、すべてのステークホルダーのポテンシャルを、共に耕し、育て合う組織です。</p>
+                            <p>メンバーが挑戦し、成長し続けること。その成長が、事業の変革を生み出し、より多くの価値を社会に届けていく。</p>
+                            <p>そしてその価値が、生徒様の「自ら育つ力」を引き出し、ふたたび新たな成長の循環を生み出していく。</p>
+                            <p>私たちは、そんな成長の連鎖が循環する組織と社会を、事業を通じてつくっていきます。</p>
                         </div>
                     </div>
                 </div>
@@ -334,7 +325,6 @@
                     <h2 class="text-3xl md:text-4xl lg:text-5xl font-black">事業内容</h2>
                 </div>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border border-gray-100 reveal">
                 <div class="p-8 md:p-20 bg-manabi-gray flex flex-col justify-center border-b md:border-b-0 md:border-r border-gray-200">
                     <h3 class="text-xl md:text-3xl font-bold mb-6 md:mb-8 leading-snug">
@@ -367,7 +357,6 @@
     <section id="culture" class="bg-white py-20 md:py-32 border-t border-gray-100">
         <div class="max-w-7xl mx-auto px-6">
             <div class="mb-12 md:mb-20 reveal">
-                <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-manabi-accent block mb-2">OUR CULTURE</span>
                 <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-black font-english">VALUES</h2>
                 <p class="text-xs md:text-sm text-gray-400 mt-2 md:mt-4 font-bold tracking-widest">組織文化・行動指針</p>
             </div>
@@ -410,7 +399,7 @@
 
                 <div class="w-full lg:w-1/2 order-1 lg:order-2">
                     <h3 class="text-2xl md:text-3xl font-english font-bold mb-8 md:mb-10 text-manabi-dark tracking-wider border-b border-gray-300 pb-4 inline-block">
-                        COMMUNICATION
+                        CULTURE
                     </h3>
                     <div class="space-y-8 md:space-y-12">
                         <div>
@@ -447,8 +436,7 @@
 
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="reveal mb-12 md:mb-16 text-left">
-                <span class="text-[10px] md:text-xs font-bold font-english tracking-widest text-manabi-accent block mb-2">OPPORTUNITIES</span>
-                <h2 class="text-3xl md:text-4xl lg:text-5xl font-black mb-4 md:mb-6 font-english">GROWTH</h2>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-black mb-4 md:mb-6 font-english">COURSE</h2>
                 <p class="text-xs md:text-sm text-gray-400">圧倒的な成長環境</p>
             </div>
 
