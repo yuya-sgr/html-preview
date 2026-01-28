@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LINEへ移動中 | トウコベ</title>
+    <meta http-equiv="refresh" content="5;url=https://page.line.me/514vrzhl">
+    
+    <style>
+        :root {
+            --line-green: #06c755;
+            --bg-color: #f4f7f4;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+        }
+
+        .card {
+            background: white;
+            padding: 50px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            max-width: 380px;
+            width: 85%;
+            text-align: center;
+        }
+
+        .logo {
+            width: 180px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background-color: #eee;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: var(--line-green);
+            transition: width 2s linear;
+        }
+
+        .btn {
+            display: block;
+            padding: 16px;
+            background-color: var(--line-green);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(6, 199, 85, 0.3);
+        }
+
+        .notice {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #999;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <img src="https://www.toukobe.com/wp-content/themes/toukobe/assets/img/header__logo.webp" alt="トウコベ" class="logo">
+        
+        <div class="progress-container">
+            <div id="bar" class="progress-bar"></div>
+        </div>
+
+        <h1>LINEアプリを起動しています</h1>
+
+        <a href="https://page.line.me/514vrzhl" class="btn">自動で移動しない場合はこちら</a>
+
+        <p class="notice">※LINEアプリがインストールされている<br>スマートフォンでご確認ください。</p>
+    </div>
+
+    <script>
+        // バーのアニメーション
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById('bar').style.width = '100%';
+            }, 50);
+        };
+
+        // 3. 2秒後に自動遷移を実行
+        setTimeout(function(){
+            window.location.href = "https://page.line.me/514vrzhl";
+        }, 2000);
+    </script>
+
+</body>
+</html>
