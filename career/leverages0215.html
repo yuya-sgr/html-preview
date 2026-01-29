@@ -70,7 +70,6 @@
     </script>
     <style>
         html { scroll-behavior: smooth; }
-        /* 修正: word-breakの設定を変更し、PCでも強制的な改行禁止(keep-all)を解除して自然な折り返しにする */
         body { 
             font-family: 'Noto Sans JP', sans-serif; 
             color: #1e293b; 
@@ -95,7 +94,6 @@
         .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
         .faq-icon { transition: transform 0.3s ease; }
         
-        /* 文節区切り用クラス：PCではinline-blockで改行を防ぎ、SPではinlineに戻して自然な折り返しを許可する */
         .ib { display: inline-block; }
         @media (max-width: 768px) {
             .ib { display: inline; }
@@ -107,9 +105,9 @@
     <!-- Header -->
     <header class="fixed top-0 w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md border-b border-gray-100" id="header">
         <div class="max-w-7xl mx-auto px-6 h-16 md:h-20 flex justify-between items-center relative">
-            <a href="#" class="hover:opacity-80 transition-opacity flex items-center gap-2">
-                <img src="https://www.toukobe.com/wp-content/uploads/Original-on-Transparent-18.png" alt="MANABI Inc." class="h-8 md:h-12 w-auto object-contain">
-                <span class="font-english font-bold text-gray-400 text-xs tracking-widest mt-1">| CAREER</span>
+            <a href="#" class="hover:opacity-80 transition-opacity flex items-center">
+                <!-- ロゴサイズ変更: h-10 md:h-14 -->
+                <img src="https://www.toukobe.com/wp-content/uploads/Original-on-Transparent-18.png" alt="MANABI Career" class="h-10 md:h-14 w-auto object-contain">
             </a>
             
             <nav class="hidden md:flex items-center space-x-8 lg:space-x-10">
@@ -151,13 +149,9 @@
         
         <!-- Colorful Blobs -->
         <div class="absolute top-0 w-full h-full overflow-hidden z-0 opacity-40 md:opacity-30">
-            <!-- Purple -->
             <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-            <!-- Cyan -->
             <div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-            <!-- Pink -->
             <div class="absolute bottom-[-20%] left-[20%] w-[500px] h-[500px] bg-pink-400 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
-            <!-- Yellow -->
             <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
         </div>
         
@@ -170,14 +164,13 @@
                 CAREER PROJECT FOR TUTORS
             </p>
             
-            <!-- Japanese Main Copy (Reverted to Navy) -->
             <h1 class="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-black tracking-tight leading-tight mb-6 md:mb-8 animate-fade-in-up font-sans text-manabi-dark" style="animation-delay: 0.2s;">
                 <span class="ib">【完全招待制】特別企業説明会</span>
             </h1>
 
             <div class="animate-fade-in-up" style="animation-delay: 0.4s;">
                 <div class="flex flex-col items-start gap-4">
-                    <p class="text-sm md:text-xl font-bold tracking-widest text-gray-700">
+                    <p class="text-lg md:text-3xl font-bold tracking-widest text-gray-700">
                         「教育の質」を「キャリアの質」へ。
                     </p>
                     <div class="flex flex-col md:flex-row gap-4 mt-2">
@@ -220,7 +213,6 @@
             <div class="w-[30vw] h-[30vw] shrink-0 rounded-lg overflow-hidden shadow-md bg-white">
                 <img src="https://www.toukobe.com/wp-content/uploads/LeveragesLP3.jpg" class="w-full h-full object-cover">
             </div>
-            
             <!-- Duplicates -->
             <div class="w-[30vw] h-[30vw] shrink-0 rounded-lg overflow-hidden shadow-md bg-white">
                 <img src="https://www.toukobe.com/wp-content/uploads/LeveragesLP1.jpg" class="w-full h-full object-cover">
@@ -253,7 +245,6 @@
                 <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square shrink-0 bg-white">
                     <img src="https://www.toukobe.com/wp-content/uploads/LeveragesLP3.jpg" class="w-full h-full object-cover">
                 </div>
-                
                 <!-- Repeats -->
                 <div class="w-full rounded-xl overflow-hidden shadow-xl aspect-square shrink-0 bg-white">
                     <img src="https://www.toukobe.com/wp-content/uploads/LeveragesLP1.jpg" class="w-full h-full object-cover">
@@ -357,7 +348,7 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border border-gray-100 reveal shadow-xl">
-                <div class="p-8 md:p-20 bg-manabi-gray flex flex-col justify-center border-b md:border-b-0 md:border-r border-gray-200">
+                <div class="p-8 md:p-24 bg-manabi-gray flex flex-col justify-center border-b md:border-b-0 md:border-r border-gray-200">
                     <span class="text-xs font-bold text-gray-400 mb-2 tracking-widest">COOPERATED BY</span>
                     <h3 class="text-xl md:text-3xl font-bold mb-6 md:mb-8 leading-snug font-english text-manabi-dark">
                         Leverages
@@ -378,8 +369,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="img-hover-container h-64 md:h-auto relative order-first md:order-last flex items-center justify-center overflow-hidden">
-                    <!-- Leverages Image -->
+                <div class="img-hover-container h-80 md:h-auto relative order-first md:order-last flex items-center justify-center overflow-hidden">
                     <img src="https://www.toukobe.com/wp-content/uploads/Leveragesオフィス.jpg" alt="Leverages Office" class="w-full h-full object-cover">
                     <div class="img-overlay"></div>
                 </div>
@@ -400,7 +390,7 @@
                     </div>
                     <div class="ml-6 md:ml-8 pt-1 w-full border-b border-gray-100 pb-6 md:pb-8">
                         <h3 class="font-bold text-lg md:text-xl mb-2 text-manabi-dark">開催日時</h3>
-                        <p class="text-base md:text-lg font-bold text-manabi-main font-english">2026.2.9 (Mon) 19:00 - 20:30</p>
+                        <p class="text-base md:text-lg font-bold text-manabi-main font-english">2026.2.15 (Sun) 18:00 - 19:30</p>
                     </div>
                 </div>
 
