@@ -66,58 +66,31 @@
             background-color: #fff;
         }
 
-        /* レバレジーズ風ボタン */
-        .lev-button {
+        /* レバレジーズ風ボタン (PC用オレンジVer) */
+        .lev-button-orange {
             position: relative;
             display: inline-flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center; /* 中央揃えに変更 */
             width: 100%;
             max-width: 320px;
             padding: 20px 30px;
-            border: 1px solid #111;
-            background: #fff;
-            color: #111;
-            font-family: 'Noto Sans JP', sans-serif; /* 日本語フォントに変更 */
+            background: #FF8A32; /* オレンジ背景 */
+            color: #fff;
+            font-family: 'Noto Sans JP', sans-serif;
             font-weight: 700;
             letter-spacing: 0.05em;
             text-decoration: none;
             overflow: hidden;
-            transition: color 0.4s;
+            transition: all 0.3s;
             cursor: pointer;
+            box-shadow: 0 10px 25px -5px rgba(255, 138, 50, 0.4); /* オレンジの影 */
         }
-        .lev-button:hover { color: #fff; }
-        .lev-button::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #111;
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-            z-index: 0;
+        .lev-button-orange:hover {
+            background: #e06d1b; /* ホバーで少し濃く */
+            transform: translateY(-2px);
         }
-        .lev-button:hover::before { transform: scaleX(1); }
-        .lev-button span, .lev-button i { position: relative; z-index: 1; }
         
-        .arrow-box { position: relative; width: 40px; height: 10px; overflow: hidden; z-index: 1; }
-        .arrow-wrapper {
-            display: block; position: relative; width: 100%; height: 100%;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-        }
-        .arrow-line {
-            position: absolute; top: 50%; left: 0; width: 100%; height: 1px;
-            background-color: #111; transition: background-color 0.4s;
-        }
-        .arrow-head {
-            position: absolute; top: 50%; right: 0; width: 8px; height: 8px;
-            border-top: 1px solid #111; border-right: 1px solid #111;
-            transform: translateY(-50%) rotate(45deg); transition: border-color 0.4s;
-        }
-        .lev-button:hover .arrow-line { background-color: #fff; }
-        .lev-button:hover .arrow-head { border-color: #fff; }
-        .lev-button:hover .arrow-wrapper { transform: translateX(5px); }
-
         /* 画像マスクアニメーション */
         .mask-reveal { position: relative; overflow: hidden; }
         .mask-reveal::after {
@@ -138,9 +111,15 @@
 
         .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
         
+        /* SP版FV画像の調整 */
         .fv-bg-img {
             filter: grayscale(100%) contrast(110%) brightness(1.1);
             transition: transform 10s linear;
+        }
+
+        /* SP版文字の可読性確保（薄い白フチのような効果） */
+        .text-shadow-sm-white {
+            text-shadow: 0 0 2px rgba(255,255,255,0.5);
         }
     </style>
 </head>
@@ -175,7 +154,7 @@
                     OUTLINE
                     <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-manabi-main transition-all duration-300 group-hover:w-full"></span>
                 </a>
-                <a href="#entry" class="bg-black text-white px-8 py-3 text-xs font-bold tracking-widest hover:bg-manabi-main transition-colors duration-300 font-english">
+                <a href="#entry" class="bg-manabi-main text-white px-8 py-3 text-xs font-bold tracking-widest hover:bg-orange-600 transition-colors duration-300 font-english shadow-lg">
                     ENTRY
                 </a>
             </nav>
@@ -201,49 +180,43 @@
         </nav>
     </div>
 
-    <section class="relative h-[100vh] md:h-screen w-full bg-white overflow-hidden">
+    <section class="relative h-[95vh] md:h-screen w-full bg-white overflow-hidden">
         
         <div class="hidden md:flex h-full w-full relative pt-20">
             <div class="w-1/2 h-full flex flex-col justify-center px-12 lg:px-24 z-10 bg-white">
                 
-                <div class="mb-6 flex items-center gap-4 text-reveal active" style="transition-delay: 0.1s;">
-                    <span class="bg-manabi-black text-white px-3 py-1 text-[10px] font-bold tracking-widest">完全招待制</span>
+                <div class="mb-6 inline-flex flex-col items-start gap-2 text-reveal active -ml-3 p-3 bg-white/95 backdrop-blur-sm rounded-sm" style="transition-delay: 0.1s;">
+                    <span class="bg-manabi-black text-white px-2 py-0.5 text-[10px] font-bold tracking-widest">完全招待制</span>
                     <span class="text-[10px] font-bold tracking-widest text-gray-500 font-english">COLLABORATION : Leverages Co., Ltd.</span>
                 </div>
 
-                <div class="mb-8 text-reveal active" style="transition-delay: 0.2s;">
+                <div class="mb-4 text-reveal active" style="transition-delay: 0.2s;">
                     <p class="text-xs text-manabi-main font-bold tracking-widest font-english mb-1">DATE</p>
-                    <p class="text-2xl font-bold font-english text-manabi-black tracking-wider">2026.2.9 (Mon) 19:00 - 20:30</p>
+                    <p class="text-3xl font-black font-english text-manabi-black tracking-tighter">2026.2.9 (Mon) 19:00 - 20:30</p>
                 </div>
 
-                <h1 class="text-5xl lg:text-7xl font-black leading-[1.15] mb-10 text-manabi-black text-reveal active" style="transition-delay: 0.4s;">
+                <h1 class="text-5xl lg:text-7xl font-black leading-[1.15] mb-8 text-manabi-black text-reveal active" style="transition-delay: 0.4s;">
                     教育の質を、<br>
                     <span class="whitespace-nowrap">キャリアの質へ。</span>
                 </h1>
 
-                <div class="flex gap-4 mb-12 text-reveal active" style="transition-delay: 0.6s;">
+                <div class="flex gap-4 mb-8 text-reveal active" style="transition-delay: 0.6s;">
                     <span class="border border-black px-4 py-2 text-xs font-bold tracking-wider">28卒 難関大生講師限定</span>
                     <span class="bg-black text-white px-4 py-2 text-xs font-bold tracking-wider">参加謝礼あり</span>
                 </div>
 
                 <div class="text-reveal active" style="transition-delay: 0.8s;">
-                    <a href="#entry" class="lev-button group">
+                    <a href="#entry" class="lev-button-orange group">
                         <span class="text-sm font-bold flex items-center">
                             イベントに申し込む
-                            <span class="ml-2 text-[10px] font-english font-normal text-gray-400 group-hover:text-white transition-colors">- ENTRY EVENT</span>
+                            <i class="fa-solid fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
                         </span>
-                        <div class="arrow-box">
-                            <div class="arrow-wrapper">
-                                <div class="arrow-line"></div>
-                                <div class="arrow-head"></div>
-                            </div>
-                        </div>
                     </a>
                 </div>
             </div>
 
             <div class="w-1/2 h-full relative mask-reveal active" style="transition-delay: 0.5s;">
-                <img src="https://www.toukobe.com/wp-content/uploads/LeveragesLP1.jpg" class="w-full h-full object-cover grayscale-[20%] contrast-110">
+                <img src="https://www.toukobe.com/wp-content/uploads/LeveragesLP1.jpg" class="w-full h-full object-cover object-bottom scale-110 grayscale-[20%] contrast-110">
             </div>
 
             <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-32 bg-gray-100 z-20">
@@ -253,36 +226,33 @@
         </div>
 
         <div class="md:hidden h-full w-full relative flex flex-col justify-end pb-24 px-6 pt-20">
-            <div class="absolute top-0 right-0 w-full h-[70%] z-0">
-                <div class="absolute inset-0 bg-gradient-to-b from-white/0 via-white/40 to-white z-10"></div>
+            <div class="absolute top-0 right-0 w-full h-[85%] z-0">
+                <div class="absolute inset-0 bg-gradient-to-b from-white/0 via-white/30 to-white via-90% z-10"></div>
                 <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" 
                      class="w-full h-full object-cover grayscale-[50%] contrast-125 opacity-90 fv-bg-img" alt="Business Career">
             </div>
 
-            <div class="relative z-20">
-                <div class="inline-flex flex-col items-start gap-2 mb-6 animate-fade-in-up bg-white/80 backdrop-blur-sm p-4 rounded-sm shadow-sm border border-white/50">
-                    <div class="flex items-center gap-3">
-                        <span class="bg-manabi-black text-white px-2 py-1 text-[10px] font-bold tracking-widest">完全招待制</span>
-                        <div class="h-[1px] w-6 bg-gray-400"></div>
-                    </div>
-                    <span class="text-xs font-bold font-english text-manabi-dark tracking-wide">COLLABORATION : Leverages</span>
+            <div class="relative z-20 mt-auto">
+                <div class="inline-flex flex-col items-start gap-1 mb-6 animate-fade-in-up bg-white/15 backdrop-blur-[4px] p-3 -ml-3 rounded-sm border border-white/20">
+                    <span class="bg-manabi-black text-white px-2 py-0.5 text-[10px] font-bold tracking-widest">完全招待制</span>
+                    <span class="text-[10px] font-bold font-english text-manabi-dark tracking-widest text-shadow-sm-white">COLLABORATION : Leverages</span>
                 </div>
 
-                <div class="mb-6 animate-fade-in-up" style="animation-delay: 0.1s;">
-                    <p class="text-[10px] text-manabi-main font-bold tracking-widest font-english mb-1">DATE</p>
-                    <p class="text-xl font-bold font-english text-manabi-black tracking-wider">2026.2.9 (Mon) 19:00 -</p>
+                <div class="mb-8 animate-fade-in-up" style="animation-delay: 0.1s;">
+                    <p class="text-[10px] text-manabi-main font-bold tracking-widest font-english mb-1 text-shadow-sm-white">DATE</p>
+                    <p class="text-2xl font-black font-english text-manabi-black tracking-tighter text-shadow-sm-white">2026.2.9 (Mon) 19:00 -</p>
                 </div>
 
-                <div class="mb-8 animate-fade-in-up" style="animation-delay: 0.2s;">
-                    <p class="text-xs font-bold text-manabi-main mb-2 tracking-widest">特別企業説明会</p>
-                    <h1 class="text-4xl font-black leading-tight text-manabi-black font-sans tracking-tight">
+                <div class="mb-10 animate-fade-in-up" style="animation-delay: 0.2s;">
+                    <p class="text-xs font-bold text-manabi-main mb-2 tracking-widest text-shadow-sm-white">特別企業説明会</p>
+                    <h1 class="text-4xl font-black leading-tight text-manabi-black font-sans tracking-tight text-shadow-sm-white">
                         教育の質を、<br>
                         <span class="whitespace-nowrap">キャリアの質へ。</span>
                     </h1>
                 </div>
 
                 <div class="flex flex-wrap gap-3 mb-12 animate-fade-in-up" style="animation-delay: 0.3s;">
-                    <div class="border border-manabi-black px-3 py-1.5 text-[10px] font-bold tracking-wider text-manabi-black bg-white/90 backdrop-blur-sm">
+                    <div class="border border-manabi-black px-3 py-1.5 text-[10px] font-bold tracking-wider text-manabi-black bg-white/80 backdrop-blur-sm">
                         28卒 難関大生講師限定
                     </div>
                     <div class="bg-manabi-black px-3 py-1.5 text-[10px] font-bold tracking-wider text-white">
@@ -302,7 +272,7 @@
                 </div>
             </div>
 
-            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-12 bg-gray-200 z-20 overflow-hidden">
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-12 bg-gray-300 z-20 overflow-hidden">
                 <div class="absolute top-0 left-0 w-full h-full bg-manabi-black animate-scroll-line"></div>
             </div>
         </div>
@@ -316,7 +286,6 @@
                     <img src="https://www.toukobe.com/wp-content/uploads/LeveragesLP2.jpg" class="w-full h-full object-cover grayscale-[30%]">
                 </div>
             </div>
-
             <div class="order-1 md:order-2 space-y-12">
                 <div class="text-reveal scroll-trigger">
                     <span class="text-xs font-bold font-english tracking-widest border-b border-black pb-1 inline-block mb-8">CONCEPT</span>
@@ -354,7 +323,6 @@
                         本イベントは「業務」として扱われるため、参加対価として3,000円（税込）を支給。学びながら報酬を得られます。
                     </p>
                 </div>
-
                 <div class="bg-white p-10 border-r border-b border-gray-300 group hover:bg-black transition-colors duration-500">
                     <div class="text-manabi-main text-4xl font-english font-bold mb-6 group-hover:text-white transition-colors">02</div>
                     <h3 class="text-lg font-bold mb-4 group-hover:text-white transition-colors">優良企業への選抜</h3>
@@ -362,7 +330,6 @@
                         「働きがいのある会社」ランキング常連のレバレジーズ社員と少人数で対話。優秀者は特別選考ルートへ招待。
                     </p>
                 </div>
-
                 <div class="bg-white p-10 border-r border-b border-gray-300 group hover:bg-black transition-colors duration-500">
                     <div class="text-manabi-main text-4xl font-english font-bold mb-6 group-hover:text-white transition-colors">03</div>
                     <h3 class="text-lg font-bold mb-4 group-hover:text-white transition-colors">90分の高タイパ</h3>
