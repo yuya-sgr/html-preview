@@ -1,504 +1,560 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>トウコベキャリア | 特別キャリア形成プロジェクト</title>
-    <meta name="description" content="難関大生講師のための特別キャリア形成プロジェクト「トウコベキャリア」。">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トウコベキャリア | 特別キャリア形成プロジェクト</title>
+    <meta name="description" content="難関大生講師のための特別キャリア形成プロジェクト「トウコベキャリア」。">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Noto Sans JP"', 'sans-serif'],
-                        english: ['"Montserrat"', 'sans-serif'],
-                    },
-                    colors: {
-                        'manabi-main': '#FF8A32',       // アクセント：オレンジ
-                        'manabi-black': '#111111',      // ベース：漆黒
-                        'manabi-dark': '#333333',       // テキスト：ダークグレー
-                        'manabi-light': '#F5F5F5',      // 背景：ライトグレー
-                        'border-gray': '#E0E0E0',       // 枠線
-                    },
-                    letterSpacing: {
-                        'widest-xl': '0.25em',
-                    },
-                    animation: {
-                        'scroll-line': 'scrollLine 2s ease-in-out infinite',
-                        'logo-appear': 'logoAppear 1.5s ease-out forwards',
-                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                    },
-                    keyframes: {
-                        logoAppear: {
-                            '0%': { opacity: '0', transform: 'scale(0.95)' },
-                            '100%': { opacity: '1', transform: 'scale(1)' },
-                        },
-                        scrollLine: {
-                            '0%': { height: '0%', top: '0', opacity: '0' },
-                            '30%': { height: '50%', top: '0', opacity: '1' },
-                            '100%': { height: '0%', top: '100%', opacity: '0' },
-                        },
-                        fadeInUp: {
-                            '0%': { opacity: '0', transform: 'translateY(20px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                    }
-                }
-            }
-        }
-    </script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans JP"', 'sans-serif'],
+                        english: ['"Montserrat"', 'sans-serif'],
+                    },
+                    colors: {
+                        'manabi-main': '#FF8A32',
+                        'manabi-black': '#111111',
+                        'manabi-dark': '#333333',
+                        'manabi-light': '#F5F5F5',
+                        'border-gray': '#E0E0E0',
+                    },
+                    letterSpacing: {
+                        'widest-xl': '0.25em',
+                    },
+                    animation: {
+                        'scroll-line': 'scrollLine 2s ease-in-out infinite',
+                        'logo-appear': 'logoAppear 1.5s ease-out forwards',
+                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        logoAppear: {
+                            '0%': { opacity: '0', transform: 'scale(0.95)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        scrollLine: {
+                            '0%': { height: '0%', top: '0', opacity: '0' },
+                            '30%': { height: '50%', top: '0', opacity: '1' },
+                            '100%': { height: '0%', top: '100%', opacity: '0' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
 
-    <style>
-        html { scroll-behavior: smooth; }
-        body { 
-            font-family: 'Noto Sans JP', sans-serif; 
-            color: #111; 
-            overflow-x: hidden; 
-            background-color: #fff;
-        }
+    <style>
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Noto Sans JP', sans-serif; 
+            color: #111; 
+            overflow-x: hidden; 
+            background-color: #fff;
+        }
 
-        /* オレンジボタン (共通) */
-        .lev-button-orange {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            max-width: 320px;
-            padding: 18px 30px;
-            background: #FF8A32;
-            color: #fff;
-            font-family: 'Noto Sans JP', sans-serif;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-            overflow: hidden;
-            transition: all 0.3s;
-            cursor: pointer;
-            box-shadow: 0 10px 25px -5px rgba(255, 138, 50, 0.4);
-            border-radius: 2px;
-        }
-        .lev-button-orange:hover {
-            background: #e06d1b;
-            transform: translateY(-2px);
-        }
-        
-        /* 画像マスクアニメーション */
-        .mask-reveal { position: relative; overflow: hidden; }
-        .mask-reveal::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #fff; 
-            transform: translateY(0);
-            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 2;
-        }
-        .mask-reveal.active::after { transform: translateY(-100%); }
-        .mask-reveal img {
-            transform: scale(1.1); transition: transform 1.5s ease-out;
-        }
-        .mask-reveal.active img { transform: scale(1); }
+        /* ボタン */
+        .lev-button-orange {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 320px;
+            padding: 18px 30px;
+            background: #FF8A32;
+            color: #fff;
+            font-family: 'Noto Sans JP', sans-serif;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 138, 50, 0.3);
+            border-radius: 2px;
+        }
+        .lev-button-orange:hover {
+            background: #e06d1b;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(255, 138, 50, 0.4);
+        }
+        
+        /* アニメーション関連 */
+        .mask-reveal { position: relative; overflow: hidden; }
+        .mask-reveal::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #fff; 
+            transform: translateY(0);
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 2;
+        }
+        .mask-reveal.active::after { transform: translateY(-100%); }
+        .mask-reveal img {
+            transform: scale(1.1); transition: transform 1.5s ease-out;
+        }
+        .mask-reveal.active img { transform: scale(1); }
 
-        .text-reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
-        .text-reveal.active { opacity: 1; transform: translateY(0); }
+        .text-reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .text-reveal.active { opacity: 1; transform: translateY(0); }
 
-        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
-    </style>
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; }
+    </style>
 </head>
 <body class="bg-white">
 
-    <div id="loading-screen" class="fixed inset-0 z-[1000] bg-white flex items-center justify-center transition-opacity duration-1000 ease-out">
-        <div class="text-center">
-            <img src="https://www.toukobe.com/wp-content/uploads/Group-164.png" alt="トウコベキャリア" class="w-48 md:w-64 animate-logo-appear">
-        </div>
-    </div>
+    <div id="loading-screen" class="fixed inset-0 z-[1000] bg-white flex items-center justify-center transition-opacity duration-1000 ease-out">
+        <div class="text-center">
+            <img src="https://www.toukobe.com/wp-content/uploads/Group-164.png" alt="トウコベキャリア" class="w-48 md:w-64 animate-logo-appear">
+        </div>
+    </div>
 
-    <header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300" id="header">
-        <div class="max-w-[1400px] mx-auto px-6 h-16 md:h-20 flex justify-between items-center">
-            <a href="#" class="hover:opacity-60 transition-opacity">
-                <img src="https://www.toukobe.com/wp-content/uploads/Group-164.png" alt="トウコベキャリア" class="h-8 md:h-10 w-auto object-contain">
-            </a>
-            
-            <nav class="hidden md:flex items-center space-x-10">
-                <a href="#concept" class="text-xs font-bold tracking-widest text-manabi-black hover:text-manabi-main transition-colors font-english relative group">
-                    CONCEPT
-                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-manabi-main transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#merit" class="text-xs font-bold tracking-widest text-manabi-black hover:text-manabi-main transition-colors font-english relative group">
-                    MERIT
-                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-manabi-main transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#partner" class="text-xs font-bold tracking-widest text-manabi-black hover:text-manabi-main transition-colors font-english relative group">
-                    PARTNER
-                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-manabi-main transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#outline" class="text-xs font-bold tracking-widest text-manabi-black hover:text-manabi-main transition-colors font-english relative group">
-                    OUTLINE
-                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-manabi-main transition-all duration-300 group-hover:w-full"></span>
-                </a>
-                <a href="#entry" class="bg-manabi-main text-white px-8 py-3 text-xs font-bold tracking-widest hover:bg-orange-600 transition-colors duration-300 font-english shadow-lg rounded-sm">
-                    ENTRY
-                </a>
-            </nav>
+    <header class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100 transition-all duration-300" id="header">
+        <div class="max-w-[1400px] mx-auto px-6 h-16 md:h-20 flex justify-between items-center">
+            <a href="#" class="hover:opacity-60 transition-opacity">
+                <img src="https://www.toukobe.com/wp-content/uploads/Group-164.png" alt="トウコベキャリア" class="h-8 md:h-10 w-auto object-contain">
+            </a>
+            
+            <nav class="hidden md:flex items-center space-x-10">
+                <a href="#concept" class="text-xs font-bold tracking-widest text-manabi-black hover:text-manabi-main transition-colors font-english relative group">
+                    WHAT IS THIS EVENT
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-manabi-main transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#merit" class="text-xs font-bold tracking-widest text-manabi-black hover:text-manabi-main transition-colors font-english relative group">
+                    MERIT
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-manabi-main transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#partner" class="text-xs font-bold tracking-widest text-manabi-black hover:text-manabi-main transition-colors font-english relative group">
+                    PARTNER
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-manabi-main transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#program" class="text-xs font-bold tracking-widest text-manabi-black hover:text-manabi-main transition-colors font-english relative group">
+                    PROGRAM
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-manabi-main transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#outline" class="text-xs font-bold tracking-widest text-manabi-black hover:text-manabi-main transition-colors font-english relative group">
+                    OUTLINE
+                    <span class="absolute -bottom-2 left-0 w-0 h-[1px] bg-manabi-main transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#entry" class="bg-manabi-main text-white px-8 py-3 text-xs font-bold tracking-widest hover:bg-orange-600 transition-colors duration-300 font-english rounded-sm">
+                    ENTRY
+                </a>
+            </nav>
 
-            <button class="md:hidden text-2xl w-10 h-10 flex items-center justify-center text-black" id="menu-open-btn">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-        </div>
-    </header>
+            <button class="md:hidden text-2xl w-10 h-10 flex items-center justify-center text-black" id="menu-open-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
 
-    <div id="mobile-menu" class="fixed inset-0 w-full h-full bg-white z-[9999] hidden flex flex-col opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="h-16 flex justify-end items-center px-6 border-b border-gray-100">
-            <button id="menu-close-btn" class="text-3xl w-10 h-10 flex items-center justify-center text-black">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-        <nav class="flex-1 flex flex-col items-center justify-center space-y-10">
-            <a href="#concept" class="text-xl font-bold tracking-widest text-black mobile-link font-english">CONCEPT</a>
-            <a href="#merit" class="text-xl font-bold tracking-widest text-black mobile-link font-english">MERIT</a>
-            <a href="#partner" class="text-xl font-bold tracking-widest text-black mobile-link font-english">PARTNER</a>
-            <a href="#outline" class="text-xl font-bold tracking-widest text-black mobile-link font-english">OUTLINE</a>
-            <a href="#entry" class="text-xl font-bold tracking-widest text-manabi-main mobile-link font-english">ENTRY</a>
-        </nav>
-    </div>
+    <div id="mobile-menu" class="fixed inset-0 w-full h-full bg-white z-[9999] hidden flex flex-col opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="h-16 flex justify-end items-center px-6 border-b border-gray-100">
+            <button id="menu-close-btn" class="text-3xl w-10 h-10 flex items-center justify-center text-black">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        <nav class="flex-1 flex flex-col items-center justify-center space-y-10">
+            <a href="#concept" class="text-xl font-bold tracking-widest text-black mobile-link font-english">WHAT IS THIS EVENT</a>
+            <a href="#merit" class="text-xl font-bold tracking-widest text-black mobile-link font-english">MERIT</a>
+            <a href="#partner" class="text-xl font-bold tracking-widest text-black mobile-link font-english">PARTNER</a>
+            <a href="#program" class="text-xl font-bold tracking-widest text-black mobile-link font-english">PROGRAM</a>
+            <a href="#outline" class="text-xl font-bold tracking-widest text-black mobile-link font-english">OUTLINE</a>
+            <a href="#entry" class="text-xl font-bold tracking-widest text-manabi-main mobile-link font-english">ENTRY</a>
+        </nav>
+    </div>
 
-    <section class="relative h-[100dvh] w-full overflow-hidden flex flex-col justify-end pb-12 pt-20">
-        
-        <div class="absolute inset-0 z-0 pointer-events-none">
-            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" 
-                 class="w-full h-full object-cover object-center opacity-[0.15] grayscale" 
-                 alt="Background">
-            <div class="absolute bottom-0 left-0 w-full h-[60%] bg-gradient-to-t from-white via-white/90 to-transparent"></div>
-        </div>
+    <section class="relative h-[100dvh] w-full overflow-hidden flex flex-col justify-end pb-12 pt-20">
+        
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" 
+                 class="w-full h-full object-cover object-center opacity-[0.15] grayscale" 
+                 alt="Background">
+            <div class="absolute bottom-0 left-0 w-full h-[60%] bg-gradient-to-t from-white via-white/90 to-transparent"></div>
+        </div>
 
-        <div class="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24">
-            <div class="max-w-xl">
-                
-                <div class="animate-fade-in-up mb-6">
-                    <span class="bg-black text-white px-3 py-1 text-[10px] font-bold tracking-widest inline-block shadow-sm">
-                        完全招待制
-                    </span>
-                </div>
+        <div class="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24">
+            <div class="max-w-xl">
+                
+                <div class="animate-fade-in-up mb-6">
+                    <span class="bg-black text-white px-3 py-1 text-[10px] font-bold tracking-widest inline-block">
+                        完全招待制
+                    </span>
+                </div>
 
-                <div class="animate-fade-in-up mb-6" style="animation-delay: 0.1s;">
-                    <p class="text-[10px] text-manabi-main font-bold tracking-widest font-english mb-1">DATE</p>
-                    <p class="text-2xl md:text-4xl font-black font-english text-black tracking-tighter leading-none">
-                        2026.2.15 <span class="text-lg md:text-xl font-bold text-gray-600 ml-1">(Sun)</span>
-                    </p>
-                    <p class="text-lg font-bold font-english text-black mt-1">18:00 - 19:30 <span class="text-sm text-gray-500 font-normal">ONLINE</span></p>
-                </div>
+                <div class="animate-fade-in-up mb-6" style="animation-delay: 0.1s;">
+                    <p class="text-[10px] text-manabi-main font-bold tracking-widest font-english mb-2">DATE</p>
+                    <p class="text-3xl md:text-5xl font-bold font-english text-black tracking-tight leading-none">
+                        2026.2.15 <span class="text-xl font-medium text-gray-400 ml-2">Sun</span>
+                    </p>
+                    <p class="text-lg font-bold font-english text-black mt-2">18:00 - 19:30 <span class="text-sm text-gray-500 font-normal ml-2">ONLINE</span></p>
+                </div>
 
-                <div class="animate-fade-in-up mb-8" style="animation-delay: 0.2s;">
-                    <p class="text-xs font-bold text-manabi-main mb-3 tracking-widest">特別企業説明会</p>
-                    <h1 class="text-4xl md:text-7xl font-black leading-[1.1] text-black tracking-tight -ml-1">
-                        教育の質を、<br>
-                        キャリアの質へ。
-                    </h1>
-                </div>
+                <div class="animate-fade-in-up mb-8" style="animation-delay: 0.2s;">
+                    <p class="text-xs font-bold text-manabi-main mb-3 tracking-widest">特別企業説明会</p>
+                    <h1 class="text-4xl md:text-6xl font-black leading-tight text-black tracking-tight -ml-1">
+                        教育の質を、<br>
+                        キャリアの質へ。
+                    </h1>
+                </div>
 
-                <div class="flex flex-wrap gap-3 mb-10 animate-fade-in-up" style="animation-delay: 0.3s;">
-                    <span class="border border-black px-4 py-2 text-[10px] font-bold bg-white text-black">28卒 難関大生講師限定</span>
-                    <span class="bg-black text-white px-4 py-2 text-[10px] font-bold">参加謝礼あり</span>
-                </div>
+                <div class="flex flex-wrap gap-3 mb-10 animate-fade-in-up" style="animation-delay: 0.3s;">
+                    <span class="border border-black px-4 py-2 text-[10px] font-bold bg-white text-black">28卒 難関大生講師限定</span>
+                    <span class="bg-black text-white px-4 py-2 text-[10px] font-bold">参加謝礼あり</span>
+                </div>
 
-                <div class="animate-fade-in-up w-full md:w-auto" style="animation-delay: 0.4s;">
-                    <a href="https://form.run/@career-FxiAm3f14E8n3Ooa7a2m?_field_83=【完全招待制】Leverages 特別キャリア形成プロジェクト" target="_blank" rel="noopener noreferrer" class="lev-button-orange group">
-                        <span class="text-sm font-bold flex items-center">
-                            イベントに申し込む
-                            <i class="fa-solid fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
-                        </span>
-                    </a>
-                    <p class="text-[10px] text-center md:text-left md:pl-8 text-gray-400 mt-3 font-english tracking-[0.2em]">ENTRY EVENT</p>
-                </div>
-            </div>
-        </div>
+                <div class="animate-fade-in-up w-full md:w-auto" style="animation-delay: 0.4s;">
+                    <a href="https://form.run/@career-FxiAm3f14E8n3Ooa7a2m?_field_83=【完全招待制】Leverages 特別キャリア形成プロジェクト" target="_blank" rel="noopener noreferrer" class="lev-button-orange group">
+                        <span class="text-sm font-bold flex items-center">
+                            イベントに申し込む
+                            <i class="fa-solid fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </a>
+                    <p class="text-[10px] text-center md:text-left md:pl-8 text-gray-400 mt-3 font-english tracking-[0.2em]">ENTRY EVENT</p>
+                </div>
+            </div>
+        </div>
 
-        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-12 bg-gray-100 z-0">
-            <div class="absolute top-0 left-0 w-full h-full bg-black animate-scroll-line"></div>
-        </div>
-    </section>
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1px] h-12 bg-gray-100 z-0">
+            <div class="absolute top-0 left-0 w-full h-full bg-black animate-scroll-line"></div>
+        </div>
+    </section>
 
-    <section id="concept" class="py-24 md:py-40 bg-white relative">
-        <div class="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div class="order-2 md:order-1 relative">
-                <div class="absolute -top-6 -left-6 w-full h-full bg-[#F5F5F5] z-0 hidden md:block"></div>
-                <div class="relative z-10 w-full aspect-[4/3] mask-reveal scroll-trigger">
-                    <img src="https://www.toukobe.com/wp-content/uploads/LeveragesLP2.jpg" class="w-full h-full object-cover grayscale-[30%]">
-                </div>
-            </div>
-            <div class="order-1 md:order-2 space-y-12">
-                <div class="text-reveal scroll-trigger">
-                    <span class="text-xs font-bold font-english tracking-widest border-b border-black pb-1 inline-block mb-8">CONCEPT</span>
-                    <h2 class="text-3xl md:text-4xl font-black leading-relaxed tracking-wider mb-8">
-                        教育の現場から、<br>
-                        企業の<span class="text-manabi-main border-b-2 border-manabi-main pb-1">最前線</span>へ。
-                    </h2>
-                    <p class="text-sm md:text-base text-gray-600 leading-loose font-medium mb-8">
-                        MANABIは、難関大生である皆さんが講師業を通じて培った「対話力」や「課題解決能力」に、ビジネスにおける大きな可能性を感じています。
-                    </p>
-                    <p class="text-sm md:text-base text-gray-600 leading-loose font-medium">
-                        本イベントでは、急成長企業 <span class="font-bold">Leverages</span> と連携。<br>
-                        皆さんのポテンシャルが社会でどう評価されるのか、リアルなフィードバックを得られる特別な機会です。
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section id="concept" class="py-24 md:py-40 bg-white relative">
+        <div class="max-w-[1200px] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div class="order-2 md:order-1 relative">
+                <div class="absolute -top-6 -left-6 w-full h-full bg-[#F5F5F5] z-0 hidden md:block"></div>
+                <div class="relative z-10 w-full aspect-[4/3] mask-reveal scroll-trigger">
+                    <img src="https://www.toukobe.com/wp-content/uploads/LeveragesLP2.jpg" class="w-full h-full object-cover grayscale-[30%]">
+                </div>
+            </div>
+            <div class="order-1 md:order-2 space-y-12">
+                <div class="text-reveal scroll-trigger">
+                    <span class="text-xs font-bold font-english tracking-widest border-b border-black pb-1 inline-block mb-8">WHAT IS THIS EVENT</span>
+                    <h2 class="text-3xl md:text-4xl font-bold leading-relaxed tracking-tight mb-8">
+                        教育の現場から、<br>
+                        企業の<span class="text-manabi-main border-b-2 border-manabi-main pb-1">最前線</span>へ。
+                    </h2>
+                    <p class="text-sm md:text-base text-gray-600 leading-loose font-medium mb-8">
+                        MANABIは、難関大生である皆さんが講師業を通じて培った「対話力」や「課題解決能力」に、ビジネスにおける大きな可能性を感じています。
+                    </p>
+                    <p class="text-sm md:text-base text-gray-600 leading-loose font-medium">
+                        本イベントは、一部講師限定のオンラインキャリアセミナーです。<br>
+                        「就活、何から始めればいい？」そんな疑問を持つあなたへ。日本を代表するメガベンチャーの現役社員との対話を通じて、社会で求められる視点や、自分の可能性を知るための「最初の一歩」をご提供いたします。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <section id="merit" class="bg-[#F9F9F9] py-24 md:py-40">
-        <div class="max-w-[1200px] mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 text-reveal scroll-trigger">
-                <div>
-                    <h2 class="text-4xl md:text-5xl font-black font-english tracking-tight mb-4">MERIT</h2>
-                    <p class="text-sm font-bold text-gray-500">参加のメリット</p>
-                </div>
-                <div class="hidden md:block w-1/2 h-[1px] bg-gray-300 mb-2"></div>
-            </div>
+    <section id="merit" class="bg-[#F9F9F9] py-24 md:py-40">
+        <div class="max-w-[1200px] mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 text-reveal scroll-trigger">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold font-english tracking-tight mb-4">MERIT</h2>
+                    <p class="text-sm font-bold text-gray-500">参加のメリット</p>
+                </div>
+                <div class="hidden md:block w-1/2 h-[1px] bg-gray-300 mb-2"></div>
+            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-gray-300 scroll-trigger">
-                <div class="bg-white p-10 border-r border-b border-gray-300 group hover:bg-black transition-colors duration-500">
-                    <div class="text-manabi-main text-4xl font-english font-bold mb-6 group-hover:text-white transition-colors">01</div>
-                    <h3 class="text-lg font-bold mb-4 group-hover:text-white transition-colors">謝礼3,000円支給</h3>
-                    <p class="text-xs text-gray-500 leading-loose group-hover:text-gray-400 transition-colors">
-                        本イベントは「業務」として扱われるため、参加対価として3,000円（税込）を支給。学びながら報酬を得られます。
-                    </p>
-                </div>
-                <div class="bg-white p-10 border-r border-b border-gray-300 group hover:bg-black transition-colors duration-500">
-                    <div class="text-manabi-main text-4xl font-english font-bold mb-6 group-hover:text-white transition-colors">02</div>
-                    <h3 class="text-lg font-bold mb-4 group-hover:text-white transition-colors">就活基礎の効率的習得</h3>
-                    <p class="text-xs text-gray-500 leading-loose group-hover:text-gray-400 transition-colors">
-                        「何から始めるべき？」「自分に合う仕事は？」そんな疑問をトップ社員の視点で解消。業界研究の基礎や、納得できるキャリアの歩み方を学べます。
-                    </p>
-                </div>
-                <div class="bg-white p-10 border-r border-b border-gray-300 group hover:bg-black transition-colors duration-500">
-                    <div class="text-manabi-main text-4xl font-english font-bold mb-6 group-hover:text-white transition-colors">03</div>
-                    <h3 class="text-lg font-bold mb-4 group-hover:text-white transition-colors">90分の高タイパ</h3>
-                    <p class="text-xs text-gray-500 leading-loose group-hover:text-gray-400 transition-colors">
-                        オンライン開催のため移動時間はゼロ。短時間で深い業界研究と報酬獲得が完了する、効率的な機会です。
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l border-gray-300 scroll-trigger">
+                <div class="bg-white p-10 border-r border-b border-gray-300 group hover:bg-black transition-colors duration-500">
+                    <div class="text-manabi-main text-3xl font-english font-bold mb-6 group-hover:text-white transition-colors">01</div>
+                    <h3 class="text-lg font-bold mb-4 group-hover:text-white transition-colors">
+                        謝礼 <span class="font-english font-bold text-xl mx-1">3,000</span> 円支給
+                    </h3>
+                    <p class="text-xs text-gray-500 leading-loose group-hover:text-gray-400 transition-colors">
+                        本イベントは「業務」として扱われるため、参加対価として3,000円（税込）を支給。学びながら報酬を得られます。
+                    </p>
+                </div>
+                <div class="bg-white p-10 border-r border-b border-gray-300 group hover:bg-black transition-colors duration-500">
+                    <div class="text-manabi-main text-3xl font-english font-bold mb-6 group-hover:text-white transition-colors">02</div>
+                    <h3 class="text-lg font-bold mb-4 group-hover:text-white transition-colors">就活基礎の効率的習得</h3>
+                    <p class="text-xs text-gray-500 leading-loose group-hover:text-gray-400 transition-colors">
+                        「何から始めるべき？」「自分に合う仕事は？」そんな疑問をトップ社員の視点で解消。業界研究の基礎や、納得できるキャリアの歩み方を学べます。
+                    </p>
+                </div>
+                <div class="bg-white p-10 border-r border-b border-gray-300 group hover:bg-black transition-colors duration-500">
+                    <div class="text-manabi-main text-3xl font-english font-bold mb-6 group-hover:text-white transition-colors">03</div>
+                    <h3 class="text-lg font-bold mb-4 group-hover:text-white transition-colors">90分の濃密なキャリア形成</h3>
+                    <p class="text-xs text-gray-500 leading-loose group-hover:text-gray-400 transition-colors">
+                        20名限定の少人数制により、社員と対話できる高密度な環境を確保。オンライン開催のため、移動コストを最小限に抑えながら報酬と社会との接点を獲得できます。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <section id="partner" class="py-24 md:py-40 bg-white">
-        <div class="max-w-[1200px] mx-auto px-6">
-            <div class="mb-16 text-reveal scroll-trigger">
-                <span class="text-xs font-bold font-english tracking-widest text-gray-400 block mb-4">COLLABORATION PARTNER</span>
-                <h2 class="text-3xl md:text-5xl font-black">第1回 提携企業について</h2>
-            </div>
+    <section id="partner" class="py-24 md:py-40 bg-white">
+        <div class="max-w-[1200px] mx-auto px-6">
+            <div class="mb-16 text-reveal scroll-trigger">
+                <span class="text-xs font-bold font-english tracking-widest text-gray-400 block mb-4">COLLABORATION PARTNER</span>
+                <h2 class="text-3xl md:text-5xl font-bold">第1回 提携企業について</h2>
+            </div>
 
-            <div class="flex flex-col md:flex-row gap-12 items-center">
-                <div class="w-full md:w-1/2 mask-reveal scroll-trigger">
-                    <img src="https://www.toukobe.com/wp-content/uploads/image-8.jpg" alt="Office" class="w-full aspect-video object-cover grayscale-[20%]">
-                </div>
-                <div class="w-full md:w-1/2 text-reveal scroll-trigger">
-                    <h3 class="text-2xl md:text-3xl font-black font-english mb-6">Leverages Co., Ltd.</h3>
-                    <div class="w-12 h-[2px] bg-manabi-main mb-8"></div>
-                    <p class="text-sm text-gray-600 leading-loose mb-10">
-                        創業15年で年商1000億円規模へ急成長を遂げた「レバレジーズ株式会社」が全面協力。IT・医療・介護・若年層など幅広い領域で事業を展開するオールジャンル・コングロマリット企業です。
-                    </p>
-                    
-                    <dl class="grid grid-cols-2 gap-y-6 border-t border-gray-200 pt-6">
-                        <div>
-                            <dt class="text-[10px] font-bold text-gray-400 font-english mb-1">REVENUE</dt>
-                            <dd class="text-xl font-bold font-english text-manabi-black">1,000億+</dd>
-                        </div>
-                        <div>
-                            <dt class="text-[10px] font-bold text-gray-400 font-english mb-1">EMPLOYEES</dt>
-                            <dd class="text-xl font-bold font-english text-manabi-black">2,000+</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </section>
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="w-full md:w-1/2 mask-reveal scroll-trigger">
+                    <img src="https://www.toukobe.com/wp-content/uploads/image-8.jpg" alt="Office" class="w-full aspect-video object-cover grayscale-[20%]">
+                </div>
+                <div class="w-full md:w-1/2 text-reveal scroll-trigger">
+                    <h3 class="text-2xl md:text-3xl font-bold font-english mb-6">Leverages Co., Ltd.</h3>
+                    <div class="w-12 h-[2px] bg-manabi-main mb-8"></div>
+                    <p class="text-sm text-gray-600 leading-loose mb-10">
+                        創業15年で年商1000億円規模へ急成長を遂げた「レバレジーズ株式会社」が全面協力。IT・医療・介護・若年層など幅広い領域で事業を展開するオールジャンル・コングロマリット企業です。
+                    </p>
+                    
+                    <dl class="grid grid-cols-2 gap-y-6 border-t border-gray-200 pt-6">
+                        <div>
+                            <dt class="text-[10px] font-bold text-gray-400 font-english mb-2">REVENUE</dt>
+                            <dd class="text-xl font-bold text-manabi-black">
+                                <span class="font-english font-bold text-2xl">1,000</span> 億+
+                            </dd>
+                        </div>
+                        <div>
+                            <dt class="text-[10px] font-bold text-gray-400 font-english mb-2">EMPLOYEES</dt>
+                            <dd class="text-xl font-bold text-manabi-black">
+                                <span class="font-english font-bold text-2xl">2,000</span> +
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <section id="outline" class="py-24 md:py-40 bg-[#F5F5F5] relative overflow-hidden">
-        <div class="absolute right-0 bottom-0 text-[15vw] font-black text-white font-english leading-none pointer-events-none select-none">OUTLINE</div>
+    <section id="program" class="py-24 md:py-40 bg-white">
+        <div class="max-w-[1200px] mx-auto px-6">
+            <div class="text-center mb-16 text-reveal scroll-trigger">
+                <span class="text-xs font-bold font-english tracking-widest text-gray-400 block mb-4">PROGRAM</span>
+                <h2 class="text-3xl md:text-5xl font-bold mb-2">当日のプログラム</h2>
+                <p class="text-sm font-normal text-gray-400">(予定)</p>
+            </div>
 
-        <div class="max-w-[1000px] mx-auto px-6 relative z-10">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-black pb-6 text-reveal scroll-trigger">
-                <h2 class="text-3xl md:text-4xl font-black font-english">OUTLINE</h2>
-                <p class="text-sm font-bold">開催概要</p>
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-reveal scroll-trigger">
+                
+                <div class="bg-[#F8F9FA] rounded-2xl p-6 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300 group cursor-default">
+                    <p class="text-xs font-bold text-gray-400 font-english mb-1">Program</p>
+                    <p class="text-3xl font-black font-english text-manabi-main mb-6 group-hover:scale-110 transition-transform">01</p>
+                    <div class="text-4xl text-gray-300 mb-6 group-hover:text-manabi-main transition-colors duration-300"><i class="fa-solid fa-person-chalkboard"></i></div>
+                    <h3 class="text-xl font-bold mb-3 text-manabi-black">就活の進め方レクチャー</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        何から始めるべきか？<br>現役社員が「就活のロードマップ」を解説
+                    </p>
+                </div>
 
-            <div class="space-y-0 text-reveal scroll-trigger">
-                <div class="flex flex-col md:flex-row py-8 border-b border-gray-300">
-                    <div class="w-full md:w-1/3 text-sm font-bold text-gray-500 mb-2 md:mb-0 font-english">DATE</div>
-                    <div class="w-full md:w-2/3 text-lg font-bold font-english">2026.2.15 (Sun) 18:00 - 19:30</div>
-                </div>
-                <div class="flex flex-col md:flex-row py-8 border-b border-gray-300">
-                    <div class="w-full md:w-1/3 text-sm font-bold text-gray-500 mb-2 md:mb-0 font-english">PLACE</div>
-                    <div class="w-full md:w-2/3 text-lg font-bold">
-                        オンライン (Zoom)<br>
-                        <span class="text-xs font-normal text-gray-500 block mt-2">※URLは前日にメールにて送付します</span>
-                    </div>
-                </div>
-                <div class="flex flex-col md:flex-row py-8 border-b border-gray-300">
-                    <div class="w-full md:w-1/3 text-sm font-bold text-gray-500 mb-2 md:mb-0 font-english">REQUIREMENTS</div>
-                    <div class="w-full md:w-2/3 text-base font-medium">
-                        <ul class="list-disc pl-5 space-y-2">
-                            <li>カメラONでの参加必須</li>
-                            <li>遅刻・欠席厳禁</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                <div class="bg-[#F8F9FA] rounded-2xl p-6 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300 group cursor-default">
+                    <p class="text-xs font-bold text-gray-400 font-english mb-1">Program</p>
+                    <p class="text-3xl font-black font-english text-manabi-main mb-6 group-hover:scale-110 transition-transform">02</p>
+                    <div class="text-4xl text-gray-300 mb-6 group-hover:text-manabi-main transition-colors duration-300"><i class="fa-solid fa-users"></i></div>
+                    <h3 class="text-xl font-bold mb-3 text-manabi-black">GD練習</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        本番想定のテーマで<br>実践形式のワーク＆フィードバック
+                    </p>
+                </div>
 
-    <section class="py-24 bg-white">
-        <div class="max-w-[800px] mx-auto px-6">
-            <h2 class="text-3xl font-black text-center mb-16 font-english">FAQ</h2>
-            <div class="space-y-0 border-t border-gray-200">
-                <div class="faq-item border-b border-gray-200">
-                    <button class="w-full text-left py-8 flex justify-between items-center focus:outline-none group">
-                        <span class="font-bold text-sm md:text-base flex items-center">
-                            <span class="text-manabi-main mr-6 font-black font-english text-xl">Q.</span>
-                            就活をまだ始めていなくても参加できますか？
-                        </span>
-                        <span class="faq-icon text-2xl font-light text-gray-300 transition-transform duration-300 group-hover:text-manabi-main">+</span>
-                    </button>
-                    <div class="faq-content">
-                        <div class="pb-8 pl-12 text-sm text-gray-600 leading-loose">
-                            はい。可能です。これからキャリアを考え始める方のためのイベントですので、予備知識は不要です。
-                        </div>
-                    </div>
-                </div>
+                <div class="bg-[#F8F9FA] rounded-2xl p-6 flex flex-col items-center text-center hover:shadow-lg transition-shadow duration-300 group cursor-default">
+                    <p class="text-xs font-bold text-gray-400 font-english mb-1">Program</p>
+                    <p class="text-3xl font-black font-english text-manabi-main mb-6 group-hover:scale-110 transition-transform">03</p>
+                    <div class="text-4xl text-gray-300 mb-6 group-hover:text-manabi-main transition-colors duration-300"><i class="fa-solid fa-comments"></i></div>
+                    <h3 class="text-xl font-bold mb-3 text-manabi-black">座談会</h3>
+                    <p class="text-xs text-gray-500 leading-relaxed">
+                        先輩社員への質疑応答を通じて<br>リアルな働き方の解像度を高める
+                    </p>
+                </div>
 
-                <div class="faq-item border-b border-gray-200">
-                    <button class="w-full text-left py-8 flex justify-between items-center focus:outline-none group">
-                        <span class="font-bold text-sm md:text-base flex items-center">
-                            <span class="text-manabi-main mr-6 font-black font-english text-xl">Q.</span>
-                            謝礼はいつ振り込まれますか？
-                        </span>
-                        <span class="faq-icon text-2xl font-light text-gray-300 transition-transform duration-300 group-hover:text-manabi-main">+</span>
-                    </button>
-                    <div class="faq-content">
-                        <div class="pb-8 pl-12 text-sm text-gray-600 leading-loose">
-                            翌月の指導報酬と合算して、ご指定の口座にお振込みいたします。
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            </div>
+        </div>
+    </section>
 
-    <section id="entry" class="py-32 md:py-48 px-6 bg-white flex flex-col items-center justify-center text-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-50 via-white to-white z-0"></div>
-        
-        <div class="text-reveal scroll-trigger w-full flex flex-col items-center relative z-10">
-            <span class="text-xs font-bold tracking-[0.3em] text-gray-400 mb-8 block font-english">APPLICATION FORM</span>
-            
-            <h2 class="text-5xl md:text-7xl font-black mb-12 tracking-tight font-english text-manabi-black">ENTRY</h2>
-            
-            <p class="text-sm font-bold mb-12 text-gray-600">
-                定員に達し次第、募集を終了いたします。<br>
-                <span class="text-manabi-main mt-2 block font-bold">申込締切：2月5日(木) 23:59</span>
-            </p>
-            
-            <a href="https://form.run/@career-FxiAm3f14E8n3Ooa7a2m?_field_83=【完全招待制】Leverages 特別キャリア形成プロジェクト" target="_blank" rel="noopener noreferrer" class="lev-button-orange group">
-                <span class="text-sm z-10 font-bold flex items-center">
-                    イベントに申し込む
-                    <i class="fa-solid fa-arrow-right ml-2 group-hover:text-white transition-colors"></i>
-                </span>
-            </a>
-        </div>
-    </section>
+    <section id="outline" class="py-24 md:py-40 bg-[#F5F5F5] relative overflow-hidden">
+        <div class="absolute right-0 bottom-0 text-[15vw] font-bold text-white font-english leading-none pointer-events-none select-none">OUTLINE</div>
 
-    <footer class="bg-[#111] text-white py-16">
-        <div class="max-w-[1200px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-end">
-            <div class="mb-8 md:mb-0 text-center md:text-left">
-                <img src="https://www.toukobe.com/wp-content/uploads/Original-on-Transparent-18.png" alt="MANABI Inc." class="h-8 w-auto brightness-0 invert mx-auto md:mx-0 mb-4 opacity-80">
-                <p class="text-[10px] text-gray-500 tracking-widest font-english">&copy; MANABI Inc. ALL RIGHTS RESERVED.</p>
-            </div>
-            
-            <ul class="flex space-x-8 text-xs text-gray-400 font-bold">
-                <li><a href="#" class="hover:text-white transition-colors">利用規約</a></li>
-                <li><a href="#" class="hover:text-white transition-colors">プライバシーポリシー</a></li>
-            </ul>
-        </div>
-    </footer>
+        <div class="max-w-[1000px] mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-black pb-6 text-reveal scroll-trigger">
+                <h2 class="text-3xl md:text-4xl font-bold font-english">OUTLINE</h2>
+                <p class="text-sm font-bold">開催概要</p>
+            </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Loading Animation
-            const loadingScreen = document.getElementById('loading-screen');
-            setTimeout(() => {
-                loadingScreen.classList.add('opacity-0', 'pointer-events-none');
-            }, 1000);
+            <div class="space-y-0 text-reveal scroll-trigger">
+                <div class="flex flex-col md:flex-row py-8 border-b border-gray-300">
+                    <div class="w-full md:w-1/3 text-sm font-bold text-gray-500 mb-2 md:mb-0 font-english">DATE</div>
+                    <div class="w-full md:w-2/3 text-lg font-bold font-english">2026.2.15 (Sun) 18:00 - 19:30</div>
+                </div>
+                <div class="flex flex-col md:flex-row py-8 border-b border-gray-300">
+                    <div class="w-full md:w-1/3 text-sm font-bold text-gray-500 mb-2 md:mb-0 font-english">PLACE</div>
+                    <div class="w-full md:w-2/3 text-lg font-bold">
+                        オンライン (Zoom)<br>
+                        <span class="text-xs font-normal text-gray-500 block mt-2">※URLは前日にメールにて送付します</span>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row py-8 border-b border-gray-300">
+                    <div class="w-full md:w-1/3 text-sm font-bold text-gray-500 mb-2 md:mb-0 font-english">REQUIREMENTS</div>
+                    <div class="w-full md:w-2/3 text-base font-medium">
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>カメラONでの参加必須</li>
+                            <li>遅刻・欠席厳禁</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            // Scroll Reveal Animation (Intersection Observer)
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15
-            };
+    <section class="py-24 bg-white">
+        <div class="max-w-[800px] mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center mb-16 font-english">FAQ</h2>
+            <div class="space-y-0 border-t border-gray-200">
+                <div class="faq-item border-b border-gray-200">
+                    <button class="w-full text-left py-8 flex justify-between items-center focus:outline-none group">
+                        <span class="font-bold text-sm md:text-base flex items-center">
+                            <span class="text-manabi-main mr-6 font-bold font-english text-xl">Q.</span>
+                            就活をまだ始めていなくても参加できますか？
+                        </span>
+                        <span class="faq-icon text-2xl font-light text-gray-300 transition-transform duration-300 group-hover:text-manabi-main">+</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="pb-8 pl-12 text-sm text-gray-600 leading-loose">
+                            はい。可能です。これからキャリアを考え始める方のためのイベントですので、予備知識は不要です。
+                        </div>
+                    </div>
+                </div>
 
-            const observer = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('active');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
+                <div class="faq-item border-b border-gray-200">
+                    <button class="w-full text-left py-8 flex justify-between items-center focus:outline-none group">
+                        <span class="font-bold text-sm md:text-base flex items-center">
+                            <span class="text-manabi-main mr-6 font-bold font-english text-xl">Q.</span>
+                            謝礼はいつ振り込まれますか？
+                        </span>
+                        <span class="faq-icon text-2xl font-light text-gray-300 transition-transform duration-300 group-hover:text-manabi-main">+</span>
+                    </button>
+                    <div class="faq-content">
+                        <div class="pb-8 pl-12 text-sm text-gray-600 leading-loose">
+                            翌月の指導報酬と合算して、ご指定の口座にお振込みいたします。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            const scrollElements = document.querySelectorAll('.mask-reveal, .text-reveal, .scroll-trigger');
-            scrollElements.forEach(el => observer.observe(el));
+    <section id="entry" class="py-32 md:py-48 px-6 bg-white flex flex-col items-center justify-center text-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-50 via-white to-white z-0"></div>
+        
+        <div class="text-reveal scroll-trigger w-full flex flex-col items-center relative z-10">
+            <span class="text-xs font-bold tracking-[0.3em] text-gray-400 mb-8 block font-english">APPLICATION FORM</span>
+            
+            <h2 class="text-5xl md:text-7xl font-black mb-12 tracking-tight font-english text-manabi-black">ENTRY</h2>
+            
+            <p class="text-sm font-bold mb-12 text-gray-600">
+                定員に達し次第、募集を終了いたします。<br>
+                <span class="text-manabi-main mt-2 block font-bold">申込締切：<span class="font-english font-bold text-xl mr-1">2.5</span> (木) 23:59</span>
+            </p>
+            
+            <a href="https://form.run/@career-FxiAm3f14E8n3Ooa7a2m?_field_83=【完全招待制】Leverages 特別キャリア形成プロジェクト" target="_blank" rel="noopener noreferrer" class="lev-button-orange group">
+                <span class="text-sm z-10 font-bold flex items-center">
+                    イベントに申し込む
+                    <i class="fa-solid fa-arrow-right ml-2 group-hover:text-white transition-colors"></i>
+                </span>
+            </a>
+        </div>
+    </section>
 
-            // Accordion
-            const faqButtons = document.querySelectorAll('.faq-item button');
-            faqButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const content = btn.nextElementSibling;
-                    const icon = btn.querySelector('.faq-icon');
-                    
-                    if (content.style.maxHeight) {
-                        content.style.maxHeight = null;
-                        icon.textContent = '+';
-                        icon.style.transform = 'rotate(0deg)';
-                    } else {
-                        content.style.maxHeight = content.scrollHeight + "px";
-                        icon.textContent = '−'; 
-                        icon.style.transform = 'rotate(0deg)'; 
-                    }
-                });
-            });
+    <footer class="bg-[#111] text-white py-16">
+        <div class="max-w-[1200px] mx-auto px-6 flex flex-col md:flex-row justify-between items-center md:items-end">
+            <div class="mb-8 md:mb-0 text-center md:text-left">
+                <img src="https://www.toukobe.com/wp-content/uploads/Original-on-Transparent-18.png" alt="MANABI Inc." class="h-8 w-auto brightness-0 invert mx-auto md:mx-0 mb-4 opacity-80">
+                <p class="text-[10px] text-gray-500 tracking-widest font-english">&copy; MANABI Inc. ALL RIGHTS RESERVED.</p>
+            </div>
+            
+            <ul class="flex space-x-8 text-xs text-gray-400 font-bold">
+                <li><a href="#" class="hover:text-white transition-colors">利用規約</a></li>
+                <li><a href="#" class="hover:text-white transition-colors">プライバシーポリシー</a></li>
+            </ul>
+        </div>
+    </footer>
 
-            // Mobile Menu
-            const menuOpenBtn = document.getElementById('menu-open-btn');
-            const menuCloseBtn = document.getElementById('menu-close-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileLinks = document.querySelectorAll('.mobile-link');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Loading Animation
+            const loadingScreen = document.getElementById('loading-screen');
+            setTimeout(() => {
+                loadingScreen.classList.add('opacity-0', 'pointer-events-none');
+            }, 1000);
 
-            menuOpenBtn.addEventListener('click', () => {
-                mobileMenu.classList.remove('hidden');
-                setTimeout(() => {
-                    mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
-                    mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
-                }, 10);
-                document.body.style.overflow = 'hidden';
-            });
+            // Scroll Reveal Animation (Intersection Observer)
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
 
-            const closeMenu = () => {
-                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
-                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
-                document.body.style.overflow = '';
-                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
-            };
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
 
-            menuCloseBtn.addEventListener('click', closeMenu);
-            mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
-        });
-    </script>
+            const scrollElements = document.querySelectorAll('.mask-reveal, .text-reveal, .scroll-trigger');
+            scrollElements.forEach(el => observer.observe(el));
+
+            // Accordion
+            const faqButtons = document.querySelectorAll('.faq-item button');
+            faqButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const content = btn.nextElementSibling;
+                    const icon = btn.querySelector('.faq-icon');
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.textContent = '+';
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                        icon.textContent = '−'; 
+                        icon.style.transform = 'rotate(0deg)'; 
+                    }
+                });
+            });
+
+            // Mobile Menu
+            const menuOpenBtn = document.getElementById('menu-open-btn');
+            const menuCloseBtn = document.getElementById('menu-close-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            menuOpenBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => {
+                    mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+                    mobileMenu.classList.add('opacity-100', 'pointer-events-auto');
+                }, 10);
+                document.body.style.overflow = 'hidden';
+            });
+
+            const closeMenu = () => {
+                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto');
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+                document.body.style.overflow = '';
+                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+            };
+
+            menuCloseBtn.addEventListener('click', closeMenu);
+            mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+        });
+    </script>
 </body>
 </html>
