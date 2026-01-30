@@ -132,7 +132,7 @@
     /* SP用ロゴスタイル */
     .hero__sp-logo {
         position: absolute;
-        top: 25px;
+        top: 20px;
         left: 20px;
         z-index: 10;
         width: 120px;
@@ -343,6 +343,11 @@
     .voice-attr h4 { font-size: 16px; margin: 0; color: var(--c-navy); }
     .voice-attr span { font-size: 13px; color: var(--c-text-light); }
     .voice-body h3 { font-size: 18px; color: var(--c-navy); margin-bottom: 10px; font-weight: 700; }
+    .voice-body p { 
+        font-size: 15px; /* ←ここを変更（現在は15px程度がおすすめ） */
+        line-height: 1.6;
+        margin: 0;
+    }
 
     .faq-section { background: #fff; }
     .faq-list { max-width: 800px; margin: 0 auto; }
@@ -466,7 +471,7 @@
         }
 
         .hero__container { 
-            align-items: flex-start; text-align: left; padding: 30px 20px; 
+            align-items: flex-start; text-align: left; padding: 50px 20px; 
             padding-top: 0px; /* 修正: 210pxから減らしてFV全体の高さを抑制 */
         }
 
@@ -483,7 +488,7 @@
 
         .badge-container {
             /* 1. 土台の位置（上下） */
-            margin-top: 80px;      /* 数値を大きくすると下に、小さくすると上に移動 */
+            margin-top: 110px;      /* 数値を大きくすると下に、小さくすると上に移動 */
             
             /* 2. 土台の横幅 */
             width: 100%;            /* 画面に対する幅。100%にすると端まで届く帯になります */
@@ -529,14 +534,29 @@
         .badge-number .unit { font-size: 8px; }
         
         .curved-stars text, .curved-stars-bottom text { font-size: 13px; }
-        .hero__note { margin-top: 10px; font-size: 10px; }
+        .hero__note {
+            margin: 8px auto 0;
+            /* 1. フォントサイズを画面幅に連動させる (最小8px 〜 最大10px) */
+            font-size: clamp(8px, 2.5vw, 10px);
+            
+            /* 2. 絶対に改行させない */
+            white-space: nowrap;
+            
+            /* 3. それでも入り切らない極小画面（SE等）の場合、文字間隔を少し詰める */
+            letter-spacing: -0.02em;
+            
+            /* 4. 中央揃えを維持し、少し透過させて馴染ませる */
+            text-align: center;
+            opacity: 0.8;
+            width: 100%;
+            display: block;
+        }
         
         .cta-title { 
-            font-size: 20px; 
+            font-size: clamp(18px, 5.5vw, 24px); 
             line-height: 1.4; 
-            white-space: normal;
-            display: inline-block;
-            width: auto;
+            display: block; 
+            width: 100%;
         }
         .cta-title::before, .cta-title::after { content: none; } 
 
@@ -544,14 +564,15 @@
         
         .cta-title__sub { 
             display: inline; 
+            /* 親のサイズに連動させるため 1em（＝100%）に設定 */
             font-size: 1em; 
             background: transparent; 
             color: #fff; 
             padding: 0; 
             border-radius: 0;
         }
-        .cta-title__sub::before { content: " ＼"; font-weight: 300; margin-left: 2px; }
-        .cta-title__sub::after { content: "／"; font-weight: 300; }
+        .cta-title__sub::before { content: " ＼"; font-weight: 300; font-size: 0.9em; }
+        .cta-title__sub::after { content: "／"; font-weight: 300; font-size: 0.9em; }
         
         .cta-grid { grid-template-columns: 1fr; gap: 15px; max-width: 400px; }
         .cta-card { padding: 20px; }
@@ -728,7 +749,7 @@
                     <a href="#requirements" class="sokei-req-link js-open-req">（※ 中学指定あり）</a>
                 </div>
             </div>
-            <a href="https://www.manabiph.com/intern/" class="cta-link-intern">インターン採用はこちら</a>
+            <a href="https://www.manabiph.com/intern/" class="cta-link-intern" target="_blank" rel="noopener noreferrer">インターン採用はこちら</a>
         </div>
     </section>
 
