@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales 面談分析レポート v2</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --brand-main: #FF834F;
+  --brand-dark: #e0642b; /* テキスト用に少し暗めのオレンジ */
+  --brand-light: #fff2ec; /* 背景用の極薄いオレンジ */
+  --text-main: #1e293b;
+  --text-sub: #64748b;
+  --bg-main: #f8fafc;
+  --bg-card: #ffffff;
+  --border-light: #e2e8f0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+  font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif; 
+  background: var(--bg-main); 
+  color: var(--text-main); 
+  font-size: 14px; 
+  line-height: 1.6; 
+  -webkit-font-smoothing: antialiased;
+}
+
+.page { max-width: 1160px; margin: 0 auto; padding: 40px 24px; }
+h1 { font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 8px; letter-spacing: 0.02em; }
+.sub { color: var(--text-sub); font-size: 13px; margin-bottom: 40px; display: flex; align-items: center; gap: 8px; }
+
+h2 { 
+  font-size: 18px; 
+  font-weight: 700; 
+  color: #0f172a; 
+  margin: 40px 0 16px; 
+  padding-left: 14px; 
+  border-left: 5px solid var(--brand-main); 
+  display: flex;
+  align-items: center;
+}
+
+h3 { font-size: 14px; font-weight: 700; color: #334155; margin: 16px 0 8px; }
+
+.section { 
+  background: var(--bg-card); 
+  border-radius: 16px; 
+  padding: 24px 32px; 
+  margin-bottom: 24px; 
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); 
+  border: 1px solid #f1f5f9;
+  overflow-x: auto;
+}
+
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+th { 
+  background: #ffffff; 
+  color: var(--text-sub); 
+  font-weight: 600; 
+  padding: 12px 16px; 
+  text-align: left; 
+  border-bottom: 2px solid var(--border-light); 
+  white-space: nowrap; 
+  font-size: 13px;
+}
+td { padding: 12px 16px; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #f8fafc; }
+
+.kpi-top td { background: #fffbf0; }
+.kpi-top:hover td { background: #fef8e3; }
+.kpi-mid td { background: white; }
+.kpi-bot td { background: #fff5f5; }
+
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+.grid4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+
+.card { 
+  background: var(--bg-card); 
+  border-radius: 16px; 
+  padding: 24px; 
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); 
+  border: 1px solid #f1f5f9;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+
+.insight { 
+  background: var(--brand-light); 
+  border-left: 4px solid var(--brand-main); 
+  padding: 14px 20px; 
+  border-radius: 0 12px 12px 0; 
+  margin: 16px 0 24px; 
+  font-size: 13.5px; 
+  color: #334155;
+  line-height: 1.7;
+}
+.insight.warn { background: #fffbeb; border-left-color: #f59e0b; }
+.insight.ok { background: #f0fdf4; border-left-color: #22c55e; }
+
+.chart-wrap { position: relative; height: 240px; width: 100%; margin-top: 16px; }
+.note { color: #94a3b8; font-size: 12px; margin-top: 12px; display: block; }
+
+.hypo-tag { 
+  display: inline-block; 
+  background: var(--brand-light); 
+  color: var(--brand-dark); 
+  padding: 2px 10px; 
+  border-radius: 9999px; 
+  font-size: 11px; 
+  font-weight: 700; 
+  margin-right: 6px; 
+  border: 1px solid rgba(255, 131, 79, 0.2);
+}
+
+/* ユーティリティクラス */
+.text-brand { color: var(--brand-dark); }
+.text-danger { color: #dc2626; }
+.text-success { color: #166534; }
+.text-muted { color: #64748b; }
+.bg-danger-light { background: #fee2e2; }
+.bg-success-light { background: #dcfce7; }
+.bg-brand-light { background: var(--brand-light); }
+.bg-warning-light { background: #fff7ed; }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+
+.bar-bg { background: #f1f5f9; border-radius: 99px; height: 8px; width: 110px; display: inline-block; vertical-align: middle; overflow: hidden;}
+.bar-fill { background: var(--brand-main); height: 100%; border-radius: 99px; }
+
+/* 個人別アドバイス用バッジ */
+.badge-success { background:#dcfce7; color:#166534; padding:3px 10px; border-radius:9999px; font-size:12px; font-weight:600; margin:2px 4px 4px 0; display:inline-block; }
+.badge-danger { background:#fee2e2; color:#991b1b; padding:3px 10px; border-radius:9999px; font-size:12px; font-weight:600; margin:2px 4px 4px 0; display:inline-block; }
+.action-box { background:#f8fafc; border-radius:8px; padding:12px 16px; font-size:13.5px; margin-top:16px; border:1px solid #e2e8f0; }
+
+/* リストスタイル */
+.bullet-list { padding-left: 20px; line-height: 1.8; font-size: 13.5px; color: var(--text-main); }
+.bullet-list li { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="page">
+<h1>Sales 面談分析レポート</h1>
+<div class="sub">
+  <span style="background:#e2e8f0; padding:2px 8px; border-radius:4px; font-weight:600; color:#475569">v2.0</span>
+  作成: 2026-04-05 ／ 文字起こし 350件・KPI担当者 16名・マニュアル仮説 H1〜H8 検証
+</div>
+
+<!-- KEY FINDINGS -->
+<h2>Key Findings</h2>
+<div class="grid4">
+  <div class="card">
+    <div style="font-size:12px;color:var(--text-sub);margin-bottom:6px;display:flex;align-items:center;">
+      <span class="hypo-tag">H6</span>最重要発見
+    </div>
+    <div style="font-size:18px;font-weight:800;" class="text-brand">なぜトウコベ？を聞く</div>
+    <div style="font-size:13px;margin-top:10px;line-height:1.6">
+      <span style="display:block;margin-bottom:4px">→ LTV <strong style="font-size:15px">r=+0.74★</strong></span>
+      <span style="display:block;margin-bottom:4px;color:var(--text-sub)">入会率 r=+0.59†</span>
+      面談でトウコベ選択理由を深掘りした担当者が圧倒的に高LTV
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-size:12px;color:var(--text-sub);margin-bottom:6px;display:flex;align-items:center;">
+      <span class="hypo-tag" style="background:#fee2e2;color:#b91c1c;border-color:#fca5a5">H4</span>逆効果
+    </div>
+    <div style="font-size:18px;font-weight:800;" class="text-danger">「なぜ系」質問が多すぎる</div>
+    <div style="font-size:13px;margin-top:10px;line-height:1.6">
+      <span style="display:block;margin-bottom:4px">→ LTV <strong style="font-size:15px">r=-0.35</strong></span>
+      課題深掘りとして有効なはずが負の相関。詰問感・圧迫感の可能性
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-size:12px;color:var(--text-sub);margin-bottom:6px;display:flex;align-items:center;">
+      <span class="hypo-tag" style="background:#f1f5f9;color:#475569;border-color:#cbd5e1">既存</span>再確認
+    </div>
+    <div style="font-size:18px;font-weight:800;color:#991b1b">営業の話す量</div>
+    <div style="font-size:13px;margin-top:10px;line-height:1.6">
+      <span style="display:block;margin-bottom:4px">→ LTV <strong style="font-size:15px">r=-0.52</strong></span>
+      上位3名の話す割合 72% vs 下位3名 81%。聴く姿勢が一貫して重要
+    </div>
+  </div>
+  <div class="card">
+    <div style="font-size:12px;color:var(--text-sub);margin-bottom:6px;display:flex;align-items:center;">
+      <span class="hypo-tag" style="background:#dcfce7;color:#15803d;border-color:#86efac">H7</span>プラス
+    </div>
+    <div style="font-size:18px;font-weight:800;" class="text-success">ペイン共感表現</div>
+    <div style="font-size:13px;margin-top:10px;line-height:1.6">
+      <span style="display:block;margin-bottom:4px">→ 保証突破率 <strong style="font-size:15px">r=+0.55†</strong></span>
+      「そうですね」「確かに」等の共感が保証突破率（30日継続）に効く
+    </div>
+  </div>
+</div>
+<div class="insight ok" style="margin-top:24px">
+<strong>マニュアルとの照合：</strong>「なぜオンライン・東大生・個別指導なのかを探れ」（ヒアリングFB）が数字で立証。
+「ペインに共感する」（ヒアリングFB）も保証突破率と正相関。
+一方「なぜ系の質問過多」は詰問感のリスクをFBが繰り返し警告しており、量より質の問題と考えられる。
+</div>
+
+<!-- KPIランキング -->
+<h2>担当者 KPI ランキング（LTV順・面談10件以上）</h2>
+<div class="section">
+<table>
+  <tr><th>順位</th><th>担当者</th><th>LTV（換算）</th><th>純入会率</th><th>保証突破率</th><th>入会率</th><th>面談数</th></tr>
+  <tr class="kpi-top"><td>👑 1位</td><td class="font-bold">唐木</td><td><div class="bar-bg"><div class="bar-fill" style="width:100.0%"></div></div> ¥123,021</td><td class="font-semibold">64.0%</td><td>78.0%</td><td>82.0%</td><td>28</td></tr>
+  <tr class="kpi-top"><td>👑 2位</td><td class="font-bold">大塚</td><td><div class="bar-bg"><div class="bar-fill" style="width:97.0%"></div></div> ¥119,314</td><td class="font-semibold">68.0%</td><td>83.0%</td><td>82.0%</td><td>22</td></tr>
+  <tr class="kpi-top"><td>👑 3位</td><td class="font-bold">小栁</td><td><div class="bar-bg"><div class="bar-fill" style="width:87.9%"></div></div> ¥108,192</td><td class="font-semibold">54.0%</td><td>74.0%</td><td>73.0%</td><td>26</td></tr>
+  <tr class="kpi-mid"><td>4位</td><td class="font-semibold">安達</td><td><div class="bar-bg"><div class="bar-fill" style="width:84.2%"></div></div> ¥103,558</td><td>55.0%</td><td>76.0%</td><td>73.0%</td><td>40</td></tr>
+  <tr class="kpi-mid"><td>5位</td><td class="font-semibold">敬禮</td><td><div class="bar-bg"><div class="bar-fill" style="width:79.9%"></div></div> ¥98,330</td><td>56.0%</td><td>73.0%</td><td>77.0%</td><td>43</td></tr>
+  <tr class="kpi-mid"><td>6位</td><td class="font-semibold">福田</td><td><div class="bar-bg"><div class="bar-fill" style="width:79.4%"></div></div> ¥97,704</td><td>48.0%</td><td>60.0%</td><td>80.0%</td><td>66</td></tr>
+  <tr class="kpi-mid"><td>7位</td><td class="font-semibold">山家</td><td><div class="bar-bg"><div class="bar-fill" style="width:77.9%"></div></div> ¥95,887</td><td>52.0%</td><td>70.0%</td><td>74.0%</td><td>77</td></tr>
+  <tr class="kpi-mid"><td>8位</td><td class="font-semibold">清水</td><td><div class="bar-bg"><div class="bar-fill" style="width:77.0%"></div></div> ¥94,687</td><td>52.0%</td><td>71.0%</td><td>73.0%</td><td>33</td></tr>
+  <tr class="kpi-mid"><td>9位</td><td class="font-semibold">大西</td><td><div class="bar-bg"><div class="bar-fill" style="width:75.8%"></div></div> ¥93,227</td><td>44.0%</td><td>71.0%</td><td>61.0%</td><td>57</td></tr>
+  <tr class="kpi-mid"><td>10位</td><td class="font-semibold">松本</td><td><div class="bar-bg"><div class="bar-fill" style="width:72.9%"></div></div> ¥89,730</td><td>45.0%</td><td>57.0%</td><td>79.0%</td><td>29</td></tr>
+  <tr class="kpi-mid"><td>11位</td><td class="font-semibold">池田</td><td><div class="bar-bg"><div class="bar-fill" style="width:70.5%"></div></div> ¥86,742</td><td>41.0%</td><td>60.0%</td><td>69.0%</td><td>51</td></tr>
+  <tr class="kpi-mid"><td>12位</td><td class="font-semibold">井上</td><td><div class="bar-bg"><div class="bar-fill" style="width:70.5%"></div></div> ¥86,720</td><td>46.0%</td><td>62.0%</td><td>74.0%</td><td>35</td></tr>
+  <tr class="kpi-mid"><td>13位</td><td class="font-semibold">曽根</td><td><div class="bar-bg"><div class="bar-fill" style="width:68.4%"></div></div> ¥84,098</td><td>41.0%</td><td>67.0%</td><td>60.0%</td><td>96</td></tr>
+  <tr class="kpi-bot"><td>14位</td><td class="font-semibold text-muted">重田</td><td><div class="bar-bg"><div class="bar-fill" style="width:64.7%;background:#94a3b8"></div></div> ¥79,594</td><td>30.0%</td><td>48.0%</td><td>62.0%</td><td>50</td></tr>
+  <tr class="kpi-bot"><td>15位</td><td class="font-semibold text-muted">志水</td><td><div class="bar-bg"><div class="bar-fill" style="width:60.6%;background:#94a3b8"></div></div> ¥74,528</td><td>28.0%</td><td>42.0%</td><td>67.0%</td><td>18</td></tr>
+  <tr class="kpi-bot"><td>16位</td><td class="font-semibold text-muted">野澤</td><td><div class="bar-bg"><div class="bar-fill" style="width:58.3%;background:#94a3b8"></div></div> ¥71,768</td><td>53.0%</td><td>89.0%</td><td>60.0%</td><td>15</td></tr>
+</table>
+<div class="note">※ LTV（換算）= 属性・受講分数等を考慮した1面談あたりの獲得LTV。純入会率=30日保証突破入会者の割合。</div>
+</div>
+
+<!-- 相関表 -->
+<h2>行動指標 × KPI 相関（n=11名）</h2>
+<div class="insight warn">
+  <strong>留意事項：</strong> n=11のため統計検出力が限定的です。★p&lt;.05 / †p&lt;.10 を重視し、それ以外は方向性の参考として読むこと。<br>
+  <span class="text-brand font-bold">オレンジ字</span>はマニュアル仮説（H1〜H8）から新たに追加した指標です。
+</div>
+<div class="section">
+<table>
+  <tr><th>指標</th><th style="text-align:center">LTV ★主指標</th><th style="text-align:center">純入会率</th><th style="text-align:center">保証突破率</th><th style="text-align:center">入会率</th></tr>
+  <tr><td>営業の話す割合</td><td style="text-align:center" class="bg-danger-light"><span style="color:#991b1b;font-weight:700">-0.518</span></td><td style="text-align:center" class="bg-warning-light"><span style="color:#dc2626;font-weight:700">-0.424</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.182</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.175</span></td></tr>
+  <tr><td>フィラー率</td><td style="text-align:center"><span class="text-muted font-semibold">-0.209</span></td><td style="text-align:center" class="bg-warning-light"><span style="color:#dc2626;font-weight:700">-0.378</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.219</span></td><td style="text-align:center" class="bg-warning-light"><span style="color:#dc2626;font-weight:700">-0.395</span></td></tr>
+  <tr><td>質問率</td><td style="text-align:center"><span class="text-muted font-semibold">+0.064</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.150</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.027</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.166</span></td></tr>
+  <tr><td>顧客1発話長</td><td style="text-align:center" class="bg-success-light"><span class="text-success font-bold">+0.455</span></td><td style="text-align:center" class="bg-success-light"><span class="text-success font-bold">+0.342</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.200</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.221</span></td></tr>
+  <tr><td>顧客発話回数</td><td style="text-align:center; background:#bbf7d0"><span class="text-success font-bold">+0.582</span> <span style="background:#f59e0b;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700">†p&lt;.10</span></td><td style="text-align:center" class="bg-success-light"><span class="text-success font-bold">+0.465</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.159</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.212</span></td></tr>
+  <tr><td>終盤の話す割合</td><td style="text-align:center"><span class="text-muted font-semibold">-0.136</span></td><td style="text-align:center" class="bg-warning-light"><span style="color:#dc2626;font-weight:700">-0.469</span></td><td style="text-align:center" class="bg-danger-light"><span style="color:#991b1b;font-weight:700">-0.515</span></td><td style="text-align:center" class="bg-success-light"><span class="text-success font-bold">+0.276</span></td></tr>
+  <tr><td>面談時間(分)</td><td style="text-align:center" class="bg-success-light"><span class="text-success font-bold">+0.309</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.205</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.191</span></td><td style="text-align:center" class="bg-success-light"><span class="text-success font-bold">+0.253</span></td></tr>
+  
+  <tr><td class="font-bold text-brand">H1:オウム返し率</td><td style="text-align:center"><span class="text-muted font-semibold">-0.018</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.205</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.068</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.060</span></td></tr>
+  <tr><td class="font-bold text-brand">H2:他塾深掘り率</td><td style="text-align:center"><span class="text-muted font-semibold">-0.173</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.187</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.091</span></td><td style="text-align:center" class="bg-success-light"><span class="text-success font-bold">+0.308</span></td></tr>
+  <tr><td class="font-bold text-brand">H3:多科目提案率</td><td style="text-align:center"><span class="text-muted font-semibold">+0.127</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.137</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.105</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.248</span></td></tr>
+  <tr><td class="font-bold text-brand">H4:なぜ系質問率</td><td style="text-align:center" class="bg-warning-light"><span style="color:#dc2626;font-weight:700">-0.345</span></td><td style="text-align:center" class="bg-warning-light"><span style="color:#dc2626;font-weight:700">-0.328</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.032</span></td><td style="text-align:center" class="bg-warning-light"><span style="color:#dc2626;font-weight:700">-0.285</span></td></tr>
+  <tr><td class="font-bold text-brand">H5:提案主導率</td><td style="text-align:center"><span class="text-muted font-semibold">-0.109</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.191</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.055</span></td><td style="text-align:center" class="bg-warning-light"><span style="color:#dc2626;font-weight:700">-0.405</span></td></tr>
+  <tr><td class="font-bold text-brand">H6:なぜトウコベ率</td><td style="text-align:center; background:#fdebd0"><span class="text-brand font-bold">+0.744</span> <span style="background:#ef4444;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700">★p&lt;.05</span></td><td style="text-align:center" class="bg-success-light"><span class="text-success font-bold">+0.455</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.205</span></td><td style="text-align:center" class="bg-success-light"><span class="text-success font-bold">+0.588</span> <span style="background:#f59e0b;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700">†p&lt;.10</span></td></tr>
+  <tr><td class="font-bold text-brand">H7:ペイン共感率</td><td style="text-align:center"><span class="text-muted font-semibold">+0.000</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.178</span></td><td style="text-align:center; background:#bbf7d0"><span class="text-success font-bold">+0.547</span> <span style="background:#f59e0b;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700">†p&lt;.10</span></td><td style="text-align:center"><span class="text-muted font-semibold">-0.234</span></td></tr>
+  <tr><td class="font-bold text-brand">H8:IB親近感率</td><td style="text-align:center" class="bg-success-light"><span class="text-success font-bold">+0.427</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.228</span></td><td style="text-align:center"><span class="text-muted font-semibold">+0.027</span></td><td style="text-align:center" class="bg-success-light"><span class="text-success font-bold">+0.492</span></td></tr>
+</table>
+</div>
+
+<!-- 散布図 -->
+<h2>散布図：主要相関の可視化</h2>
+<div class="grid4">
+  <div class="card">
+    <h3><span class="hypo-tag">H6</span>なぜトウコベ率 × LTV</h3>
+    <div class="chart-wrap"><canvas id="c1"></canvas></div>
+    <div class="note">相関係数 r = +0.74 ★p&lt;.05</div>
+  </div>
+  <div class="card">
+    <h3>顧客発話回数 × LTV</h3>
+    <div class="chart-wrap"><canvas id="c2"></canvas></div>
+    <div class="note">相関係数 r = +0.58 †p&lt;.10</div>
+  </div>
+  <div class="card">
+    <h3>営業の話す割合 × LTV</h3>
+    <div class="chart-wrap"><canvas id="c3"></canvas></div>
+    <div class="note">相関係数 r = -0.52</div>
+  </div>
+  <div class="card">
+    <h3><span class="hypo-tag">H7</span>ペイン共感率 × 保証突破率</h3>
+    <div class="chart-wrap"><canvas id="c4"></canvas></div>
+    <div class="note">相関係数 r = +0.55 †p&lt;.10</div>
+  </div>
+</div>
+
+<!-- LTV上位 vs 下位 -->
+<h2>LTV 上位3名 vs 下位3名 行動スタイル比較</h2>
+<div class="insight">
+  上位3（唐木, 大塚, 小栁）平均LTV ¥116,842 <strong>vs</strong> 下位3（松本, 池田, 野澤）平均LTV ¥82,747
+</div>
+<div class="section">
+<table>
+  <tr><th>指標</th><th style="text-align:right">上位3（平均）</th><th style="text-align:right">下位3（平均）</th><th style="text-align:right">差分</th><th>方向性</th></tr>
+  <tr><td>営業の話す割合</td><td style="text-align:right;font-weight:700">0.724</td><td style="text-align:right">0.805</td><td style="text-align:right" class="text-success font-bold">↓ 0.080</td><td style="color:#64748b;font-size:12px">小さい方が良い</td></tr>
+  <tr><td>フィラー率</td><td style="text-align:right;font-weight:700">1.177</td><td style="text-align:right">1.256</td><td style="text-align:right" class="text-success font-bold">↓ 0.078</td><td style="color:#64748b;font-size:12px">小さい方が良い</td></tr>
+  <tr><td>顧客発話回数</td><td style="text-align:right;font-weight:700">413.833</td><td style="text-align:right">191.167</td><td style="text-align:right" class="text-success font-bold">↑ 222.667</td><td style="color:#64748b;font-size:12px">大きい方が良い</td></tr>
+  <tr><td>顧客1発話長</td><td style="text-align:right;font-weight:700">14.243</td><td style="text-align:right">13.163</td><td style="text-align:right" class="text-success font-bold">↑ 1.080</td><td style="color:#64748b;font-size:12px">大きい方が良い</td></tr>
+  <tr><td>面談時間(分)</td><td style="text-align:right;font-weight:700">74.189</td><td style="text-align:right">57.903</td><td style="text-align:right" class="text-success font-bold">↑ 16.286</td><td style="color:#64748b;font-size:12px">大きい方が良い</td></tr>
+  <tr><td class="font-bold text-brand">H1:オウム返し率</td><td style="text-align:right;font-weight:700">0.009</td><td style="text-align:right">0.009</td><td style="text-align:right" class="text-danger font-bold">↓ 0.000</td><td style="color:#64748b;font-size:12px">大きい方が良い</td></tr>
+  <tr><td class="font-bold text-brand">H2:他塾深掘り率</td><td style="text-align:right;font-weight:700">0.003</td><td style="text-align:right">0.003</td><td style="text-align:right" class="text-danger font-bold">↓ 0.001</td><td style="color:#64748b;font-size:12px">大きい方が良い</td></tr>
+  <tr><td class="font-bold text-brand">H3:多科目提案率</td><td style="text-align:right;font-weight:700">0.621</td><td style="text-align:right">0.586</td><td style="text-align:right" class="text-success font-bold">↑ 0.035</td><td style="color:#64748b;font-size:12px">大きい方が良い</td></tr>
+  <tr><td class="font-bold text-brand">H4:なぜ系質問率</td><td style="text-align:right;font-weight:700">0.036</td><td style="text-align:right">0.050</td><td style="text-align:right" class="text-success font-bold">↓ 0.014</td><td style="color:#64748b;font-size:12px">小さい方が良い</td></tr>
+  <tr><td class="font-bold text-brand">H5:提案主導率</td><td style="text-align:right;font-weight:700">0.045</td><td style="text-align:right">0.038</td><td style="text-align:right" class="text-success font-bold">↑ 0.007</td><td style="color:#64748b;font-size:12px">大きい方が良い</td></tr>
+  <tr><td class="font-bold text-brand">H6:なぜトウコベ率</td><td style="text-align:right;font-weight:700">0.462</td><td style="text-align:right">0.019</td><td style="text-align:right" class="text-success font-bold">↑ 0.443</td><td style="color:#64748b;font-size:12px">大きい方が良い</td></tr>
+  <tr><td class="font-bold text-brand">H7:ペイン共感率</td><td style="text-align:right;font-weight:700">0.091</td><td style="text-align:right">0.091</td><td style="text-align:right" class="text-danger font-bold">↓ 0.000</td><td style="color:#64748b;font-size:12px">大きい方が良い</td></tr>
+  <tr><td class="font-bold text-brand">H8:IB親近感率</td><td style="text-align:right;font-weight:700">0.023</td><td style="text-align:right">0.019</td><td style="text-align:right" class="text-success font-bold">↑ 0.004</td><td style="color:#64748b;font-size:12px">大きい方が良い</td></tr>
+</table>
+<div class="note">※ H1〜H8はオレンジ字（マニュアル仮説指標）。差分の矢印↑↓が「良い方向」と合っている場合は仮説支持となります。</div>
+</div>
+
+<!-- 担当者別一覧 -->
+<h2>担当者別 KPI × 行動指標（LTV順・文字起こしあり）</h2>
+<div class="section">
+<table>
+  <tr><th>担当者</th><th>LTV</th><th>純入会率</th><th>話す割合</th><th>フィラー率</th><th>顧客発話回数</th><th>H6:なぜTK率</th><th>H7:共感率</th><th>面談時間</th></tr>
+  <tr><td class="font-bold">唐木</td><td>¥123,021</td><td>64%</td><td class="text-success font-bold">0.709</td><td>0.80</td><td>389</td><td>0.60 <span style="background:var(--brand-light);color:var(--brand-dark);padding:2px 8px;border-radius:8px;font-size:11px">✓</span></td><td>0.092</td><td>83分</td></tr>
+  <tr><td class="font-bold">大塚</td><td>¥119,314</td><td>68%</td><td class="text-danger font-bold">0.769</td><td>1.16</td><td>236</td><td>0.29 </td><td>0.093</td><td>60分</td></tr>
+  <tr><td class="font-bold">小栁</td><td>¥108,192</td><td>54%</td><td class="text-success font-bold">0.695</td><td>1.58</td><td>616</td><td>0.50 <span style="background:var(--brand-light);color:var(--brand-dark);padding:2px 8px;border-radius:8px;font-size:11px">✓</span></td><td>0.087</td><td>80分</td></tr>
+  <tr><td class="font-bold">安達</td><td>¥103,558</td><td>55%</td><td class="text-success font-bold">0.732</td><td>2.61</td><td>337</td><td>0.00 </td><td>0.069</td><td>71分</td></tr>
+  <tr><td class="font-bold">敬禮</td><td>¥98,330</td><td>56%</td><td class="text-success font-bold">0.581</td><td>0.72</td><td>742</td><td>0.25 </td><td>0.052</td><td>92分</td></tr>
+  <tr><td class="font-bold">福田</td><td>¥97,704</td><td>48%</td><td class="text-success font-bold">0.719</td><td>1.87</td><td>353</td><td>0.27 </td><td>0.069</td><td>61分</td></tr>
+  <tr><td class="font-bold">山家</td><td>¥95,887</td><td>52%</td><td class="text-success font-bold">0.730</td><td>3.08</td><td>421</td><td>0.27 </td><td>0.039</td><td>84分</td></tr>
+  <tr><td class="font-bold">清水</td><td>¥94,687</td><td>52%</td><td class="text-success font-bold">0.724</td><td>2.84</td><td>285</td><td>0.00 </td><td>0.053</td><td>86分</td></tr>
+  <tr><td class="font-bold">松本</td><td>¥89,730</td><td>45%</td><td class="text-danger font-bold">0.867</td><td>1.00</td><td>173</td><td>0.00 </td><td>0.041</td><td>72分</td></tr>
+  <tr><td class="font-bold">池田</td><td>¥86,742</td><td>41%</td><td class="text-danger font-bold">0.792</td><td>1.47</td><td>174</td><td>0.06 </td><td>0.095</td><td>53分</td></tr>
+  <tr><td class="font-bold">野澤</td><td>¥71,768</td><td>53%</td><td class="text-danger font-bold">0.755</td><td>1.30</td><td>226</td><td>0.00 </td><td>0.137</td><td>48分</td></tr>
+</table>
+<div class="note">※ 話す割合：緑=0.75未満（良）、赤=0.75以上（要改善）。H6✓バッジ=30%以上の面談でなぜトウコベを聞いている。</div>
+</div>
+
+<!-- 個人別アドバイス -->
+<h2>メンバー個人別アドバイス</h2>
+<div class="insight">データに基づく強み・改善点の整理。優先アクションは最もLTV向上に直結する1〜2点に絞っています。色はLTV順位帯（🟢上位 / 🟡中位 / 🔴下位）を示します。</div>
+<div class="grid2">
+  <div class="card" style="border-top: 4px solid #22c55e;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:18px;font-weight:800">唐木</span>
+      <span class="text-sub" style="font-size:12px">LTV 1位 ¥123,021 ／ 文字起こし25件</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-success font-bold" style="display:block;margin-bottom:4px">✅ 強み：</span>
+      <span class="badge-success">なぜトウコベ率=0.60（全体最高）</span><span class="badge-success">話す割合72.9%（低い）</span><span class="badge-success">純入会率64%・LTV¥123k（1位）</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-danger font-bold" style="display:block;margin-bottom:4px">⚠ 改善点：</span>
+      <span class="badge-danger">質問率0.110が中央値より高め → 詰問感注意</span><span class="badge-danger">面談が83分と長め → 後半の効率化</span>
+    </div>
+    <div class="action-box">
+      <span class="font-bold">優先アクション：</span>現状維持＋質問の質の精度向上。量より深さを意識した「なぜ」の使い方へ
+    </div>
+  </div>
+
+  <div class="card" style="border-top: 4px solid #22c55e;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:18px;font-weight:800">大塚</span>
+      <span class="text-sub" style="font-size:12px">LTV 2位 ¥119,314 ／ 文字起こし7件</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-success font-bold" style="display:block;margin-bottom:4px">✅ 強み：</span>
+      <span class="badge-success">フィラー率1.16（全体最低）</span><span class="badge-success">純入会率68%（全体最高）</span><span class="badge-success">保証突破率83%</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-danger font-bold" style="display:block;margin-bottom:4px">⚠ 改善点：</span>
+      <span class="badge-danger">顧客発話回数236回（最少クラス）</span><span class="badge-danger">why_toukobe率=0.29（中央値）</span><span class="badge-danger">面談時間59分（短め）</span>
+    </div>
+    <div class="action-box">
+      <span class="font-bold">優先アクション：</span>「なぜトウコベか」をもっと深掘りすること。聴く量を増やすとLTVが伸びる余地あり
+    </div>
+  </div>
+
+  <div class="card" style="border-top: 4px solid #22c55e;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:18px;font-weight:800">小栁</span>
+      <span class="text-sub" style="font-size:12px">LTV 3位 ¥108,192 ／ 文字起こし18件</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-success font-bold" style="display:block;margin-bottom:4px">✅ 強み：</span>
+      <span class="badge-success">話す割合69.5%（最も聴いている）</span><span class="badge-success">顧客発話回数616回（全体最多）</span><span class="badge-success">LTV¥108k（3位）</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-danger font-bold" style="display:block;margin-bottom:4px">⚠ 改善点：</span>
+      <span class="badge-danger">多科目提案率=38.9%（中央値下回る）</span><span class="badge-danger">フィラー率1.58（やや高め）</span>
+    </div>
+    <div class="action-box">
+      <span class="font-bold">優先アクション：</span>聴く力はNo.1。2科目提案を習慣化するだけでLTVが大幅に伸びる可能性が高い
+    </div>
+  </div>
+
+  <div class="card" style="border-top: 4px solid #f59e0b;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:18px;font-weight:800">安達</span>
+      <span class="text-sub" style="font-size:12px">LTV 4位 ¥103,558 ／ 文字起こし31件</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-success font-bold" style="display:block;margin-bottom:4px">✅ 強み：</span>
+      <span class="badge-success">多科目提案率96.8%（全体最高）</span><span class="badge-success">面談時間70.8分（適切）</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-danger font-bold" style="display:block;margin-bottom:4px">⚠ 改善点：</span>
+      <span class="badge-danger">なぜトウコベ率=0.000（全員中唯一ゼロ）</span><span class="badge-danger">フィラー率2.61（高め）</span>
+    </div>
+    <div class="action-box">
+      <span class="font-bold">優先アクション：</span>「なぜ東大生・オンラインを選んだか」を必ず聞く習慣をつける。これ1点だけで大幅な改善が見込まれる
+    </div>
+  </div>
+
+  <div class="card" style="border-top: 4px solid #f59e0b;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:18px;font-weight:800">敬禮</span>
+      <span class="text-sub" style="font-size:12px">LTV 5位 ¥98,330 ／ 文字起こし4件</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-success font-bold" style="display:block;margin-bottom:4px">✅ 強み：</span>
+      <span class="badge-success">話す割合58.1%（最も聴いている）</span><span class="badge-success">顧客発話回数742回（全体最多）</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-danger font-bold" style="display:block;margin-bottom:4px">⚠ 改善点：</span>
+      <span class="badge-danger">面談時間92.2分（全体最長）</span><span class="badge-danger">n=4でサンプルが少なく信頼性が低い</span>
+    </div>
+    <div class="action-box">
+      <span class="font-bold">優先アクション：</span>聴く力は最高水準。面談の効率化（90分以内）が課題。データが少ないため継続観察が必要
+    </div>
+  </div>
+
+  <div class="card" style="border-top: 4px solid #f59e0b;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:18px;font-weight:800">福田</span>
+      <span class="text-sub" style="font-size:12px">LTV 6位 ¥97,704 ／ 文字起こし78件</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-success font-bold" style="display:block;margin-bottom:4px">✅ 強み：</span>
+      <span class="badge-success">入会率80%（全体上位）</span><span class="badge-success">顧客発話回数353回（中央値並み）</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-danger font-bold" style="display:block;margin-bottom:4px">⚠ 改善点：</span>
+      <span class="badge-danger">入会80%に対し保証突破60%（乖離あり）</span><span class="badge-danger">なぜトウコベ率=0.269（低め）</span><span class="badge-danger">なぜ系質問率0.061（高め）</span>
+    </div>
+    <div class="action-box">
+      <span class="font-bold">優先アクション：</span>入会はするが離脱する顧客が多い傾向。「なぜトウコベか」を深掘りし、ニーズとサービスの一致度を高める
+    </div>
+  </div>
+
+  <div class="card" style="border-top: 4px solid #f59e0b;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:18px;font-weight:800">山家</span>
+      <span class="text-sub" style="font-size:12px">LTV 7位 ¥95,887 ／ 文字起こし101件</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-success font-bold" style="display:block;margin-bottom:4px">✅ 強み：</span>
+      <span class="badge-success">最多101件で信頼性が高い</span><span class="badge-success">顧客発話回数421回（高め）</span><span class="badge-success">提案主導率0.064（高め）</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-danger font-bold" style="display:block;margin-bottom:4px">⚠ 改善点：</span>
+      <span class="badge-danger">フィラー率3.08（全体最高）</span><span class="badge-danger">なぜトウコベ率=0.267（低め）</span><span class="badge-danger">面談時間83.9分（長め）</span>
+    </div>
+    <div class="action-box">
+      <span class="font-bold">優先アクション：</span>フィラー削減が最優先。録画を見返し自己チェックする習慣を。「あのー」「えっと」を減らすだけでLTV改善が見込める
+    </div>
+  </div>
+
+  <div class="card" style="border-top: 4px solid #f59e0b;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:18px;font-weight:800">清水</span>
+      <span class="text-sub" style="font-size:12px">LTV 8位 ¥94,687 ／ 文字起こし3件</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-success font-bold" style="display:block;margin-bottom:4px">✅ 強み：</span>
+      <span class="badge-success">多科目提案率100%（全面談）</span><span class="badge-success">終盤話す割合0.659（よく聴いている）</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-danger font-bold" style="display:block;margin-bottom:4px">⚠ 改善点：</span>
+      <span class="badge-danger">なぜトウコベ率=0.000（ゼロ）</span><span class="badge-danger">フィラー率2.84（高め）</span><span class="badge-danger">n=3でサンプルが極めて少ない</span>
+    </div>
+    <div class="action-box">
+      <span class="font-bold">優先アクション：</span>n=3で判断は慎重に。ただし「なぜトウコベか」がゼロ回なのは明確な改善点。まずここから
+    </div>
+  </div>
+
+  <div class="card" style="border-top: 4px solid #ef4444;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:18px;font-weight:800">松本</span>
+      <span class="text-sub" style="font-size:12px">LTV 9位 ¥89,730 ／ 文字起こし7件</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-success font-bold" style="display:block;margin-bottom:4px">✅ 強み：</span>
+      <span class="badge-success">フィラー率1.00（低い）</span><span class="badge-success">入会率79%（高め）</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-danger font-bold" style="display:block;margin-bottom:4px">⚠ 改善点：</span>
+      <span class="badge-danger">話す割合86.7%（全体最高＝話しすぎ）</span><span class="badge-danger">顧客発話回数173回（全体最少）</span><span class="badge-danger">なぜトウコベ率=0.000（ゼロ）</span>
+    </div>
+    <div class="action-box">
+      <span class="font-bold">優先アクション：</span>「聴く」ことが最大の課題。質問後に自分が喋り始めるタイミングを10秒遅らせる練習から始める
+    </div>
+  </div>
+
+  <div class="card" style="border-top: 4px solid #ef4444;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:18px;font-weight:800">池田</span>
+      <span class="text-sub" style="font-size:12px">LTV 10位 ¥86,742 ／ 文字起こし18件</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-success font-bold" style="display:block;margin-bottom:4px">✅ 強み：</span>
+      <span class="badge-success">共感表現率0.095（高め）</span><span class="badge-success">顧客1発話長14.16（顧客がまとまって話す）</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-danger font-bold" style="display:block;margin-bottom:4px">⚠ 改善点：</span>
+      <span class="badge-danger">顧客発話回数174.5回（少なめ）</span><span class="badge-danger">なぜトウコベ率=0.056（低い）</span><span class="badge-danger">面談時間53.2分（短め）</span>
+    </div>
+    <div class="action-box">
+      <span class="font-bold">優先アクション：</span>共感力はあるが顧客が話す機会が少ない。オープンクエスチョンを増やして会話に引き込む工夫を
+    </div>
+  </div>
+
+  <div class="card" style="border-top: 4px solid #ef4444;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span style="font-size:18px;font-weight:800">野澤</span>
+      <span class="text-sub" style="font-size:12px">LTV 11位 ¥71,768 ／ 文字起こし5件</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-success font-bold" style="display:block;margin-bottom:4px">✅ 強み：</span>
+      <span class="badge-success">保証突破率89%（全体最高）</span><span class="badge-success">共感表現率0.137（全体最高）</span>
+    </div>
+    <div style="font-size:13px; color:var(--text-main); margin-bottom:12px">
+      <span class="text-danger font-bold" style="display:block;margin-bottom:4px">⚠ 改善点：</span>
+      <span class="badge-danger">LTV最低水準・入会率60%（クロージング課題）</span><span class="badge-danger">なぜトウコベ率=0.000</span><span class="badge-danger">面談時間48.4分（全体最短）</span>
+    </div>
+    <div class="action-box">
+      <span class="font-bold">優先アクション：</span>「入会後は最高」というデータ。クロージング力とニーズ深掘り（なぜトウコベ）を強化できれば一気に上位へ
+    </div>
+  </div>
+</div>
+
+<!-- 受講決定 vs 検討移行 -->
+<h2>受講決定 vs 検討移行 比較（面談レベル・参考）</h2>
+<div class="insight warn">
+  <strong>留意事項：</strong> 文字起こし提出バイアスあり（入会時のみ提出が多い）。受講決定 310件 vs 検討移行 26件。参考値として読むこと。
+</div>
+<div class="section">
+<table>
+  <tr><th>指標</th><th style="text-align:right">受講決定</th><th style="text-align:right">検討移行</th><th style="text-align:right">差</th><th>有意性</th></tr>
+  <tr><td>面談時間（分）</td><td style="text-align:right">72.192</td><td style="text-align:right">75.700</td><td style="text-align:right" class="text-danger font-bold">-3.508</td><td></td></tr>
+  <tr><td>営業の話す割合</td><td style="text-align:right">0.727</td><td style="text-align:right">0.694</td><td style="text-align:right" class="text-success font-bold">+0.032</td><td></td></tr>
+  <tr><td>フィラー率</td><td style="text-align:right">2.606</td><td style="text-align:right">1.959</td><td style="text-align:right" class="text-success font-bold">+0.647</td><td><span style="background:#f59e0b;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700">†p&lt;.10</span></td></tr>
+  <tr><td>質問率</td><td style="text-align:right">0.103</td><td style="text-align:right">0.087</td><td style="text-align:right" class="text-success font-bold">+0.016</td><td></td></tr>
+  <tr><td>顧客1発話長</td><td style="text-align:right">13.728</td><td style="text-align:right">15.330</td><td style="text-align:right" class="text-danger font-bold">-1.602</td><td><span style="background:#ef4444;color:white;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700">★p&lt;.05</span></td></tr>
+  <tr><td>顧客発話回数</td><td style="text-align:right">372.500</td><td style="text-align:right">403.000</td><td style="text-align:right" class="text-danger font-bold">-30.500</td><td></td></tr>
+  <tr><td>冒頭話す割合</td><td style="text-align:right">0.635</td><td style="text-align:right">0.618</td><td style="text-align:right" class="text-success font-bold">+0.017</td><td></td></tr>
+  <tr><td>終盤話す割合</td><td style="text-align:right">0.721</td><td style="text-align:right">0.692</td><td style="text-align:right" class="text-success font-bold">+0.029</td><td></td></tr>
+  <tr><td>フェーズ:ヒアリング</td><td style="text-align:right">0.214</td><td style="text-align:right">0.238</td><td style="text-align:right" class="text-danger font-bold">-0.024</td><td></td></tr>
+  <tr><td>フェーズ:学習アドバイス</td><td style="text-align:right">0.030</td><td style="text-align:right">0.029</td><td style="text-align:right" class="text-success font-bold">+0.001</td><td></td></tr>
+  <tr><td>フェーズ:サービス説明</td><td style="text-align:right">0.313</td><td style="text-align:right">0.323</td><td style="text-align:right" class="text-danger font-bold">-0.010</td><td></td></tr>
+  <tr><td>フェーズ:クロージング</td><td style="text-align:right">0.015</td><td style="text-align:right">0.020</td><td style="text-align:right" class="text-danger font-bold">-0.005</td><td></td></tr>
+</table>
+</div>
+
+<!-- 仮説まとめ -->
+<h2>仮説検証サマリー</h2>
+<div class="section">
+<table>
+  <tr><th>仮説</th><th>内容</th><th>主要相関</th><th>判定</th></tr>
+  <tr>
+    <td><span class="hypo-tag">H1</span> オウム返し</td>
+    <td>顧客発話の語句を繰り返す → 信頼</td>
+    <td>LTV r=−0.02</td>
+    <td>❌ 不支持（検出できず）</td>
+  </tr>
+  <tr>
+    <td><span class="hypo-tag">H2</span> 他塾深掘り</td>
+    <td>他塾・乗り換えキーワードの頻度</td>
+    <td>LTV r=−0.17</td>
+    <td>⚠ 弱い負（言及多すぎも逆効果？）</td>
+  </tr>
+  <tr>
+    <td><span class="hypo-tag">H3</span> 多科目提案</td>
+    <td>英語＋数学など複数科目に言及</td>
+    <td>LTV r=+0.13</td>
+    <td>⚠ 弱い正（方向は合っている）</td>
+  </tr>
+  <tr>
+    <td><span class="hypo-tag">H4</span> なぜ系質問</td>
+    <td>「なぜ」「理由」「原因」の頻度</td>
+    <td>LTV r=−0.35</td>
+    <td>❌ 逆効果。詰問感のリスク</td>
+  </tr>
+  <tr>
+    <td><span class="hypo-tag">H5</span> 提案主導</td>
+    <td>「おすすめ」「提案」の頻度</td>
+    <td>LTV r=−0.11</td>
+    <td>❌ 不支持（量よりタイミングが重要か）</td>
+  </tr>
+  <tr style="background:var(--brand-light)">
+    <td><span class="hypo-tag" style="background:#fff;border-color:var(--brand-main)">H6</span> なぜトウコベ</td>
+    <td>「なぜ東大生/オンライン選んだか」を聞く</td>
+    <td class="text-brand font-bold">LTV r=+0.74★</td>
+    <td class="text-brand font-bold">✅ 強く支持。最重要指標</td>
+  </tr>
+  <tr style="background:#f0fdf4">
+    <td><span class="hypo-tag">H7</span> ペイン共感</td>
+    <td>「そうですね」「確かに」等</td>
+    <td>保証突破率 r=+0.55†</td>
+    <td class="text-success font-bold">✅ 支持。30日継続に効く</td>
+  </tr>
+  <tr>
+    <td><span class="hypo-tag">H8</span> IB親近感</td>
+    <td>冒頭の「いいね」「すごい」「同じ」</td>
+    <td>LTV r=+0.43</td>
+    <td>⚠ 方向は支持（未有意）</td>
+  </tr>
+</table>
+</div>
+
+<!-- 改善提案 -->
+<h2>改善提案（優先度順）</h2>
+<div class="grid2">
+  <div class="card" style="border-top: 5px solid var(--brand-main)">
+    <h3 class="text-brand" style="margin-top:0; font-size:16px;">優先度 HIGH</h3>
+    <ol style="padding-left:22px;line-height:1.8;font-size:14px; margin-top:16px;">
+      <li style="margin-bottom:12px;"><strong>ヒアリングで「なぜトウコベか」を必ず聞く【H6★】</strong><br>
+        「オンライン・東大生・個別指導の中で何に興味を持っていただきましたか？」<br>
+        <span class="text-sub">→ 顧客のニーズの核心が分かり、後のサービス説明・クロージングにつながる</span></li>
+      <li style="margin-bottom:12px;"><strong>共感表現を増やす【H7†】</strong><br>
+        「そうですね」「確かに」「それは大変でしたね」など<br>
+        <span class="text-sub">→ 保証突破率（30日継続）に正の相関。入会後の継続にも効く</span></li>
+      <li><strong>営業の話す割合を下げる【既存】</strong><br>
+        目標: 75%以下。上位3名平均72% vs 下位3名81%</li>
+    </ol>
+  </div>
+  <div class="card" style="border-top: 5px solid #cbd5e1">
+    <h3 style="color:#475569; margin-top:0; font-size:16px;">優先度 MED / 要注意</h3>
+    <ol style="padding-left:22px;line-height:1.8;font-size:14px; margin-top:16px;">
+      <li style="margin-bottom:12px;"><strong>「なぜ系質問」は量ではなく質【H4注意】</strong><br>
+        頻度が多いほどLTVが低い傾向。「なぜ成績が上がらないのか」を詰めすぎると圧迫感に。仮説を持ってクローズな形で聞く</li>
+      <li style="margin-bottom:12px;"><strong>顧客発話回数を増やす設計【既存†】</strong><br>
+        LTV r=+0.58。質問後の沈黙を耐える、短い相槌でテンポを作る</li>
+      <li><strong>アイスブレイクの共通点発見【H8参考】</strong><br>
+        「いいね！」「僕も〇〇好きで」など。方向性は支持（n不足で未有意）</li>
+    </ol>
+  </div>
+</div>
+
+<!-- 今後の課題 -->
+<h2>今後の分析課題</h2>
+<div class="section">
+  <ul class="bullet-list">
+    <li><strong>n拡大</strong>：文字起こしあり担当者が11名。残り5名（曽根・重田・大西・清水・敬禮）のデータ補完で精度向上</li>
+    <li><strong>H1オウム返しの精度</strong>：現在は「直前顧客発話の3字以上の語句が次の営業発話に含まれるか」で検出。不正確な可能性あり。形態素解析（MeCab等）による語単位の照合で改善</li>
+    <li><strong>「なぜトウコベ」深掘り品質</strong>：H6はフラグ検出のみ。「聞いた後にどう展開したか」（トウコベの強みとの接続）まで分析すると更に有用</li>
+    <li><strong>LTVと属性の交絡</strong>：LTVは属性調整済みだが、担当者が受け持つ顧客属性の偏りが残る可能性あり</li>
+  </ul>
+</div>
+
+<!-- 分析手法詳細 -->
+<h2>分析手法・詳細</h2>
+<div class="section">
+  <h3>1. データソース</h3>
+  <table style="margin-bottom:24px;">
+    <tr><th>データ</th><th>内容</th><th>件数・規模</th></tr>
+    <tr><td>Sales面談 文字起こし（WEBVTT形式）</td><td>Zoom録画から自動生成された発話ログ。タイムスタンプ・話者・テキストを含む</td><td>350ファイル（350件有効）</td></tr>
+    <tr><td>Sales Analysis 2 CSV</td><td>担当者ごとのKPI集計（LTV・入会率・保証突破率）。属性・受講分数を加味したLTV換算済み</td><td>16名（面談10件以上）</td></tr>
+    <tr><td>Salesマニュアル（PDF・MD）</td><td>面談練習フィードバック集約・業務ガイド・ヒアリング/クロージング等のマニュアル</td><td>約10万字</td></tr>
+  </table>
+
+  <h3>2. 文字起こし解析パイプライン</h3>
+  <ol class="bullet-list" style="margin-bottom:24px;">
+    <li><strong>WEBVTTパーシング</strong>：正規表現でタイムスタンプ行（<code>HH:MM:SS.mmm --&gt; HH:MM:SS.mmm</code>）と発話テキストを抽出。話者識別は「<code>話者名：テキスト</code>」パターンで分離</li>
+    <li><strong>話者分類</strong>：「お客様」以外の話者をすべて「Sales担当者」として分類。ファイル名の<code>[結果]_担当者名_</code>パターンから担当者名と面談結果を取得</li>
+    <li><strong>時間計算</strong>：各発話セグメントの継続時間（end - start）を計算し、話者別に合算して「話す割合」を算出</li>
+    <li><strong>時系列3分割</strong>：面談全体を冒頭・中盤・終盤の3等分に分けて各パートの話す割合を計算し、フェーズごとの傾向を捉える</li>
+    <li><strong>フィラーワード検出</strong>：正規表現パターン（「あのー」「えっと」「えー」「まあ」「なんか」等）で発話100文字あたりの出現率を計算</li>
+  </ol>
+
+  <h3>3. マニュアル仮説指標（H1〜H8）の算出方法</h3>
+  <table style="margin-bottom:24px;">
+    <tr><th>仮説</th><th>指標名</th><th>算出方法</th><th>根拠（マニュアル）</th></tr>
+    <tr><td><span class="hypo-tag">H1</span></td><td>オウム返し率</td><td>Sales発話の直前に顧客が話した場合、その顧客発話中の3文字以上の語句が次のSales発話に含まれる割合</td><td>FBに「オウム返し」が繰り返し登場。顧客の言葉をそのまま繰り返すことで共感を示すテクニック</td></tr>
+    <tr><td><span class="hypo-tag">H2</span></td><td>他塾深掘り率</td><td>Sales発話中に「他塾」「乗り換え」「比較」「今の塾」等の正規表現にマッチする発話の割合</td><td>「今の塾への不満・乗り換え理由を深掘れ」というFBが多数。転塾検討者へのアプローチに重要</td></tr>
+    <tr><td><span class="hypo-tag">H3</span></td><td>多科目提案率</td><td>面談全体のSales発話中に「英語」と「数学」の両方が含まれているかのフラグ（面談単位）の平均</td><td>クロージングFBで「2科目提案を基本にする」「アップセル意識を持つ」が頻出</td></tr>
+    <tr><td><span class="hypo-tag">H4</span></td><td>なぜ系質問率</td><td>Sales発話中に「なぜ」「どうして」「理由」「原因」「きっかけ」等を含む発話の割合</td><td>課題分析で「病巣を探れ」と推奨されているが、詰問感のリスクも指摘されている</td></tr>
+    <tr><td><span class="hypo-tag">H5</span></td><td>提案主導率</td><td>Sales発話中に「おすすめ」「提案」「〜がいいと思います」「にしましょう」等を含む発話の割合</td><td>クロージングで「こちらから受講プランを提案する」「手綱を握る」という指示が多数</td></tr>
+    <tr><td><span class="hypo-tag">H6</span></td><td>なぜトウコベ率</td><td>Sales発話中に「なぜ東大」「なぜオンライン」「選んだ理由」「どこに興味」等の正規表現にマッチする発話を含む面談の割合</td><td>ヒアリングFBで「オンライン・東大生・個別指導のどこに興味を持ったかを探れ」が繰り返し登場。今回の分析で最強相関（LTV r=+0.74★）と判明</td></tr>
+    <tr><td><span class="hypo-tag">H7</span></td><td>ペイン共感率</td><td>Sales発話中に「そうですね」「わかります」「確かに」「大変でしたね」「おっしゃる通り」等を含む発話の割合</td><td>ヒアリングFBで「ペインに共感する」「共感し、ニーズを再共有する」が指摘されている</td></tr>
+    <tr><td><span class="hypo-tag">H8</span></td><td>IB親近感率</td><td>冒頭1/3のSales発話中に「いいね」「すごい」「同じ」「一緒」等を含む発話の割合</td><td>アイスブレイクFBで「共通点を意識的に見つける」「いいね・そうなんだで会話を広げる」が多数</td></tr>
+  </table>
+
+  <h3>4. 統計手法</h3>
+  <table style="margin-bottom:24px;">
+    <tr><th>手法</th><th>用途</th><th>採用理由</th></tr>
+    <tr><td>Spearman順位相関（ρ）</td><td>行動指標 × KPI の相関分析（担当者レベル）</td><td>n=11と少なく外れ値の影響を受けやすい。順位相関はロバストで適切</td></tr>
+    <tr><td>Mann-Whitney U検定</td><td>受講決定 vs 検討移行の中央値比較（面談レベル）</td><td>正規分布を仮定しないノンパラメトリック検定。分布の歪みに頑健</td></tr>
+    <tr><td>有意水準</td><td>★p&lt;.05（採用）、†p&lt;.10（参考）</td><td>n=11の検出力を考慮し、†p&lt;.10も方向性の参考として表示</td></tr>
+  </table>
+
+  <h3>5. 分析上の限界・注意点</h3>
+  <ul class="bullet-list">
+    <li><strong>文字起こし提出バイアス</strong>：入会決定時のみ提出されることが多く、面談ごとの成否ラベルに偏りがある。このため、面談レベル分析（受講決定 vs 検討移行）は参考値として扱い、担当者レベルのKPI分析を主軸とした</li>
+    <li><strong>サンプルサイズ（n=11）</strong>：担当者レベルの相関分析のサンプルが11名と少ない。統計的検出力が低いため、有意でない指標でも方向性を参考にしている。文字起こし提出を増やすことで精度向上が見込まれる</li>
+    <li><strong>キーワードベース検出の限界</strong>：H1〜H8はすべて正規表現によるキーワードマッチ。「なぜ」を使わずに病巣を深掘りする高度なヒアリングや、文脈に依存する共感表現は検出できない</li>
+    <li><strong>フェーズ検出の精度</strong>：各発話をキーワードの多重マッチでフェーズ分類しているが、単一の発話が複数フェーズにまたがる場合や、フェーズが明確に分離されていない場合の精度は限定的</li>
+    <li><strong>担当者ごとのデータ量の差</strong>：山家101件 vs 清水3件など、担当者ごとに文字起こし件数が大きく異なる。件数が少ない担当者（n&lt;10）のデータは参考値として扱うこと</li>
+    <li><strong>LTVの属性調整</strong>：KPI CSVのLTVはすでに属性・受講分数等を考慮した換算値であるが、担当者が受け持つ顧客の属性分布の偏りが完全には除去されていない可能性がある</li>
+  </ul>
+</div>
+
+</div>
+
+<script>
+// ブランドカラーを定数化
+const BRAND_COLOR = '#FF834F';
+
+const mkChart = (id, data, xLabel, yLabel, color) => {
+  new Chart(document.getElementById(id), {
+    type: 'scatter',
+    data: { 
+      datasets: [{ 
+        data: data, 
+        backgroundColor: color, 
+        pointRadius: 6, 
+        pointHoverRadius: 9,
+        borderWidth: 1,
+        borderColor: '#ffffff'
+      }] 
+    },
+    options: {
+      responsive: true, 
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { 
+          backgroundColor: 'rgba(15, 23, 42, 0.9)',
+          padding: 12,
+          cornerRadius: 8,
+          callbacks: { label: ctx => ctx.raw.label + ' (' + ctx.raw.x + ', ' + ctx.raw.y + ')' } 
+        }
+      },
+      scales: {
+        x: { 
+          title: { display: true, text: xLabel, font: {size: 12, weight: 'bold'}, color: '#64748b' }, 
+          grid: {color: '#f1f5f9', drawBorder: false} 
+        },
+        y: { 
+          title: { display: true, text: yLabel, font: {size: 12, weight: 'bold'}, color: '#64748b' }, 
+          grid: {color: '#f1f5f9', drawBorder: false} 
+        }
+      }
+    }
+  });
+};
+
+// グラフの描画（色を全体のトーンに合わせる）
+mkChart('c1', [{"x": 0.0, "y": 89730.0, "label": "松本"}, {"x": 0.0556, "y": 86742.0, "label": "池田"}, {"x": 0.25, "y": 98330.0, "label": "敬禮"}, {"x": 0.2857, "y": 119314.0, "label": "大塚"}, {"x": 0.5, "y": 108192.0, "label": "小栁"}, {"x": 0.0, "y": 71768.0, "label": "野澤"}, {"x": 0.2673, "y": 95887.0, "label": "山家"}, {"x": 0.2692, "y": 97704.0, "label": "福田"}, {"x": 0.0, "y": 94687.0, "label": "清水"}, {"x": 0.0, "y": 103558.0, "label": "安達"}, {"x": 0.6, "y": 123021.0, "label": "唐木"}],  'H6:なぜトウコベ率', 'LTV(円)', BRAND_COLOR); // トウコベ率はブランドカラー
+mkChart('c2', [{"x": 173.0, "y": 89730.0, "label": "松本"}, {"x": 174.5, "y": 86742.0, "label": "池田"}, {"x": 742.5, "y": 98330.0, "label": "敬禮"}, {"x": 236.0, "y": 119314.0, "label": "大塚"}, {"x": 616.5, "y": 108192.0, "label": "小栁"}, {"x": 226.0, "y": 71768.0, "label": "野澤"}, {"x": 421.0, "y": 95887.0, "label": "山家"}, {"x": 353.0, "y": 97704.0, "label": "福田"}, {"x": 285.0, "y": 94687.0, "label": "清水"}, {"x": 337.0, "y": 103558.0, "label": "安達"}, {"x": 389.0, "y": 123021.0, "label": "唐木"}], '顧客発話回数',        'LTV(円)',       '#10b981'); // エメラルドグリーン
+mkChart('c3', [{"x": 0.8666, "y": 89730.0, "label": "松本"}, {"x": 0.7923, "y": 86742.0, "label": "池田"}, {"x": 0.5809, "y": 98330.0, "label": "敬禮"}, {"x": 0.7688, "y": 119314.0, "label": "大塚"}, {"x": 0.6948, "y": 108192.0, "label": "小栁"}, {"x": 0.7549, "y": 71768.0, "label": "野澤"}, {"x": 0.7301, "y": 95887.0, "label": "山家"}, {"x": 0.7193, "y": 97704.0, "label": "福田"}, {"x": 0.724, "y": 94687.0, "label": "清水"}, {"x": 0.7322, "y": 103558.0, "label": "安達"}, {"x": 0.709, "y": 123021.0, "label": "唐木"}],      '営業の話す割合',      'LTV(円)',       '#f43f5e'); // ローズレッド
+mkChart('c4', [{"x": 0.0412, "y": 57.0, "label": "松本"}, {"x": 0.095, "y": 60.0, "label": "池田"}, {"x": 0.0522, "y": 73.0, "label": "敬禮"}, {"x": 0.0931, "y": 83.0, "label": "大塚"}, {"x": 0.0866, "y": 74.0, "label": "小栁"}, {"x": 0.1366, "y": 89.0, "label": "野澤"}, {"x": 0.0391, "y": 70.0, "label": "山家"}, {"x": 0.0692, "y": 60.0, "label": "福田"}, {"x": 0.0533, "y": 71.0, "label": "清水"}, {"x": 0.0691, "y": 76.0, "label": "安達"}, {"x": 0.0924, "y": 78.0, "label": "唐木"}],  'H7:ペイン共感率',   '保証突破率(%)', '#8b5cf6'); // バイオレット
+</script>
+</body>
+</html>
