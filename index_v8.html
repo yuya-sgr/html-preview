@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speee × Leverages 合同企業説明会 | トウコベキャリア</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: '#FF8A32',
+            ink: '#111111',
+            surface: '#F7F7F7',
+            warm: '#FFF8F2',
+          },
+          fontFamily: {
+            sans: ['"Noto Sans JP"', 'sans-serif'],
+            mono: ['Montserrat', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans JP', sans-serif; color: #111111; background: #fff; overflow-x: hidden; }
+
+    /* Loading */
+    #loading {
+      position: fixed; inset: 0; background: #fff; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity 0.4s ease 0.7s, visibility 0.4s ease 0.7s;
+    }
+    #loading.hidden { opacity: 0; visibility: hidden; }
+    #loading-inner { opacity: 0; animation: logoAppear 0.6s ease forwards; }
+    .brand-logo-img {
+      display: block;
+      width: auto;
+      object-fit: contain;
+    }
+    .brand-logo-loading { height: 52px; }
+    .brand-logo-header { height: 28px; }
+    .brand-logo-footer { height: 26px; }
+    @keyframes logoAppear {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* Fixed header */
+    #header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,0.07); transition: box-shadow 0.3s;
+    }
+    #header.scrolled { box-shadow: 0 2px 16px rgba(0,0,0,0.07); }
+
+    /* Mobile menu */
+    #mobile-menu {
+      position: fixed; inset: 0; background: #fff; z-index: 200;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+    }
+    #mobile-menu.open { opacity: 1; visibility: visible; }
+
+    /* Buttons */
+    .btn-primary {
+      display: inline-block; background: #FF8A32; color: #fff;
+      font-family: 'Noto Sans JP', sans-serif; font-weight: 700;
+      border-radius: 3px; transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { background: #e57820; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(255,138,50,0.35); }
+
+    .section-label { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; color: #FF8A32; }
+
+    /* Hero */
+    .hero-bg {
+      position: relative;
+      min-height: 720px;
+      overflow: hidden;
+      background: #f7f3ee;
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/hero_generated_v1.png');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.02);
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,250,245,0.98) 0%, rgba(255,247,239,0.96) 24%, rgba(255,244,235,0.88) 40%, rgba(255,244,235,0.48) 58%, rgba(255,244,235,0.10) 75%, rgba(255,244,235,0.04) 100%);
+      backdrop-filter: blur(2px);
+    }
+
+    /* Company logo card in hero */
+    .company-logo-card {
+      background: #fff; border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 6px; padding: 16px 24px;
+      display: flex; align-items: center; justify-content: center;
+      flex: 1; min-height: 64px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .pseudo-logo {
+      height: 44px;
+      border: 1px solid #d9d9d9;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
+      color: #2b2b2b;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    /* Tag pill (light version) */
+    .tag-pill-light {
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid rgba(255,138,50,0.3);
+      background: rgba(255,138,50,0.06);
+      color: #c86c1a; font-family: 'Montserrat', sans-serif;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      padding: 5px 12px; border-radius: 50px;
+    }
+
+    /* Info row */
+    .info-row { display: flex; align-items: center; gap: 10px; font-size: 13px; color: #555; }
+    .info-row .dot { width: 6px; height: 6px; border-radius: 50%; background: #FF8A32; flex-shrink: 0; }
+
+    /* Partner card */
+    .partner-card { border: 1px solid #eaeaea; border-radius: 6px; transition: box-shadow 0.3s, transform 0.3s; background: #fff; }
+    .partner-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .partner-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+    .partner-badge {
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    /* Logo placeholder */
+    .logo-placeholder {
+      height: 44px; border: 2px dashed #d5d5d5; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      background: #fafafa; color: #bbb;
+      font-family: 'Montserrat', sans-serif; font-size: 10px; letter-spacing: 0.1em;
+    }
+
+    .hero-overlay {
+      position: relative;
+      z-index: 2;
+      min-height: 720px;
+      display: flex;
+      align-items: center;
+    }
+    .hero-copy-wrap {
+      max-width: 620px;
+      padding: 96px 0 56px;
+    }
+    .hero-copy-panel {
+      display: inline-block;
+      max-width: 560px;
+      padding: 18px 22px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.78) 0%, rgba(255,248,240,0.72) 100%);
+      border: 1px solid rgba(255,255,255,0.65);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.08);
+      backdrop-filter: blur(12px);
+    }
+    .hero-underbar {
+      width: 92px;
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #FF8A32 0%, #ffb06c 100%);
+      margin: 10px 0 20px;
+      box-shadow: 0 8px 24px rgba(255,138,50,0.28);
+    }
+    .hero-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .hero-logo-box {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 14px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 58px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      backdrop-filter: blur(10px);
+    }
+    .hero-logo-box img {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+      max-width: 120px;
+    }
+    .hero-logo-divider {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: rgba(17,17,17,0.35);
+    }
+
+    /* Photo placeholder */
+    .photo-placeholder {
+      width: 100%; background: #f0f0f0; border-bottom: 2px dashed #d5d5d5;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: #bbb; gap: 8px; padding: 32px 0;
+    }
+    .photo-placeholder i { font-size: 28px; }
+    .photo-placeholder span { font-size: 10px; font-family: 'Montserrat', sans-serif; letter-spacing: 0.12em; }
+
+    /* Speaker card */
+    .speaker-card { border: 1px solid #eaeaea; border-radius: 6px; overflow: hidden; background: #fff; transition: box-shadow 0.3s; }
+    .speaker-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.07); }
+    .speaker-photo-wrap { position: relative; }
+    .speaker-photo {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      background: #f7f7f7;
+    }
+    /* Num heading */
+    .num-heading { font-family: 'Montserrat', sans-serif; font-weight: 900; color: #ebebeb; line-height: 1; }
+
+    /* Timeline */
+    .timeline-item { position: relative; padding-left: 3rem; }
+    .timeline-item::before { content: ''; position: absolute; left: 1.1rem; top: 2.8rem; bottom: -1rem; width: 1px; background: #e0e0e0; }
+    .timeline-item:last-child::before { display: none; }
+
+    /* FAQ */
+    .faq-body {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.25s ease;
+    }
+    .faq-body.open {
+      max-height: 420px;
+      opacity: 1;
+      padding-top: 0;
+      padding-bottom: 16px;
+    }
+
+    /* Concept frame */
+    .concept-frame {
+      background: linear-gradient(180deg, #fffaf5 0%, #fff2e6 100%);
+      border: 1px solid #f2dcc5;
+      border-radius: 18px; padding: 36px 28px;
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .about-visual {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #f0e2d5;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.07);
+      background: #fff;
+    }
+    .about-visual img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .mid-cta-card {
+      border-radius: 22px;
+      padding: 28px;
+      background: linear-gradient(135deg, #fff7ef 0%, #ffe9d3 100%);
+      border: 1px solid #f3d5b0;
+      box-shadow: 0 12px 32px rgba(255,138,50,0.10);
+    }
+
+    /* Divider */
+    .brand-divider { width: 36px; height: 3px; background: #FF8A32; border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+<!-- ========== LOADING ========== -->
+<div id="loading">
+  <div id="loading-inner">
+    <img class="brand-logo-img brand-logo-loading" src="assets/Group 164.png" alt="トウコベキャリア" />
+  </div>
+</div>
+
+<!-- ========== HEADER ========== -->
+<header id="header">
+  <div class="max-w-6xl mx-auto px-5 flex items-center justify-between h-14">
+    <a href="#" aria-label="トウコベキャリア">
+      <img class="brand-logo-img brand-logo-header" src="assets/Group 164.png" alt="トウコベキャリア" />
+    </a>
+    <nav class="hidden md:flex items-center gap-7">
+      <a href="#about"   style="font-family:'Montserrat',sans-serif;font-weight:600;font-size:10px;letter-spacing:0.15em;" class="text-gray-500 hover:text-brand transition-colors">ABOUT</a>
+      <a href="#partner" style="font-family:'Montserrat',sans-serif;font-weight:600;font-size:10px;letter-spacing:0.15em;" class="text-gray-500 hover:text-brand transition-colors">PARTNER</a>
+      <a href="#speaker" style="font-family:'Montserrat',sans-serif;font-weight:600;font-size:10px;letter-spacing:0.15em;" class="text-gray-500 hover:text-brand transition-colors">SPEAKER</a>
+      <a href="#program" style="font-family:'Montserrat',sans-serif;font-weight:600;font-size:10px;letter-spacing:0.15em;" class="text-gray-500 hover:text-brand transition-colors">PROGRAM</a>
+      <a href="#outline" style="font-family:'Montserrat',sans-serif;font-weight:600;font-size:10px;letter-spacing:0.15em;" class="text-gray-500 hover:text-brand transition-colors">OUTLINE</a>
+      <a href="#entry" class="btn-primary px-5 py-2 text-xs" style="letter-spacing:0.1em;">SEMINAR</a>
+    </nav>
+    <button id="menu-btn" class="md:hidden flex flex-col gap-1.5 p-2">
+      <span class="block w-5 h-0.5 bg-ink" id="bar1"></span>
+      <span class="block w-5 h-0.5 bg-ink" id="bar2"></span>
+      <span class="block w-5 h-0.5 bg-ink" id="bar3"></span>
+    </button>
+  </div>
+</header>
+
+<!-- ========== MOBILE MENU ========== -->
+<div id="mobile-menu">
+  <button id="menu-close" class="absolute top-5 right-5 text-ink text-2xl"><i class="fa fa-times"></i></button>
+  <nav class="flex flex-col items-center gap-8">
+    <a href="#about"   class="mobile-link text-ink text-xl" style="font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:0.15em;">ABOUT</a>
+    <a href="#partner" class="mobile-link text-ink text-xl" style="font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:0.15em;">PARTNER</a>
+    <a href="#speaker" class="mobile-link text-ink text-xl" style="font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:0.15em;">SPEAKER</a>
+    <a href="#program" class="mobile-link text-ink text-xl" style="font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:0.15em;">PROGRAM</a>
+    <a href="#outline" class="mobile-link text-ink text-xl" style="font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:0.15em;">OUTLINE</a>
+    <a href="#entry" class="btn-primary px-8 py-3 mt-2 mobile-link" style="letter-spacing:0.1em;">SEMINAR</a>
+  </nav>
+</div>
+
+<!-- ========== HERO ========== -->
+<!-- 写真全面 + 左グラデーション -->
+<section class="hero-bg pt-14">
+  <div class="hero-overlay">
+    <div class="max-w-6xl mx-auto px-5 w-full">
+      <div class="hero-copy-wrap">
+        <div class="reveal mb-4">
+          <span class="tag-pill-light">トウコベキャリア 主催 / 旧帝大・一工 限定</span>
+        </div>
+        <div class="reveal hero-logo-row" style="transition-delay:0.06s;">
+          <div class="hero-logo-box">
+            <img src="assets/Speee.jpg" alt="Speee" />
+          </div>
+          <div class="hero-logo-divider">×</div>
+          <div class="hero-logo-box">
+            <img src="assets/leverages_bk.png" alt="Leverages" />
+          </div>
+        </div>
+        <h1 class="reveal font-black leading-tight mb-5" style="font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:clamp(1.9rem,5vw,3.2rem);line-height:1.3;transition-delay:0.1s;">
+          就活の早い段階で、<br><span class="text-brand">知っておくべき</span><br>ベンチャー2社
+        </h1>
+        <div class="reveal hero-underbar" style="transition-delay:0.13s;"></div>
+        <div class="reveal hero-copy-panel mb-8" style="transition-delay:0.2s;">
+          <p class="text-gray-700 text-sm md:text-base leading-relaxed mb-5">
+            難関大生が本格的に動き出す前に、<br/>採用のプロから直接、会社とキャリアの話を聞ける機会です。
+          </p>
+
+          <div class="space-y-2.5">
+            <div class="info-row"><div class="dot"></div><span><strong>2026年5月28日（木）</strong> 18:00〜20:00</span></div>
+            <div class="info-row"><div class="dot"></div><span>オンライン（Zoom）</span></div>
+            <div class="info-row"><div class="dot"></div><span>旧帝大・一橋大・東工大 在籍 28卒限定</span></div>
+            <div class="info-row"><div class="dot"></div><span>参加無料</span></div>
+            <div class="info-row"><div class="dot"></div><span>定員40名</span></div>
+            <div class="info-row"><div class="dot"></div><span>参加後に<strong class="text-brand">謝礼 3,000円</strong>あり</span></div>
+          </div>
+        </div>
+
+        <div class="reveal" style="transition-delay:0.3s;">
+          <a href="https://form.run/@career-FxiAm3f14E8n3Ooa7a2m?_field_83=%E3%80%90%E5%AE%8C%E5%85%A8%E6%8B%9B%E5%BE%85%E7%94%9F%E3%80%915%E6%9C%8828%E6%97%A5%E7%89%B9%E5%88%A5%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88" target="_blank" rel="noopener noreferrer" class="btn-primary px-8 py-3.5 text-sm" style="letter-spacing:0.05em;">申し込む →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ABOUT ========== -->
+<section id="about" class="py-20 md:py-28 bg-white">
+  <div class="max-w-5xl mx-auto px-5">
+    <div class="reveal text-center mb-4"><p class="section-label">ABOUT</p></div>
+    <div class="reveal brand-divider mx-auto mb-8" style="transition-delay:0.05s;"></div>
+    <!-- FIXED: 見出しを短くし、モバイルでの改行バランスを改善 -->
+    <h2 class="reveal text-2xl md:text-4xl font-black text-center leading-tight mb-10" style="font-weight:900;transition-delay:0.1s;">
+      志望業界が固まっていなくても、
+      <br class="hidden md:block">今のうちに見ておきたい2社
+    </h2>
+
+    <div class="reveal mb-10 about-visual" style="transition-delay:0.14s;">
+      <img src="assets/office_generated_v1.png" alt="明るいオフィスで会話するイメージ" />
+    </div>
+
+    <div class="reveal grid md:grid-cols-2 gap-10 mt-4 items-start" style="transition-delay:0.2s;">
+      <!-- 左テキスト -->
+      <div class="space-y-5 text-gray-700 text-sm md:text-base leading-relaxed">
+        <p>難関大生の多くは、3年生の春に「どこを見ればいいかわからない」状態から就活が始まる。大企業やコンサルは知っていても、ベンチャーは情報が少なく、最初の一歩が踏み出しづらい。</p>
+        <p>このイベントは、そんな人が<strong>就活の序盤に見ておくべき2社</strong>を一度に知れる場として設計した。まずは話を聞いて、自分の選択肢を広げてほしい。</p>
+      </div>
+      <!-- 右フレーム -->
+      <div class="concept-frame">
+        <p class="text-gray-500 text-xs tracking-widest mb-5" style="font-family:'Montserrat',sans-serif;letter-spacing:0.2em;">WHY NOW</p>
+        <div class="space-y-4 w-full">
+          <div class="bg-white rounded-lg p-4 text-left border border-orange-100">
+            <p class="text-brand text-xs font-bold mb-1" style="font-family:'Montserrat',sans-serif;letter-spacing:0.1em;">01</p>
+            <p class="text-ink text-sm font-bold">早めに知るほど、企業選びが進めやすい</p>
+            <p class="text-gray-600 text-xs mt-1 leading-relaxed">就活が本格化する前に視野を広げておくと、その後の判断がしやすくなる。</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 text-left border border-orange-100">
+            <p class="text-brand text-xs font-bold mb-1" style="font-family:'Montserrat',sans-serif;letter-spacing:0.1em;">02</p>
+            <p class="text-ink text-sm font-bold">採用のプロと、早い段階で話せる</p>
+            <p class="text-gray-600 text-xs mt-1 leading-relaxed">企業理解だけでなく、自分がどう見られるかまで知る機会になる。</p>
+          </div>
+          <div class="bg-white rounded-lg p-4 text-left border border-orange-100">
+            <p class="text-brand text-xs font-bold mb-1" style="font-family:'Montserrat',sans-serif;letter-spacing:0.1em;">03</p>
+            <p class="text-ink text-sm font-bold">少人数なので、直接話せる</p>
+            <p class="text-gray-600 text-xs mt-1 leading-relaxed">定員40名・BOR形式だから、社員と近い距離で話せる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOR WHO ========== -->
+<section id="for-who" class="py-20 md:py-28 bg-warm">
+  <div class="max-w-5xl mx-auto px-5">
+    <div class="reveal text-center mb-4"><p class="section-label">FOR WHO</p></div>
+    <div class="reveal brand-divider mx-auto mb-8" style="transition-delay:0.05s;"></div>
+    <h2 class="reveal text-2xl md:text-4xl font-black text-center mb-14" style="font-weight:900;transition-delay:0.1s;">こんな人のためのイベントです</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="reveal bg-white rounded-xl p-8 border border-orange-100 shadow-sm" style="transition-delay:0.1s;">
+        <p class="num-heading text-6xl mb-5">01</p>
+        <p class="font-bold text-base mb-3 leading-snug">ベンチャーを<br/>まだ調べたことがない</p>
+        <p class="text-gray-500 text-sm leading-relaxed">大企業・コンサル・商社しか知らなかった。ベンチャーの解像度を上げたい。</p>
+      </div>
+      <div class="reveal bg-white rounded-xl p-8 border border-orange-100 shadow-sm" style="transition-delay:0.2s;">
+        <p class="num-heading text-6xl mb-5">02</p>
+        <p class="font-bold text-base mb-3 leading-snug">就活を<br/>まだ始めていない</p>
+        <p class="text-gray-500 text-sm leading-relaxed">自己分析も業界研究も手をつけていない。でも動き出すきっかけが欲しい。</p>
+      </div>
+      <div class="reveal bg-white rounded-xl p-8 border border-orange-100 shadow-sm" style="transition-delay:0.3s;">
+        <p class="num-heading text-6xl mb-5">03</p>
+        <p class="font-bold text-base mb-3 leading-snug">社会人と<br/>話す機会がなかった</p>
+        <p class="text-gray-500 text-sm leading-relaxed">インターン経験がなく、社会人と話す機会がほとんどなかった。少人数なら話せそう。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PARTNER ========== -->
+<section id="partner" class="py-20 md:py-28 bg-white">
+  <div class="max-w-5xl mx-auto px-5">
+    <div class="reveal text-center mb-4"><p class="section-label">PARTNER</p></div>
+    <div class="reveal brand-divider mx-auto mb-8" style="transition-delay:0.05s;"></div>
+    <h2 class="reveal text-2xl md:text-4xl font-black text-center mb-14" style="font-weight:900;transition-delay:0.1s;">登壇・参加企業</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <!-- Speee -->
+      <div class="reveal partner-card p-9" style="transition-delay:0.1s;">
+        <div class="partner-top">
+          <img src="assets/Speee.jpg" alt="Speee" style="height:36px;width:auto;object-fit:contain;max-width:140px;" />
+          <span class="partner-badge text-xs bg-surface text-gray-500 px-3 py-1 rounded-full" style="font-family:'Montserrat',sans-serif;font-size:10px;">東証スタンダード</span>
+        </div>
+        <p class="text-gray-600 text-sm leading-relaxed mb-6">産業変革を掲げるテック企業。若手から事業づくりに近い仕事へ挑戦できる、難関大生から人気の高い成長環境が特徴。</p>
+        <div class="grid grid-cols-3 gap-3 pt-4 border-t border-gray-100">
+          <div class="text-center">
+            <p class="font-bold text-lg text-ink" style="font-family:'Montserrat',sans-serif;">2007</p>
+            <p class="text-gray-400 text-xs mt-0.5">設立</p>
+          </div>
+          <div class="text-center">
+            <p class="font-bold text-lg text-ink" style="font-family:'Montserrat',sans-serif;">700<span class="text-sm">名+</span></p>
+            <p class="text-gray-400 text-xs mt-0.5">従業員</p>
+          </div>
+          <div class="text-center">
+            <p class="font-bold text-sm text-ink">上場企業</p>
+            <p class="text-gray-400 text-xs mt-0.5">成長環境</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Leverages -->
+      <div class="reveal partner-card p-9" style="transition-delay:0.2s;">
+        <div class="partner-top">
+          <img src="assets/leverages_bk.png" alt="Leverages" style="height:36px;width:auto;object-fit:contain;max-width:140px;" />
+          <span class="partner-badge text-xs bg-surface text-gray-500 px-3 py-1 rounded-full" style="font-family:'Montserrat',sans-serif;font-size:10px;">年商1,000億+</span>
+        </div>
+        <p class="text-gray-600 text-sm leading-relaxed mb-6">HR・教育・医療などに事業を広げるメガベンチャー。就活初期から難関大生と広く接点を持つ、急成長企業の代表格。</p>
+        <div class="grid grid-cols-3 gap-3 pt-4 border-t border-gray-100">
+          <div class="text-center">
+            <p class="font-bold text-lg text-ink" style="font-family:'Montserrat',sans-serif;">2005</p>
+            <p class="text-gray-400 text-xs mt-0.5">設立</p>
+          </div>
+          <div class="text-center">
+            <p class="font-bold text-lg text-ink" style="font-family:'Montserrat',sans-serif;">3,000<span class="text-sm">名+</span></p>
+            <p class="text-gray-400 text-xs mt-0.5">従業員</p>
+          </div>
+          <div class="text-center">
+            <p class="font-bold text-sm text-ink">多角化</p>
+            <p class="text-gray-400 text-xs mt-0.5">急成長</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SPEAKER ========== -->
+<section id="speaker" class="py-20 md:py-28 bg-surface">
+  <div class="max-w-5xl mx-auto px-5">
+    <div class="reveal text-center mb-4"><p class="section-label">SPEAKER</p></div>
+    <div class="reveal brand-divider mx-auto mb-8" style="transition-delay:0.05s;"></div>
+    <h2 class="reveal text-2xl md:text-4xl font-black text-center mb-4" style="font-weight:900;transition-delay:0.1s;">登壇者</h2>
+    <p class="reveal text-center text-sm text-gray-600 mb-3" style="transition-delay:0.11s;">両社とも、採用の前線で学生と向き合う人事・採用責任者クラスが参加します。</p>
+    <div class="grid md:grid-cols-2 gap-8">
+
+      <!-- Speee -->
+      <div class="reveal speaker-card" style="transition-delay:0.1s;">
+        <div class="speaker-photo-wrap">
+          <img class="speaker-photo" src="assets/Speee_宇津木様 .jpg" alt="宇津木 孝志 氏 / Speee" />
+        </div>
+        <div class="p-7">
+          <p class="section-label mb-3">Speee</p>
+          <p class="font-black text-xl mb-0.5">宇津木 孝志 氏</p>
+          <p class="text-gray-500 text-sm mb-5">経営企画本部 / HumanCapital本部</p>
+          <p class="text-gray-600 text-sm leading-relaxed">東京大学経済学部卒。2016年にSpeeeへ新卒入社し、アナリストとして新人賞を受賞。経営企画本部で事業戦略や新規事業のグロースを担った後、現在はHumanCapital本部で全社のHR戦略、とりわけ採用領域をリードしている。</p>
+        </div>
+      </div>
+
+      <!-- Leverages -->
+      <div class="reveal speaker-card" style="transition-delay:0.2s;">
+        <div class="speaker-photo-wrap">
+          <img class="speaker-photo" src="assets/Leverages_内田様.jpg" alt="内田 一平 氏 / Leverages" />
+        </div>
+        <div class="p-7">
+          <p class="section-label mb-3">Leverages</p>
+          <p class="font-black text-xl mb-0.5">内田 一平 氏</p>
+          <p class="text-gray-500 text-sm mb-5">人事部 マネージャー</p>
+          <p class="text-gray-600 text-sm leading-relaxed">東北大学文学部出身。新卒でレバレジーズに入社し、介護事業部で最速支店長を経験。現在は人事部マネージャーとして、年間1,000名弱の学生と向き合っている。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MID CTA ========== -->
+<section class="py-8 md:py-10 bg-white">
+  <div class="max-w-4xl mx-auto px-5">
+    <div class="mid-cta-card reveal text-center">
+      <p class="section-label mb-3">SEMINAR</p>
+      <h3 class="text-2xl md:text-3xl font-black mb-4" style="font-weight:900;">難関大生が、今見ておくべき2社です。</h3>
+      <p class="text-sm md:text-base text-gray-600 leading-relaxed mb-6">28卒限定・40名限定。少人数で直接話せるので、気になった時点で押さえておくのがおすすめです。</p>
+      <a href="https://form.run/@career-FxiAm3f14E8n3Ooa7a2m?_field_83=%E3%80%90%E5%AE%8C%E5%85%A8%E6%8B%9B%E5%BE%85%E7%94%9F%E3%80%915%E6%9C%8828%E6%97%A5%E7%89%B9%E5%88%A5%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88" target="_blank" rel="noopener noreferrer" class="btn-primary px-8 py-3.5 text-sm" style="letter-spacing:0.05em;">今すぐ申し込む →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PROGRAM ========== -->
+<section id="program" class="py-20 md:py-28 bg-white">
+  <div class="max-w-4xl mx-auto px-5">
+    <div class="reveal text-center mb-4"><p class="section-label">PROGRAM</p></div>
+    <div class="reveal brand-divider mx-auto mb-8" style="transition-delay:0.05s;"></div>
+    <h2 class="reveal text-2xl md:text-4xl font-black text-center mb-3" style="font-weight:900;transition-delay:0.1s;">当日プログラム</h2>
+    <p class="reveal text-gray-500 text-sm text-center mb-14" style="transition-delay:0.15s;">全3部構成で、企業理解から社員との対話まで一気に進めます。</p>
+    <div class="space-y-0">
+
+      <div class="reveal timeline-item pb-9" style="transition-delay:0.1s;">
+        <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-white border-2 border-brand flex items-center justify-center shadow-sm">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:11px;color:#FF8A32;">01</span>
+        </div>
+        <div class="bg-surface rounded-xl p-6">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-2">
+            <div>
+              <p class="font-bold text-xs text-brand mb-1" style="font-family:'Montserrat',sans-serif;letter-spacing:0.1em;">PART 01</p>
+              <p class="font-bold text-base">キャリアセミナー</p>
+            </div>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">就活の早い時期にベンチャーを見る意味や、企業選びの視点をLeverages社員が解説。</p>
+        </div>
+      </div>
+
+      <div class="reveal timeline-item pb-9" style="transition-delay:0.2s;">
+        <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-white border-2 border-brand flex items-center justify-center shadow-sm">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:11px;color:#FF8A32;">02</span>
+        </div>
+        <div class="bg-surface rounded-xl p-6">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-2">
+            <div>
+              <p class="font-bold text-xs text-brand mb-1" style="font-family:'Montserrat',sans-serif;letter-spacing:0.1em;">PART 02</p>
+              <p class="font-bold text-base">パネルディスカッション</p>
+            </div>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">両社の登壇者がキャリア観・仕事のリアルを本音で語る。学生からの質問タイム含む。</p>
+        </div>
+      </div>
+
+      <div class="reveal timeline-item" style="transition-delay:0.3s;">
+        <div class="absolute left-0 top-0 w-9 h-9 rounded-full bg-white border-2 border-brand flex items-center justify-center shadow-sm">
+          <span style="font-family:'Montserrat',sans-serif;font-weight:900;font-size:11px;color:#FF8A32;">03</span>
+        </div>
+        <div class="bg-surface rounded-xl p-6">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-2">
+            <div>
+              <p class="font-bold text-xs text-brand mb-1" style="font-family:'Montserrat',sans-serif;letter-spacing:0.1em;">PART 03</p>
+              <p class="font-bold text-base">BOR個別ルーム ×2社</p>
+            </div>
+          </div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-4">少人数のブレイクアウトルームで両社と直接話せる。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== OUTLINE + FAQ ========== -->
+<section id="outline" class="py-20 md:py-28 bg-surface">
+  <div class="max-w-5xl mx-auto px-5">
+    <div class="reveal grid md:grid-cols-2 gap-12 md:gap-16">
+
+      <div>
+        <p class="section-label mb-3">OUTLINE</p>
+        <h2 class="text-2xl md:text-3xl font-black mb-7" style="font-weight:900;">開催概要</h2>
+        <div class="bg-white border border-gray-200 rounded-xl overflow-hidden text-sm">
+          <table class="w-full">
+            <tbody>
+              <tr class="border-b border-gray-100">
+                <td class="py-4 px-5 font-bold text-brand text-xs w-24 bg-warm" style="font-family:'Montserrat',sans-serif;letter-spacing:0.08em;">イベント名</td>
+                <td class="py-4 px-5 text-gray-700 text-xs">Speee × Leverages 合同企業説明会</td>
+              </tr>
+              <tr class="border-b border-gray-100">
+                <td class="py-4 px-5 font-bold text-brand text-xs bg-warm" style="font-family:'Montserrat',sans-serif;letter-spacing:0.08em;">日時</td>
+                <td class="py-4 px-5 text-gray-700 text-xs">2026年5月28日（木）18:00〜20:00</td>
+              </tr>
+              <tr class="border-b border-gray-100">
+                <td class="py-4 px-5 font-bold text-brand text-xs bg-warm" style="font-family:'Montserrat',sans-serif;letter-spacing:0.08em;">形式</td>
+                <td class="py-4 px-5 text-gray-700 text-xs">完全オンライン（Zoom）</td>
+              </tr>
+              <tr class="border-b border-gray-100">
+                <td class="py-4 px-5 font-bold text-brand text-xs bg-warm" style="font-family:'Montserrat',sans-serif;letter-spacing:0.08em;">対象</td>
+                <td class="py-4 px-5 text-gray-700 text-xs">旧帝大・一橋大・東工大 在籍の28卒限定</td>
+              </tr>
+              <tr class="border-b border-gray-100">
+                <td class="py-4 px-5 font-bold text-brand text-xs bg-warm" style="font-family:'Montserrat',sans-serif;letter-spacing:0.08em;">定員</td>
+                <td class="py-4 px-5 text-gray-700 text-xs">40名限定</td>
+              </tr>
+              <tr class="border-b border-gray-100">
+                <td class="py-4 px-5 font-bold text-brand text-xs bg-warm" style="font-family:'Montserrat',sans-serif;letter-spacing:0.08em;">参加費</td>
+                <td class="py-4 px-5 text-gray-700 text-xs">無料<br/><span class="text-brand font-bold">特典：謝礼 3,000円</span></td>
+              </tr>
+              <tr>
+                <td class="py-4 px-5 font-bold text-brand text-xs bg-warm" style="font-family:'Montserrat',sans-serif;letter-spacing:0.08em;">主催</td>
+                <td class="py-4 px-5 text-gray-700 text-xs">トウコベキャリア（株式会社MANABI）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="faq">
+        <p class="section-label mb-3">FAQ</p>
+        <h2 class="text-2xl md:text-3xl font-black mb-7" style="font-weight:900;">よくある質問</h2>
+        <div class="space-y-2">
+          <div class="faq-item bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <button class="faq-trigger w-full text-left px-5 py-4 flex items-center justify-between gap-3">
+              <span class="font-bold text-sm leading-snug">志望がなくても参加して大丈夫ですか？</span>
+              <i class="fa fa-chevron-down text-brand flex-shrink-0 text-xs"></i>
+            </button>
+            <div class="faq-body px-5 pb-4">
+              <p class="text-gray-500 text-xs leading-relaxed">はい。「まずは知って、話す」ことを目的にした場です。志望度はゼロでも問題ありません。</p>
+            </div>
+          </div>
+          <div class="faq-item bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <button class="faq-trigger w-full text-left px-5 py-4 flex items-center justify-between gap-3">
+              <span class="font-bold text-sm leading-snug">ベンチャー業界をほとんど知らなくても大丈夫ですか？</span>
+              <i class="fa fa-chevron-down text-brand flex-shrink-0 text-xs"></i>
+            </button>
+            <div class="faq-body px-5 pb-4">
+              <p class="text-gray-500 text-xs leading-relaxed">大丈夫です。第1部のセミナーで「ベンチャーを見る意義・就活の序盤にやるべきこと」を解説します。</p>
+            </div>
+          </div>
+          <div class="faq-item bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <button class="faq-trigger w-full text-left px-5 py-4 flex items-center justify-between gap-3">
+              <span class="font-bold text-sm leading-snug">選考に進まないと失礼になりませんか？</span>
+              <i class="fa fa-chevron-down text-brand flex-shrink-0 text-xs"></i>
+            </button>
+            <div class="faq-body px-5 pb-4">
+              <p class="text-gray-500 text-xs leading-relaxed">問題ありません。SpeeeもLeveragesも、就活初期の学生が会いに来ることを歓迎しています。</p>
+            </div>
+          </div>
+          <div class="faq-item bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <button class="faq-trigger w-full text-left px-5 py-4 flex items-center justify-between gap-3">
+              <span class="font-bold text-sm leading-snug">服装・事前準備は必要ですか？</span>
+              <i class="fa fa-chevron-down text-brand flex-shrink-0 text-xs"></i>
+            </button>
+            <div class="faq-body px-5 pb-4">
+              <p class="text-gray-500 text-xs leading-relaxed">私服で構いません。準備も不要です。気軽に参加してください。</p>
+            </div>
+          </div>
+          <div class="faq-item bg-white border border-gray-200 rounded-xl overflow-hidden">
+            <button class="faq-trigger w-full text-left px-5 py-4 flex items-center justify-between gap-3">
+              <span class="font-bold text-sm leading-snug">謝礼はいつ振り込まれますか？</span>
+              <i class="fa fa-chevron-down text-brand flex-shrink-0 text-xs"></i>
+            </button>
+            <div class="faq-body px-5 pb-4">
+              <p class="text-gray-500 text-xs leading-relaxed">翌月の指導報酬と合算して、ご指定の口座にお振込みいたします。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ENTRY ========== -->
+<section id="entry" class="py-28 md:py-36 bg-warm">
+  <div class="max-w-3xl mx-auto px-5 text-center">
+    <div class="reveal mb-5"><p class="section-label" style="color:#FF8A32;">SEMINAR</p></div>
+    <div class="reveal brand-divider mx-auto mb-8" style="transition-delay:0.05s;"></div>
+    <h2 class="reveal font-black text-ink leading-tight mb-5" style="font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:clamp(1.7rem,4.5vw,2.8rem);line-height:1.4;transition-delay:0.1s;">
+      就活の最初の一歩を、<br/><span class="text-brand">この2社</span>から始めよう。
+    </h2>
+    <p class="reveal text-gray-600 text-sm md:text-base mb-10 leading-relaxed" style="transition-delay:0.15s;">
+      旧帝大・一橋大・東工大の28卒限定 / 定員40名（先着順）
+    </p>
+    <div class="reveal flex flex-wrap justify-center gap-3 mb-10" style="transition-delay:0.2s;">
+      <span class="flex items-center gap-2 border border-orange-200 rounded-full px-4 py-2 text-xs text-gray-500 bg-white/70">
+        <i class="fa fa-calendar-alt text-brand"></i> 2026.5.28 THU
+      </span>
+      <span class="flex items-center gap-2 border border-orange-200 rounded-full px-4 py-2 text-xs text-gray-500 bg-white/70">
+        <i class="fa fa-laptop text-brand"></i> ONLINE / ZOOM
+      </span>
+    </div>
+    <div class="reveal" style="transition-delay:0.25s;">
+      <a href="https://form.run/@career-FxiAm3f14E8n3Ooa7a2m?_field_83=%E3%80%90%E5%AE%8C%E5%85%A8%E6%8B%9B%E5%BE%85%E7%94%9F%E3%80%915%E6%9C%8828%E6%97%A5%E7%89%B9%E5%88%A5%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block px-14 py-4 text-base" style="letter-spacing:0.05em;">申し込む →</a>
+      <p class="text-gray-500 text-xs mt-4">参加後に謝礼 3,000円あり</p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="bg-[#0C0C0C] py-8">
+  <div class="max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-4">
+    <img class="brand-logo-img brand-logo-footer" src="assets/Group 164.png" alt="トウコベキャリア" />
+    <p style="font-family:'Montserrat',sans-serif;font-size:10px;color:rgba(255,255,255,0.2);letter-spacing:0.12em;">© 2026 MANABI, Inc. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('loading').classList.add('hidden');
+      document.querySelectorAll('.reveal').forEach(el => { if (isInView(el)) el.classList.add('visible'); });
+    }, 700);
+  });
+
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 20); });
+
+  const menuBtn = document.getElementById('menu-btn');
+  const menuClose = document.getElementById('menu-close');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const bar1 = document.getElementById('bar1'), bar2 = document.getElementById('bar2'), bar3 = document.getElementById('bar3');
+
+  function openMenu() {
+    mobileMenu.classList.add('open'); document.body.style.overflow = 'hidden';
+    bar1.style.transform = 'translateY(8px) rotate(45deg)'; bar2.style.opacity = '0'; bar3.style.transform = 'translateY(-8px) rotate(-45deg)';
+  }
+  function closeMenu() {
+    mobileMenu.classList.remove('open'); document.body.style.overflow = '';
+    bar1.style.transform = ''; bar2.style.opacity = ''; bar3.style.transform = '';
+  }
+  menuBtn.addEventListener('click', openMenu);
+  menuClose.addEventListener('click', closeMenu);
+  document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMenu));
+
+  function isInView(el) { return el.getBoundingClientRect().top < window.innerHeight * 0.93; }
+  function checkReveal() { document.querySelectorAll('.reveal').forEach(el => { if (isInView(el)) el.classList.add('visible'); }); }
+  window.addEventListener('scroll', checkReveal, { passive: true });
+  window.addEventListener('resize', checkReveal, { passive: true });
+  setTimeout(checkReveal, 100);
+
+  document.querySelectorAll('.faq-trigger').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const body = btn.nextElementSibling;
+      const icon = btn.querySelector('i');
+      const isOpen = body.classList.contains('open');
+      document.querySelectorAll('.faq-body').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.faq-trigger i').forEach(i => { i.style.transform = ''; });
+      if (!isOpen) { body.classList.add('open'); icon.style.transform = 'rotate(180deg)'; }
+    });
+  });
+</script>
+</body>
+</html>
